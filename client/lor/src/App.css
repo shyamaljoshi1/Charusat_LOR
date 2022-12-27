@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.frame {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: #E9F3FC;
+}
+
+.center {
+  box-shadow: 0 0 70px 9px rgba(27, 101, 167, 0.25);
+  border-radius: 29px;
+  width: 32.5em;
+  height: 33.75em;
+  padding: 1.625em;
+  background-color: #E9F3FC;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.logo {
+  position: relative;
+  top: 2.5rem;
+  width: 25rem;
+  height: 4.8rem;
+}
+
+.login-text {
+  font-size: 40px;
+  /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+  font-weight: 700;
+  position: relative;
+  top: 35%;
+  letter-spacing: 5px;
+}
