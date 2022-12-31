@@ -1,0 +1,12 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 500;
+}
+html,body{
+    overflow-x:hidden;
+    font-size: 62.5%;
+    height: 100vh;
+}

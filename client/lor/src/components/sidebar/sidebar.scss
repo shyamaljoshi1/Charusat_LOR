@@ -1,0 +1,45 @@
+*{
+    background-color: #E9F3FC;
+    color: #040615;
+}
+
+.sidebar{
+    background-color: #E9F3FC;
+    font-size: 1.6rem;
+    &__menu{
+        background-color: #E9F3FC;
+    }
+}
+
+.ps-menu-label:hover{
+    background-color: #1B65A7 !important;
+    color: #fff;
+}
+
+.ps-menu-label{
+    padding: 1.49rem 1rem !important;
+    border-radius: 1.1rem !important;
+    margin: 0 1.5rem !important;
+    font-weight:600 !important;
+    align-items: center;
+    transition: all .15s !important;
+}
+
+.ps-menu-button{
+    padding: 0 !important;
+    margin: .7rem 0 !important;
+    background-color: #E9F3FC !important;
+}
+
+.ps-sidebar-container{
+    background:  #E9F3FC !important;
+    display: flex !important;
+    flex-direction: column;
+    box-shadow: 0px 0px 70px 9px rgba(27, 101, 167, 0.25) !important;
+    align-items: center !important;
+    justify-content: space-around;
+}
+
+// .ps-menuitem-root{
+//     transform: translateY(-8rem);
+// }

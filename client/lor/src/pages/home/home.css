@@ -1,0 +1,16 @@
+.container {
+  margin-left: 30rem;
+}
+.container__heading {
+  font-family: "Raleway", sans-serif;
+  font-size: 3rem;
+  font-weight: 600;
+  letter-spacing: 0.54rem;
+  text-align: center;
+  margin: 5.7rem 0;
+}
+.container__data {
+  font-size: 1.6rem;
+  margin: 0 7rem;
+  line-height: 2.3rem;
+}/*# sourceMappingURL=home.css.map */
