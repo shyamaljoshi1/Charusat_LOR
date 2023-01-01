@@ -14,6 +14,9 @@ const SidebarCustom =()=>{
     function home() {
         navigate("/home");
     }
+    function lor() {
+        navigate("/lor_request");
+    }
 
     return(
         <Sidebar className="sidebar" style={{position:'fixed',top:'0',bottom:'0'}}>
@@ -25,7 +28,7 @@ const SidebarCustom =()=>{
                     &nbsp; Home
                     
                 </MenuItem>
-                <MenuItem className="menu_item">
+                <MenuItem className="menu_item" onClick={() => { lor() }}>
                     &nbsp; LOR Request
                 </MenuItem>
                 <MenuItem className="menu_item">

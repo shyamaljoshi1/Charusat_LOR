@@ -1,7 +1,7 @@
-.container {
+.home__container {
   margin-left: 30rem;
 }
-.container__heading {
+.home__container__heading {
   font-family: "Raleway", sans-serif;
   font-size: 3rem;
   font-weight: 600;
@@ -9,7 +9,7 @@
   text-align: center;
   margin: 5.7rem 0;
 }
-.container__data {
+.home__container__data {
   font-size: 1.6rem;
   margin: 0 7rem;
   line-height: 2.3rem;
