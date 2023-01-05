@@ -12,7 +12,7 @@ const Login = () => {
         <div className="login__frame">
             <div className="login__frame__center">
                 <img className='logo' src={logo} alt="chrausat-logo" />
-                <div className="login__text">Login</div>
+                <div className="login__text">Login With</div>
                 <div className="logo__container">
                     <div onClick={googleLogin}><img className="logo__container__google" src={google} alt="google logo" /></div>
                     <div><img className="logo__container__linkedin" src={linkedin} alt="linkedin logo" /></div>

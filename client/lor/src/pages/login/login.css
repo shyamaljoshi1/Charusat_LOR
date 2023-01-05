@@ -11,8 +11,8 @@
 .login__frame__center {
   box-shadow: 0 0 7rem 0.9rem rgba(27, 101, 167, 0.25);
   border-radius: 2.9rem;
-  width: 48rem;
-  height: 50rem;
+  width: 44rem;
+  height: 46rem;
   padding: 2.6rem;
   display: flex;
   flex-direction: column;
@@ -22,13 +22,13 @@
 .logo {
   position: relative;
   top: 4em;
-  width: 35rem;
+  width: 28rem;
 }
 
 .login__text {
-  font-size: 3.3rem;
+  font-size: 2.7rem;
   position: relative;
-  top: 35%;
+  top: 30%;
   letter-spacing: 0.5rem;
   font-family: "Raleway", sans-serif;
   font-weight: 700;
@@ -43,14 +43,14 @@
   width: 70%;
 }
 .logo__container__google {
-  width: 5rem;
+  width: 4.7rem;
   scale: 1.25;
 }
 .logo__container__google:hover {
   cursor: pointer;
 }
 .logo__container__linkedin {
-  width: 5rem;
+  width: 4.7rem;
 }
 .logo__container__linkedin:hover {
   cursor: pointer;
