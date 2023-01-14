@@ -37,12 +37,22 @@ const App = () => {
     return (
         <ProSidebarProvider>
             <BrowserRouter>
-                {user && <SidebarCustom />}
+            {/*for implementation*/}
+                {/* {user && <SidebarCustom />}
                 <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/home" element={user ? <Home /> : <Login />} />
                     <Route path="/" element={user ? <Home /> : <Login />} />
                     <Route path="/lor_request" element={user ? <LorRequest /> : <Login />} />
+                </Routes> */}
+
+            {/*for tesiting*/}
+                <SidebarCustom />
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/" element={<Home />} />
+                    <Route path="/lor_request" element={ <LorRequest />} />
                 </Routes>
             </BrowserRouter>
         </ProSidebarProvider>);

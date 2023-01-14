@@ -1,3 +1,73 @@
-.Lor__container{
+.Lor__container {
     margin-left: 30rem;
+}
+.heading__container {
+    margin-top: 4.5rem;
+    display: flex;
+    justify-content: center;
+    > h1 {
+        font-family: "Raleway", sans-serif;
+        font-size: 2.4rem;
+        color: #040615;
+        font-weight: 700;
+    }
+}
+
+.personal-information__container {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    padding: 1.5rem 2.5rem;
+    margin-top: 3.5rem;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 20px rgba(27, 101, 167, 0.25);
+
+    &__heading {
+        background-color: transparent;
+        font-size: 2rem;
+        font-weight: 600;
+    }
+}
+.input__container {
+    margin-top: 2.5rem;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    input {
+        width: 70%;
+        background-color: #fff;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+        border-radius: 6px;
+        padding: 0.8rem 2.3rem;
+        border: none;
+        font-size: 1.6rem;
+        outline: none;
+        &::placeholder {
+            transform: translateY(1px);
+        }
+    }
+}
+.select__container {
+    margin-top: 2.5rem;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    select {
+        width: 70%;
+        border-radius: 6px;
+        padding: 0.8rem 2.3rem;
+        border: none;
+        outline: none;
+        color: #999;
+        font-size: 1.6rem;
+        background-color: #fff;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+        option {
+            background-color: #fff;
+            outline: none;
+            color: #999;
+            border: none;
+        }
+    }
 }
