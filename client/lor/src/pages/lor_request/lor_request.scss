@@ -1,3 +1,21 @@
 .Lor__container{
     margin-left: 30rem;
 }
+.form__Container{
+    margin: 5rem 4rem 0 0;
+    .personalinfo_container{
+        
+        flex-direction: row;
+        align-items: center !important;
+        .controls{
+            display: flex;
+            margin:1rem 0 0 5rem;
+        }
+    }
+}
+h1{
+    font-size: 2.6rem !important;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color:#040615 ;
+}
