@@ -1,5 +1,5 @@
 *{
-    background-color: #E9F3FC !important;
+    background-color: white !important;
     color: #040615;
 }
 
@@ -16,6 +16,10 @@
     color: #fff;
 }
 
+.ps-menu-root{
+    
+}
+
 .ps-menu-label{
     padding: 1.49rem 1rem !important;
     border-radius: 1.1rem !important;
@@ -23,6 +27,8 @@
     font-weight:600 !important;
     align-items: center;
     transition: all .15s !important;
+    background-color: #E9F3FC !important;
+
 }
 
 .ps-menu-button{
@@ -40,6 +46,7 @@
     justify-content: space-around;
 }
 
-// .ps-menuitem-root{
-//     transform: translateY(-8rem);
-// }
+.ps-menuitem-root{
+    background-color: #E9F3FC !important;
+
+}
