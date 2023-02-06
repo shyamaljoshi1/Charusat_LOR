@@ -1,8 +1,9 @@
 import { useState } from "react";
 import "./lor_request.css";
-import { Input } from '@chakra-ui/react'
-import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
+// import { Input } from '@chakra-ui/react'
+// import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 import PersonalInfo from "./personalInfo";
+import PlacementInfo from "./placementInfo";
 
 const LorRequest = () => {
   // const [cdpc, setCdpc] = useState(false);
@@ -22,12 +23,13 @@ const LorRequest = () => {
     setPersonalinfo({ ...personalInfo, [e.target.name]: e.target.value });
   };
 
-  console.log(personalInfo);
+  // console.log(personalInfo);
 
   return (
       <div className="form__container">
         <form action="POST">
           <PersonalInfo onChange={onChange}/>
+          <PlacementInfo/>
         </form>
       </div>
   );

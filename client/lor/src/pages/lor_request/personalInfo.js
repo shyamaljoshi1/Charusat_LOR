@@ -2,7 +2,7 @@ import { Card, CardHeader, CardBody, Heading,Input,FormLabel,FormControl} from '
 
 const PersonalInfo = ({onChange}) =>{
     return(
-        <Card margin={"7rem 7rem 7rem 5rem"}>
+        <Card margin={"7rem 7rem 4rem 5rem"}>
             <CardHeader>
                 <Heading
                 paddingLeft={"1.5rem"}
