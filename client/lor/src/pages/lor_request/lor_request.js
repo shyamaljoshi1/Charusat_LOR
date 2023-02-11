@@ -1,16 +1,11 @@
-import { useState } from "react";
+import { useState , useEffect} from "react";
+import LorLetter from "./lor_letter";
 import "./lor_request.css";
-// import { Input } from '@chakra-ui/react'
-// import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 import PersonalInfo from "./personalInfo";
 import PlacementInfo from "./placementInfo";
 import ResultDetails from "./resultDetails";
 
 const LorRequest = () => {
-  // const [cdpc, setCdpc] = useState(false);
-  // const onchange = (e) => {
-  //   setCdpc(e.target.value);
-  // };
   const [personalInfo, setPersonalinfo] = useState({
     studentId: "",
     studentName: "",
@@ -36,19 +31,40 @@ const LorRequest = () => {
     seventhSCG: "",
     eightthSCG: "",
   })
+  const [placementInfo,setPlacementinfo]=useState({
+    placeThroughCdpc:"",
+    bondCompleted:"",
+    companyName:"",
+  })
+  const [noOfLetterhead,setNoOfLetterhead]=useState()
+
 
   const onChange = (e) => {
     setPersonalinfo({ ...personalInfo, [e.target.name]: e.target.value });
     setResultDetails({ ...resultDetails, [e.target.name]: e.target.value });
+    setPlacementinfo({ ...placementInfo, [e.target.name]: e.target.value });
+    setNoOfLetterhead(e.target.value)
   };
 
-  // console.log(resultDetails);
+  const[cdpc,checkCdpc]=useState(false);
+
+  useEffect(() => {
+      if(placementInfo.placeThroughCdpc==="true") checkCdpc(true)
+      else{
+        checkCdpc(false)
+        placementInfo.companyName=""
+      } 
+  },[placementInfo]);
+
+  console.log(noOfLetterhead);
 
   return (
     <div className="form__container">
       <form action="POST">
         <PersonalInfo onChange={onChange} />
-        <PlacementInfo />
+        <PlacementInfo onChange={onChange} cdpc={cdpc} />
+        <ResultDetails onChange={onChange}/>
+        <LorLetter onChange={onChange}/>
       </form>
     </div>
   );
