@@ -1,0 +1,121 @@
+.lor_format__container {
+    font-family: "Times New Roman", Times, serif;
+    width: 100%;
+    margin: 30px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.lor_format {
+    width: 800px;
+    padding: 15px;
+    border: 1px solid black;
+    &__header {
+        width: 100%;
+        border-top: 1px solid black;
+        &__top {
+            margin: 10px 0 0 0;
+            display: flex;
+            justify-content: space-between;
+            &__id {
+                font-size: 12px;
+                font-family: "Times New Roman", Times, serif;
+                font-weight: bold;
+            }
+            &__date {
+                font-family: "Times New Roman", Times, serif;
+                font-size: 12px;
+                width: 180px;
+                font-weight: bold;
+
+                span {
+                    font-weight: bold;
+                    display: inline-block;
+                    font-family: "Times New Roman", Times, serif;
+                    margin-left: 2px;
+                    text-align: center;
+                    width: 80%;
+                    border-bottom: 1px solid black;
+                }
+            }
+        }
+        &__uni_info {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 17px;
+            p {
+                margin: 0 0 5px 0;
+                font-family: "Times New Roman", Times, serif;
+                font-weight: bold;
+            }
+        }
+    }
+    &__body {
+        &__header {
+            font-size: 12px;
+
+            p {
+                margin: 0 0 2px 0;
+                font-family: "Times New Roman", Times, serif;
+            }
+        }
+        &__body {
+            margin: 20px 0 0 0;
+            font-size: 12px;
+            p {
+                font-family: "Times New Roman", Times, serif;
+            }
+            &__uni_table__container {
+                width: 100%;
+            }
+            &__compi {
+                p {
+                    margin-top: 10px;
+                }
+                &_table__container {
+                    width: 100%;
+                }
+            }
+            &__faculty {
+                p {
+                    margin-top: 10px;
+                }
+                &_table__container {
+                    width: 100%;
+                }
+            }
+            &__attendance {
+                p {
+                    margin-top: 10px;
+                }
+                &_table__container {
+                    width: 100%;
+                }
+            }
+            &__footer {
+                p {
+                    margin-top: 10px;
+                }
+            }
+        }
+    }
+    &__footer {
+        margin-top: 10px;
+        width: 400px;
+        margin-bottom: 50px;
+        &__signature_container {
+            display: flex;
+        }
+        p {
+            margin-top: 5px;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 12px;
+        }
+        span {
+            margin-left: 2px;
+            display: block;
+            border-bottom: 1px solid black;
+            flex: 1;
+        }
+    }
+}

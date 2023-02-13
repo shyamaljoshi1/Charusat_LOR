@@ -1,0 +1,109 @@
+.lor_format__container {
+  font-family: "Times New Roman", Times, serif;
+  width: 100%;
+  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.lor_format {
+  width: 800px;
+  padding: 15px;
+  border: 1px solid black;
+}
+.lor_format__header {
+  width: 100%;
+  border-top: 1px solid black;
+}
+.lor_format__header__top {
+  margin: 10px 0 0 0;
+  display: flex;
+  justify-content: space-between;
+}
+.lor_format__header__top__id {
+  font-size: 12px;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+}
+.lor_format__header__top__date {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12px;
+  width: 180px;
+  font-weight: bold;
+}
+.lor_format__header__top__date span {
+  font-weight: bold;
+  display: inline-block;
+  font-family: "Times New Roman", Times, serif;
+  margin-left: 2px;
+  text-align: center;
+  width: 80%;
+  border-bottom: 1px solid black;
+}
+.lor_format__header__uni_info {
+  text-align: center;
+  margin: 15px 0;
+  font-size: 17px;
+}
+.lor_format__header__uni_info p {
+  margin: 0 0 5px 0;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+}
+.lor_format__body__header {
+  font-size: 12px;
+}
+.lor_format__body__header p {
+  margin: 0 0 2px 0;
+  font-family: "Times New Roman", Times, serif;
+}
+.lor_format__body__body {
+  margin: 20px 0 0 0;
+  font-size: 12px;
+}
+.lor_format__body__body p {
+  font-family: "Times New Roman", Times, serif;
+}
+.lor_format__body__body__uni_table__container {
+  width: 100%;
+}
+.lor_format__body__body__compi p {
+  margin-top: 10px;
+}
+.lor_format__body__body__compi_table__container {
+  width: 100%;
+}
+.lor_format__body__body__faculty p {
+  margin-top: 10px;
+}
+.lor_format__body__body__faculty_table__container {
+  width: 100%;
+}
+.lor_format__body__body__attendance p {
+  margin-top: 10px;
+}
+.lor_format__body__body__attendance_table__container {
+  width: 100%;
+}
+.lor_format__body__body__footer p {
+  margin-top: 10px;
+}
+.lor_format__footer {
+  margin-top: 10px;
+  width: 400px;
+  margin-bottom: 50px;
+}
+.lor_format__footer__signature_container {
+  display: flex;
+}
+.lor_format__footer p {
+  margin-top: 5px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12px;
+}
+.lor_format__footer span {
+  margin-left: 2px;
+  display: block;
+  border-bottom: 1px solid black;
+  flex: 1;
+}/*# sourceMappingURL=lorFormat.css.map */
