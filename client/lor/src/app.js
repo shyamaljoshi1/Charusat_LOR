@@ -7,8 +7,9 @@ import {
     Route,
 } from "react-router-dom";
 import Home from './pages/home/home';
-import LorRequest from './pages/lor_request/lor_request';
+import LorRequest from './components/lor_request/lor_request';
 import Login from './pages/login/login';
+import LorFormat from './pages/lor_format/lorFormat';
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -37,7 +38,7 @@ const App = () => {
     return (
         <ProSidebarProvider>
             <BrowserRouter>
-            {/*for implementation*/}
+                {/*for implementation*/}
                 {/* {user && <SidebarCustom />}
                 <Routes>
                     <Route path="/login" element={<Login />} />
@@ -46,13 +47,14 @@ const App = () => {
                     <Route path="/lor_request" element={user ? <LorRequest /> : <Login />} />
                 </Routes> */}
 
-            {/*for tesiting*/}
+                {/*for tesiting*/}
                 <SidebarCustom />
                 <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/" element={<Home />} />
-                    <Route path="/lor_request" element={ <LorRequest />} />
+                    <Route path="/lor_request" element={<LorRequest />} />
+                    <Route path="/lor_format" element={<LorFormat />} />
                 </Routes>
             </BrowserRouter>
         </ProSidebarProvider>);
