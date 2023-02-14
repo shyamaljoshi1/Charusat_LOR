@@ -56,7 +56,10 @@ const LorRequest = () => {
       } 
   },[placementInfo]);
 
-  console.log(noOfLetterhead);
+  // console.log(personalInfo);
+  // console.log(resultDetails);
+  // console.log(placementInfo);
+  // console.log(noOfLetterhead);
 
   return (
     <div className="form__container">
