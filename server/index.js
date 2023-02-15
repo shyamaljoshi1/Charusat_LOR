@@ -5,6 +5,38 @@ const authRoute = require("./routes/auth");
 const passportSetup = require("./passport");
 const cookieSession = require("cookie-session");
 const app = express();
+const { PrismaClient } = require("@prisma/client");
+
+const prisma = new PrismaClient();
+app.use(express.json());
+
+app.get("/get", async (req, res) => {
+  try {
+    const name = await prisma.tblPersonalInfo.findMany({});
+    res.send({ name });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.post("/abc", async (req, res) => {
+  try {
+    const studentInfo = await prisma.tblPersonalInfo.create({
+      data: req.body,
+    });
+    res.status(201).send({
+      success:true,
+      studentInfo
+    })
+  } catch (error) {
+    res.status(400).send({
+      success:false,
+      message:"Data insertion fail!"
+    })
+    // console.log(error);
+  }
+});
+
 
 app.use(
   cookieSession({ name: "session", keys: ["lor"], maxAge: 24 * 60 * 60 * 100 })
