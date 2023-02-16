@@ -20,9 +20,31 @@ app.get("/get", async (req, res) => {
 });
 
 app.post("/abc", async (req, res) => {
+  // const {studentId,studentName,emailId,studentMobile,parentMobile} = req.body;
+  const {studentId,studentName,emailId,studentMobile,parentMobile,dateOfGraduation} = req.body;
+
+  const originalDate = dateOfGraduation;
+  const parts = originalDate.split('-')
+  const rearrangedDate = `${parts[2]}-${parts[1]}-${parts[0]}`
+  
+  const format = "T00:00:00.000Z";
+  const newdateOfGraduation = rearrangedDate + format;
+  // console.log(newdateOfGraduation)
+  
+  const date = new Date(newdateOfGraduation)
+  const datetimeStr = date.toISOString()
+
   try {
     const studentInfo = await prisma.tblPersonalInfo.create({
-      data: req.body,
+      // data: req.body,
+      data: {
+        studentId:studentId,
+        studentName:studentName,
+        emailId:emailId,
+        studentMobile:studentMobile,
+        parentMobile:parentMobile,
+        dateOfGraduation:datetimeStr
+      }
     });
     res.status(201).send({
       success:true,
