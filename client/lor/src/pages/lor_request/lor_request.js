@@ -67,12 +67,14 @@ const LorRequest = () => {
     //student id
     if (!personalInfo.studentId.trim()) {
       errors.studentId = 'Student ID is required';
+    } else if (personalInfo.studentId.lenght > 8) {
+      errors.studentId = 'Student ID contain 8 characters'
     }
 
     //student name
     if (!personalInfo.studentName.trim()) {
       errors.studentName = 'Student Name is required';
-    } else if (/^[A-Z]+$/i.test(personalInfo.studentName)) {
+    } else if (/^[a-zA-Z ]+$/i.test(personalInfo.studentName)) {
       errors.studentName = '';
     } else {
       errors.studentName = 'Only alphabet are allowed';
@@ -90,7 +92,7 @@ const LorRequest = () => {
     //mobile
     if (!personalInfo.studentMobile.trim()) {
       errors.studentMobile = 'Student\'s mobile number is required';
-    } else if (personalInfo.studentMobile.length < 10) {
+    } else if (personalInfo.studentMobile.length < 10 || personalInfo.studentMobile.lenght > 10) {
       errors.studentMobile = 'Phone number must be of 10 digit';
     } else {
       errors.studentMobile = '';
@@ -99,7 +101,7 @@ const LorRequest = () => {
     //parent mobile
     if (!personalInfo.parentMobile.trim()) {
       errors.parentMobile = 'Parent\'s mobile number is required';
-    } else if (personalInfo.parentMobile.length < 10) {
+    } else if (personalInfo.parentMobile.length < 10 || personalInfo.parentMobile.lenght > 10) {
       errors.parentMobile = 'Phone number must be of 10 digit';
     } else {
       errors.parentMobile = '';
@@ -114,17 +116,48 @@ const LorRequest = () => {
     return errors;
   }
 
+  const [placementDetailsErrors, setPlacementDetailsErrors] = useState({});
+
+  const placementDetailsValidation = (placementInfo) => {
+    const errors = {};
+
+    //place through cdpc
+    if (!placementInfo.placeThroughCdpc) {
+      errors.placeThroughCdpc = 'required field';
+    } else {
+      errors.placeThroughCdpc = '';
+    }
+
+    //company name
+    if (placementInfo.placeThroughCdpc === 'true' && !placementInfo.companyName) {
+      errors.companyName = 'required field';
+    } else if (/^[a-zA-Z ]+$/i.test(placementInfo.companyName)) {
+      errors.companyName = '';
+    } else {
+      errors.companyName = 'Only alphabet are allowed';
+    }
+
+    //bond period
+    if (!placementInfo.bondCompleted) {
+      errors.bondCompleted = 'required field';
+    } else {
+      errors.bondCompleted = '';
+    }
+    return errors
+  }
+
 
 
   //on click confirm
   const onConfirm = () => {
     setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
+    setPlacementDetailsErrors(placementDetailsValidation(placementInfo));
   }
   return (
     <div className="form__container">
       <form action="POST">
         <PersonalInfo error={personalDetailsErrors} onChange={onChange} />
-        <PlacementInfo onChange={onChange} cdpc={cdpc} />
+        <PlacementInfo error={placementDetailsErrors} onChange={onChange} cdpc={cdpc} />
         <ResultDetails onChange={onChange} />
         <LorLetter onChange={onChange} />
         <Button onClick={onConfirm}>Conifrm</Button>

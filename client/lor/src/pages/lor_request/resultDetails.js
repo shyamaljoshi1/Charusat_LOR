@@ -33,27 +33,27 @@ const ResultDetails = ({ onChange }) => {
                             style={{ display: 'flex', marginBottom: '1rem', alignItems: 'center' }}
                         >
                             <td style={{ flex: '.5', fontSize: '1.1rem', maxWidth: '6rem', }}>Attendence(in%)</td>
-                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='firstSAtt' type='number' variant='outline' borderColor={"#1B65A7"} size='sm' width={"11rem"} /></FormControl></td>
-                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='secondSAtt' type='number' variant='outline' borderColor={"#1B65A7"} size='sm' width={"11rem"} /></FormControl></td>
-                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='thirdSAtt' type='number' variant='outline' borderColor={"#1B65A7"} size='sm' width={"11rem"} /></FormControl></td>
-                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='forthSAtt' type='number' variant='outline' borderColor={"#1B65A7"} size='sm' width={"11rem"} /></FormControl></td>
-                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='fifthSAtt' type='number' variant='outline' borderColor={"#1B65A7"} size='sm' width={"11rem"} /></FormControl></td>
-                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='sixthSAtt' type='number' variant='outline' borderColor={"#1B65A7"} size='sm' width={"11rem"} /></FormControl></td>
-                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='seventhSAtt' type='number' variant='outline' borderColor={"#1B65A7"} size='sm' width={"11rem"} /></FormControl></td>
-                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='eightthSAtt' type='number' variant='outline' borderColor={"#1B65A7"} size='sm' width={"11rem"} /></FormControl></td>
+                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='firstSAtt' type='number' variant='outline' borderColor={"#1B65A7"} size='md' width={"11rem"} /></FormControl></td>
+                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='secondSAtt' type='number' variant='outline' borderColor={"#1B65A7"} size='md' width={"11rem"} /></FormControl></td>
+                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='thirdSAtt' type='number' variant='outline' borderColor={"#1B65A7"} size='md' width={"11rem"} /></FormControl></td>
+                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='forthSAtt' type='number' variant='outline' borderColor={"#1B65A7"} size='md' width={"11rem"} /></FormControl></td>
+                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='fifthSAtt' type='number' variant='outline' borderColor={"#1B65A7"} size='md' width={"11rem"} /></FormControl></td>
+                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='sixthSAtt' type='number' variant='outline' borderColor={"#1B65A7"} size='md' width={"11rem"} /></FormControl></td>
+                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='seventhSAtt' type='number' variant='outline' borderColor={"#1B65A7"} size='md' width={"11rem"} /></FormControl></td>
+                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='eightthSAtt' type='number' variant='outline' borderColor={"#1B65A7"} size='md' width={"11rem"} /></FormControl></td>
                         </tr>
                         <tr
                             style={{ display: 'flex', alignItems: 'center' }}
                         >
                             <td style={{ flex: '.5', fontSize: '1.1rem', maxWidth: '6rem' }}>CGPA</td>
-                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='firstSCG' type='number' variant='outline' borderColor={"#1B65A7"} size='sm' width={"11rem"} /></FormControl></td>
-                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='secondSCG' type='number' variant='outline' borderColor={"#1B65A7"} size='sm' width={"11rem"} /></FormControl></td>
-                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='thirdSACG' type='number' variant='outline' borderColor={"#1B65A7"} size='sm' width={"11rem"} /></FormControl></td>
-                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='forthSCG' type='number' variant='outline' borderColor={"#1B65A7"} size='sm' width={"11rem"} /></FormControl></td>
-                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='fifthSCG' type='number' variant='outline' borderColor={"#1B65A7"} size='sm' width={"11rem"} /></FormControl></td>
-                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='sixthSCG' type='number' variant='outline' borderColor={"#1B65A7"} size='sm' width={"11rem"} /></FormControl></td>
-                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='seventhSCG' type='number' variant='outline' borderColor={"#1B65A7"} size='sm' width={"11rem"} /></FormControl></td>
-                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='eightthSCG' type='number' variant='outline' borderColor={"#1B65A7"} size='sm' width={"11rem"} /></FormControl></td>
+                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='firstSCG' type='number' variant='outline' borderColor={"#1B65A7"} size='md' width={"11rem"} /></FormControl></td>
+                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='secondSCG' type='number' variant='outline' borderColor={"#1B65A7"} size='md' width={"11rem"} /></FormControl></td>
+                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='thirdSACG' type='number' variant='outline' borderColor={"#1B65A7"} size='md' width={"11rem"} /></FormControl></td>
+                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='forthSCG' type='number' variant='outline' borderColor={"#1B65A7"} size='md' width={"11rem"} /></FormControl></td>
+                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='fifthSCG' type='number' variant='outline' borderColor={"#1B65A7"} size='md' width={"11rem"} /></FormControl></td>
+                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='sixthSCG' type='number' variant='outline' borderColor={"#1B65A7"} size='md' width={"11rem"} /></FormControl></td>
+                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='seventhSCG' type='number' variant='outline' borderColor={"#1B65A7"} size='md' width={"11rem"} /></FormControl></td>
+                            <td style={{ flex: '1' }}><FormControl><Input onChange={onChange} name='eightthSCG' type='number' variant='outline' borderColor={"#1B65A7"} size='md' width={"11rem"} /></FormControl></td>
                         </tr>
                     </tbody>
                 </table>
