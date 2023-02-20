@@ -1,5 +1,6 @@
 import { Button } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
+import CompiExamDetail from "./compiExamDetail";
 import LorLetter from "./lor_letter";
 import "./lor_request.css";
 import PersonalInfo from "./personalInfo";
@@ -14,7 +15,7 @@ const LorRequest = () => {
     studentMobile: "",
     parentMobile: "",
     passoutDate: "",
-  })
+  });
   const [resultDetails, setResultDetails] = useState({
     firstSAtt: "",
     secondSAtt: "",
@@ -31,22 +32,34 @@ const LorRequest = () => {
     sixthSCG: "",
     seventhSCG: "",
     eightthSCG: "",
-  })
+  });
   const [placementInfo, setPlacementinfo] = useState({
     placeThroughCdpc: "",
     bondCompleted: "",
     companyName: "",
-  })
-  const [noOfLetterhead, setNoOfLetterhead] = useState()
+  });
+  const [noOfLetterhead, setNoOfLetterhead] = useState();
+
+  const [compiExamDetails, setCompiExamDetails] = useState({
+    compiExam: "",
+    greSc: "",
+    ieltsSc: "",
+    toeflSc: "",
+    gmatSc: "",
+    gateSc: "",
+    otherSc: ""
+  });
 
 
   const onChange = (e) => {
     setPersonalinfo({ ...personalInfo, [e.target.name]: e.target.value });
     setResultDetails({ ...resultDetails, [e.target.name]: e.target.value });
     setPlacementinfo({ ...placementInfo, [e.target.name]: e.target.value });
+    setCompiExamDetails({ ...compiExamDetails, [e.target.name]: e.target.value })
     setNoOfLetterhead(e.target.value)
   };
 
+  //placement input render
   const [cdpc, checkCdpc] = useState(false);
 
   useEffect(() => {
@@ -56,6 +69,23 @@ const LorRequest = () => {
       placementInfo.companyName = ""
     }
   }, [placementInfo]);
+
+
+  //compi div render
+  const [compiExam, checkCompiExam] = useState(false);
+
+  useEffect(() => {
+    if (compiExamDetails.compiExam === "true") checkCompiExam(true);
+    else {
+      checkCompiExam(false);
+      compiExamDetails.greSc = "";
+      compiExamDetails.ieltsSc = "";
+      compiExamDetails.toeflSc = "";
+      compiExamDetails.gmatSc = "";
+      compiExamDetails.gateSc = "";
+      compiExamDetails.otherSc = "";
+    }
+  }, [compiExamDetails]);
 
 
   //validation
@@ -160,6 +190,7 @@ const LorRequest = () => {
         <PlacementInfo error={placementDetailsErrors} onChange={onChange} cdpc={cdpc} />
         <ResultDetails onChange={onChange} />
         <LorLetter onChange={onChange} />
+        <CompiExamDetail onChange={onChange} compiExam={compiExam} />
         <Button onClick={onConfirm}>Conifrm</Button>
       </form>
     </div>
