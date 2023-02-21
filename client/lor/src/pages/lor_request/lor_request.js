@@ -47,10 +47,16 @@ const LorRequest = () => {
     toeflSc: "",
     gmatSc: "",
     gateSc: "",
-    otherSc: ""
+    otherSc: "",
+    gre: {},
+    ielts: {},
+    toefl: {},
+    gmat: {},
+    gate: {},
+    other: {},
   });
 
-
+  //for changing object data
   const onChange = (e) => {
     setPersonalinfo({ ...personalInfo, [e.target.name]: e.target.value });
     setResultDetails({ ...resultDetails, [e.target.name]: e.target.value });
@@ -58,6 +64,11 @@ const LorRequest = () => {
     setCompiExamDetails({ ...compiExamDetails, [e.target.name]: e.target.value })
     setNoOfLetterhead(e.target.value)
   };
+
+  //for upload files
+  const onUpload = (e) => {
+    setCompiExamDetails({ ...compiExamDetails, [e.target.name]: e.target.files[0] });
+  }
 
   //placement input render
   const [cdpc, checkCdpc] = useState(false);
@@ -86,7 +97,6 @@ const LorRequest = () => {
       compiExamDetails.otherSc = "";
     }
   }, [compiExamDetails]);
-
 
   //validation
   const [personalDetailsErrors, setPersonalDetailsErrors] = useState({});
@@ -176,13 +186,67 @@ const LorRequest = () => {
     return errors
   }
 
+  const [compiExamDetailsErrors, setcompiExamDetailsErrors] = useState({});
+
+  const compiExamDetailsValidation = (compiExamDetails) => {
+    const errors = {};
+
+    //have given compi exam or not
+    if (!compiExamDetails.compiExam) {
+      errors.compiExam = 'reqired field';
+    } else {
+      errors.compiExam = '';
+    }
+
+
+    //for simple validation if score is entered than file must be uploaded
+    if (compiExamDetails.greSc && JSON.stringify(compiExamDetails.gre)) {
+      errors.gre = 'file must be uploaded';
+    } else {
+      errors.gre = '';
+    }
+
+    if (compiExamDetails.ieltsSc && JSON.stringify(compiExamDetails.ielts)) {
+      errors.ielts = 'file must be uploaded';
+    } else {
+      errors.ielts = '';
+    }
+
+    if (compiExamDetails.toeflSc && JSON.stringify(compiExamDetails.toefl)) {
+      errors.toefl = 'file must be uploaded';
+    } else {
+      errors.toefl = '';
+    }
+
+    if (compiExamDetails.gmatSc && JSON.stringify(compiExamDetails.gmat)) {
+      errors.gmat = 'file must be uploaded';
+    } else {
+      errors.gmat = '';
+    }
+
+    if (compiExamDetails.gateSc && JSON.stringify(compiExamDetails.gate)) {
+      errors.gate = 'file must be uploaded';
+    } else {
+      errors.gate = '';
+    }
+
+    if (compiExamDetails.otherSc && JSON.stringify(compiExamDetails.other)) {
+      errors.other = 'file must be uploaded';
+    } else {
+      errors.other = '';
+    }
+
+    return errors;
+  }
 
 
   //on click confirm
   const onConfirm = () => {
     setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
     setPlacementDetailsErrors(placementDetailsValidation(placementInfo));
+    setcompiExamDetailsErrors(compiExamDetailsValidation(compiExamDetails))
   }
+
   return (
     <div className="form__container">
       <form action="POST">
@@ -190,9 +254,13 @@ const LorRequest = () => {
         <PlacementInfo error={placementDetailsErrors} onChange={onChange} cdpc={cdpc} />
         <ResultDetails onChange={onChange} />
         <LorLetter onChange={onChange} />
-        <CompiExamDetail onChange={onChange} compiExam={compiExam} />
+        <CompiExamDetail onChange={onChange} compiExam={compiExam} onUpload={onUpload} error={compiExamDetailsErrors} />
         <Button onClick={onConfirm}>Conifrm</Button>
       </form>
+
+      {/* testing purpose */}
+      {/* <img src={URL.createObjectURL(compiExamDetails.gre)} /> */}
+
     </div>
   );
 };
