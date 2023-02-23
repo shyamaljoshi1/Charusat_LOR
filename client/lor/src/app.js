@@ -7,7 +7,7 @@ import {
     Route,
 } from "react-router-dom";
 import Home from './pages/home/home';
-import LorRequest from './components/lor_request/lor_request';
+import LorRequest from './pages/lor_request/lor_request';
 import Login from './pages/login/login';
 import LorFormat from './pages/lor_format/lorFormat';
 
