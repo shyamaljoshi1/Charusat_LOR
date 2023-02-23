@@ -1,5 +1,4 @@
 import { Card, CardHeader, CardBody, Input, Heading, Radio, Stack, RadioGroup, FormLabel, FormControl, FormHelperText } from '@chakra-ui/react'
-import { Form } from 'react-router-dom';
 // import { useState } from 'react';
 
 
@@ -46,7 +45,7 @@ const PlacementInfo = ({ onChange, cdpc, error }) => {
                                         Company name
                                     </FormLabel>
                                     <Input zIndex={100} name="companyName" onChange={onChange} type="text" width={"25rem"} size={"lg"} variant="outline" borderColor={"#1B65A7"} fontSize={"1.4rem"} />
-                                    <FormHelperText color='red' margin='.7rem 1rem'>{error.companyName}</FormHelperText>
+                                    <FormHelperText s>{error.companyName}</FormHelperText>
                                 </FormControl>
                             }
 
@@ -70,7 +69,7 @@ const PlacementInfo = ({ onChange, cdpc, error }) => {
                     </FormControl>
                 </FormControl>
             </CardBody>
-        </Card >
+        </Card>
     )
 }
 
