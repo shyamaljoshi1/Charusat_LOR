@@ -8,35 +8,35 @@ datasource db {
 }
 
 model tblPersonalInfo {
-  sid Int @id @default(autoincrement())
-  studentId        String          @unique
+  studentId        String        @unique
   studentName      String
   emailId          String
   studentMobile    String
   parentMobile     String
-  dateOfGraduation DateTime        @default(now())
+  dateOfGraduation DateTime      @default(now())
   studentPlace     Boolean
-  companyName      String          @default("NA")
+  companyName      String        @default("NA")
   bond             Boolean
   noOfLetterHead   Int
-  results tblResult @relation(fields: [rid],references: [id])
-  attendances tblAttendance @relation(fields: [aid],references: [id])
-  rid Int
-  aid Int
+  aid              Int
+  rid              Int
+  sid              Int           @id @default(autoincrement())
+  attendances      tblAttendance @relation(fields: [aid], references: [id])
+  results          tblResult     @relation(fields: [rid], references: [id])
 }
 
 model tblResult {
-  id        Int             @id @default(autoincrement())
-  studentId String
-  rsem1     String
-  rsem2     String
+  id          Int               @id @default(autoincrement())
+  studentId   String
+  rsem1       String
+  rsem2       String
   studentInfo tblPersonalInfo[]
 }
 
 model tblAttendance {
-  id        Int             @id @default(autoincrement())
-  studentId String
-  asem1     String
-  asem2     String
+  id          Int               @id @default(autoincrement())
+  studentId   String
+  asem1       String
+  asem2       String
   studentInfo tblPersonalInfo[]
 }
