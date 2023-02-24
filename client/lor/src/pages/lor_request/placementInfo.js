@@ -45,7 +45,7 @@ const PlacementInfo = ({ onChange, cdpc, error }) => {
                                         Company name
                                     </FormLabel>
                                     <Input zIndex={100} name="companyName" onChange={onChange} type="text" width={"25rem"} size={"lg"} variant="outline" borderColor={"#1B65A7"} fontSize={"1.4rem"} />
-                                    <FormHelperText s>{error.companyName}</FormHelperText>
+                                    <FormHelperText color='red' margin='.7rem 1rem'>{error.companyName}</FormHelperText>
                                 </FormControl>
                             }
 

@@ -48,12 +48,12 @@ const LorRequest = () => {
     gmatSc: "",
     gateSc: "",
     otherSc: "",
-    gre: {},
-    ielts: {},
-    toefl: {},
-    gmat: {},
-    gate: {},
-    other: {},
+    gre: null,
+    ielts: null,
+    toefl: null,
+    gmat: null,
+    gate: null,
+    other: null,
   });
 
   //for changing object data
@@ -169,7 +169,7 @@ const LorRequest = () => {
     }
 
     //company name
-    if (placementInfo.placeThroughCdpc === 'true' && !placementInfo.companyName) {
+    if (placementInfo.placeThroughCdpc === 'true' && !placementInfo.companyName.trim()) {
       errors.companyName = 'required field';
     } else if (/^[a-zA-Z ]+$/i.test(placementInfo.companyName)) {
       errors.companyName = '';
@@ -200,40 +200,34 @@ const LorRequest = () => {
 
 
     //for simple validation if score is entered than file must be uploaded
-    if (compiExamDetails.greSc && JSON.stringify(compiExamDetails.gre)) {
+    if (compiExamDetails.greSc && !compiExamDetails.gre) {
       errors.gre = 'file must be uploaded';
     } else {
       errors.gre = '';
     }
 
-    if (compiExamDetails.ieltsSc && JSON.stringify(compiExamDetails.ielts)) {
+    if (compiExamDetails.ieltsSc && !compiExamDetails.ielts) {
       errors.ielts = 'file must be uploaded';
     } else {
       errors.ielts = '';
     }
 
-    if (compiExamDetails.toeflSc && JSON.stringify(compiExamDetails.toefl)) {
+    if (compiExamDetails.toeflSc && !compiExamDetails.toefl) {
       errors.toefl = 'file must be uploaded';
     } else {
       errors.toefl = '';
     }
 
-    if (compiExamDetails.gmatSc && JSON.stringify(compiExamDetails.gmat)) {
+    if (compiExamDetails.gmatSc && !compiExamDetails.gmat) {
       errors.gmat = 'file must be uploaded';
     } else {
       errors.gmat = '';
     }
 
-    if (compiExamDetails.gateSc && JSON.stringify(compiExamDetails.gate)) {
+    if (compiExamDetails.gateSc && !compiExamDetails.gate) {
       errors.gate = 'file must be uploaded';
     } else {
       errors.gate = '';
-    }
-
-    if (compiExamDetails.otherSc && JSON.stringify(compiExamDetails.other)) {
-      errors.other = 'file must be uploaded';
-    } else {
-      errors.other = '';
     }
 
     return errors;
@@ -244,7 +238,7 @@ const LorRequest = () => {
   const onConfirm = () => {
     setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
     setPlacementDetailsErrors(placementDetailsValidation(placementInfo));
-    setcompiExamDetailsErrors(compiExamDetailsValidation(compiExamDetails))
+    setcompiExamDetailsErrors(compiExamDetailsValidation(compiExamDetails));
   }
 
   return (
