@@ -6,6 +6,7 @@ import "./lor_request.css";
 import PersonalInfo from "./personalInfo";
 import PlacementInfo from "./placementInfo";
 import ResultDetails from "./resultDetails";
+import UniversityPrefList from "./universityPrefList";
 
 const LorRequest = () => {
   const [personalInfo, setPersonalinfo] = useState({
@@ -56,31 +57,65 @@ const LorRequest = () => {
     other: null,
   });
 
+  const [universityPrefList, setUniversityPrefList] = useState([
+    { universityName: "", courseName: "", countryName: "", intakeDate: "" },
+  ]);
+
   //for changing object data
   const onChange = (e) => {
     setPersonalinfo({ ...personalInfo, [e.target.name]: e.target.value });
     setResultDetails({ ...resultDetails, [e.target.name]: e.target.value });
     setPlacementinfo({ ...placementInfo, [e.target.name]: e.target.value });
-    setCompiExamDetails({ ...compiExamDetails, [e.target.name]: e.target.value })
-    setNoOfLetterhead(e.target.value)
+    setCompiExamDetails({
+      ...compiExamDetails,
+      [e.target.name]: e.target.value,
+    });
+    setNoOfLetterhead(e.target.value);
   };
 
   //for upload files
   const onUpload = (e) => {
-    setCompiExamDetails({ ...compiExamDetails, [e.target.name]: e.target.files[0] });
-  }
+    setCompiExamDetails({
+      ...compiExamDetails,
+      [e.target.name]: e.target.files[0],
+    });
+  };
 
+  const onChangeUni = (i, e) => {
+    const { name, value } = e.target;
+    const list = [...universityPrefList];
+    list[i][name] = value;
+    setUniversityPrefList(list);
+  };
+  const addUni = () => {
+    setUniversityPrefList([
+      ...universityPrefList,
+      {
+        universityName: "",
+        courseName: "",
+        countryName: "",
+        intakeDate: "",
+      },
+    ]);
+  };
+
+  const removeUni = (index) => {
+    const rows = [...universityPrefList];
+    rows.splice(index, 1);
+    setUniversityPrefList(rows);
+  };
+
+  console.log(universityPrefList);
   //placement input render
   const [cdpc, checkCdpc] = useState(false);
 
   useEffect(() => {
-    if (placementInfo.placeThroughCdpc === "true") checkCdpc(true)
+    if (placementInfo.placeThroughCdpc === "true") checkCdpc(true);
     else {
-      checkCdpc(false)
-      placementInfo.companyName = ""
+      checkCdpc(false);
+      placementInfo.companyName = "";
     }
   }, [placementInfo]);
-
 
   //compi div render
   const [compiExam, checkCompiExam] = useState(false);
@@ -106,55 +141,63 @@ const LorRequest = () => {
 
     //student id
     if (!personalInfo.studentId.trim()) {
-      errors.studentId = 'Student ID is required';
+      errors.studentId = "Student ID is required";
     } else if (personalInfo.studentId.lenght > 8) {
-      errors.studentId = 'Student ID contain 8 characters'
+      errors.studentId = "Student ID contain 8 characters";
     }
 
     //student name
     if (!personalInfo.studentName.trim()) {
-      errors.studentName = 'Student Name is required';
+      errors.studentName = "Student Name is required";
     } else if (/^[a-zA-Z ]+$/i.test(personalInfo.studentName)) {
-      errors.studentName = '';
+      errors.studentName = "";
     } else {
-      errors.studentName = 'Only alphabet are allowed';
+      errors.studentName = "Only alphabet are allowed";
     }
 
-    //email 
+    //email
     if (!personalInfo.emailId.trim()) {
-      errors.emailId = 'Email ID is required';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(personalInfo.emailId)) {
-      errors.emailId = 'Invalid Email address';
+      errors.emailId = "Email ID is required";
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(personalInfo.emailId)
+    ) {
+      errors.emailId = "Invalid Email address";
     } else {
-      errors.emailId = '';
+      errors.emailId = "";
     }
 
     //mobile
     if (!personalInfo.studentMobile.trim()) {
-      errors.studentMobile = 'Student\'s mobile number is required';
-    } else if (personalInfo.studentMobile.length < 10 || personalInfo.studentMobile.lenght > 10) {
-      errors.studentMobile = 'Phone number must be of 10 digit';
+      errors.studentMobile = "Student's mobile number is required";
+    } else if (
+      personalInfo.studentMobile.length < 10 ||
+      personalInfo.studentMobile.lenght > 10
+    ) {
+      errors.studentMobile = "Phone number must be of 10 digit";
     } else {
-      errors.studentMobile = '';
+      errors.studentMobile = "";
     }
 
     //parent mobile
     if (!personalInfo.parentMobile.trim()) {
-      errors.parentMobile = 'Parent\'s mobile number is required';
-    } else if (personalInfo.parentMobile.length < 10 || personalInfo.parentMobile.lenght > 10) {
-      errors.parentMobile = 'Phone number must be of 10 digit';
+      errors.parentMobile = "Parent's mobile number is required";
+    } else if (
+      personalInfo.parentMobile.length < 10 ||
+      personalInfo.parentMobile.lenght > 10
+    ) {
+      errors.parentMobile = "Phone number must be of 10 digit";
     } else {
-      errors.parentMobile = '';
+      errors.parentMobile = "";
     }
 
     //passout date
     if (!personalInfo.passoutDate.trim()) {
-      errors.passoutDate = 'Passout date is required';
+      errors.passoutDate = "Passout date is required";
     } else {
-      errors.passoutDate = '';
+      errors.passoutDate = "";
     }
     return errors;
-  }
+  };
 
   const [placementDetailsErrors, setPlacementDetailsErrors] = useState({});
 
@@ -163,28 +206,31 @@ const LorRequest = () => {
 
     //place through cdpc
     if (!placementInfo.placeThroughCdpc) {
-      errors.placeThroughCdpc = 'required field';
+      errors.placeThroughCdpc = "required field";
     } else {
-      errors.placeThroughCdpc = '';
+      errors.placeThroughCdpc = "";
     }
 
     //company name
-    if (placementInfo.placeThroughCdpc === 'true' && !placementInfo.companyName.trim()) {
-      errors.companyName = 'required field';
+    if (
+      placementInfo.placeThroughCdpc === "true" &&
+      !placementInfo.companyName.trim()
+    ) {
+      errors.companyName = "required field";
     } else if (/^[a-zA-Z ]+$/i.test(placementInfo.companyName)) {
-      errors.companyName = '';
+      errors.companyName = "";
     } else {
-      errors.companyName = 'Only alphabet are allowed';
+      errors.companyName = "Only alphabet are allowed";
     }
 
     //bond period
     if (!placementInfo.bondCompleted) {
-      errors.bondCompleted = 'required field';
+      errors.bondCompleted = "required field";
     } else {
-      errors.bondCompleted = '';
+      errors.bondCompleted = "";
     }
-    return errors
-  }
+    return errors;
+  };
 
   const [compiExamDetailsErrors, setcompiExamDetailsErrors] = useState({});
 
@@ -193,68 +239,82 @@ const LorRequest = () => {
 
     //have given compi exam or not
     if (!compiExamDetails.compiExam) {
-      errors.compiExam = 'reqired field';
+      errors.compiExam = "reqired field";
     } else {
-      errors.compiExam = '';
+      errors.compiExam = "";
     }
-
 
     //for simple validation if score is entered than file must be uploaded
     if (compiExamDetails.greSc && !compiExamDetails.gre) {
-      errors.gre = 'file must be uploaded';
+      errors.gre = "file must be uploaded";
     } else {
-      errors.gre = '';
+      errors.gre = "";
     }
 
     if (compiExamDetails.ieltsSc && !compiExamDetails.ielts) {
-      errors.ielts = 'file must be uploaded';
+      errors.ielts = "file must be uploaded";
     } else {
-      errors.ielts = '';
+      errors.ielts = "";
     }
 
     if (compiExamDetails.toeflSc && !compiExamDetails.toefl) {
-      errors.toefl = 'file must be uploaded';
+      errors.toefl = "file must be uploaded";
     } else {
-      errors.toefl = '';
+      errors.toefl = "";
     }
 
     if (compiExamDetails.gmatSc && !compiExamDetails.gmat) {
-      errors.gmat = 'file must be uploaded';
+      errors.gmat = "file must be uploaded";
     } else {
-      errors.gmat = '';
+      errors.gmat = "";
     }
 
     if (compiExamDetails.gateSc && !compiExamDetails.gate) {
-      errors.gate = 'file must be uploaded';
+      errors.gate = "file must be uploaded";
     } else {
-      errors.gate = '';
+      errors.gate = "";
     }
 
     return errors;
-  }
-
+  };
 
   //on click confirm
   const onConfirm = () => {
     setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
     setPlacementDetailsErrors(placementDetailsValidation(placementInfo));
     setcompiExamDetailsErrors(compiExamDetailsValidation(compiExamDetails));
-  }
+  };
 
   return (
     <div className="form__container">
       <form action="POST">
         <PersonalInfo error={personalDetailsErrors} onChange={onChange} />
-        <PlacementInfo error={placementDetailsErrors} onChange={onChange} cdpc={cdpc} />
+        <PlacementInfo
+          error={placementDetailsErrors}
+          onChange={onChange}
+          cdpc={cdpc}
+        />
         <ResultDetails onChange={onChange} />
         <LorLetter onChange={onChange} />
-        <CompiExamDetail onChange={onChange} compiExam={compiExam} onUpload={onUpload} error={compiExamDetailsErrors} />
-        <Button onClick={onConfirm}>Conifrm</Button>
+        <CompiExamDetail
+          onChange={onChange}
+          compiExam={compiExam}
+          onUpload={onUpload}
+          error={compiExamDetailsErrors}
+        />
+        <UniversityPrefList
+          onChange={onChangeUni}
+          uniPref={universityPrefList}
+          addUniversity={addUni}
+          removeUniversity={removeUni}
+        />
+        <Button className="lor-request__confirm-btn" onClick={onConfirm}>
+          Conifrm
+        </Button>
       </form>
 
       {/* testing purpose */}
       {/* <img src={URL.createObjectURL(compiExamDetails.gre)} /> */}
-
     </div>
   );
 };

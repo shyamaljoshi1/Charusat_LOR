@@ -1,0 +1,36 @@
+.university-pref__add-button {
+  width: 10%;
+  padding: 2rem 4rem !important;
+  border-radius: 0.5rem !important;
+  font-size: 1.6rem !important;
+  font-weight: bold !important;
+  background-color: #1b65a7 !important;
+  color: white;
+}
+.university-pref__add-button:hover {
+  opacity: 0.9;
+}
+.university-pref__add-button:focus {
+  outline: none;
+}
+.university-pref__add-button:active {
+  scale: 0.98;
+}
+.university-pref__remove-button {
+  margin-top: 2.4rem;
+  padding: 1.45rem !important;
+  border-radius: 0.5rem !important;
+  font-size: 1.3rem !important;
+  font-weight: bold !important;
+  background-color: #dd0000 !important;
+  color: white;
+}
+.university-pref__remove-button:hover {
+  opacity: 0.8;
+}
+.university-pref__remove-button:focus {
+  outline: none;
+}
+.university-pref__remove-button:active {
+  scale: 0.98;
+}/*# sourceMappingURL=universityPrefList.css.map */
