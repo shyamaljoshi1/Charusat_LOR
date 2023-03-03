@@ -33,4 +33,7 @@
 }
 .university-pref__remove-button:active {
   scale: 0.98;
+}
+.university-pref__remove-button .remove:hover {
+  cursor: not-allowed;
 }/*# sourceMappingURL=universityPrefList.css.map */

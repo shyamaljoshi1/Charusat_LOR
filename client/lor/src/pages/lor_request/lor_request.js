@@ -97,16 +97,29 @@ const LorRequest = () => {
         intakeDate: "",
       },
     ]);
+    setUniversityPrefListErrors([
+      ...universityPrefListErrors,
+      {
+        universityName: "",
+        courseName: "",
+        countryName: "",
+        intakeDate: "",
+      },
+    ]);
   };
+  console.log(JSON.stringify(universityPrefList));
 
   const removeUni = (index) => {
     const rows = [...universityPrefList];
+    const error = [...universityPrefListErrors];
+    console.log(JSON.stringify(rows)); //placement input render
     rows.splice(index, 1);
+    error.splice(index, 1);
     setUniversityPrefList(rows);
+    setUniversityPrefListErrors(error);
+    console.log(rows);
   };
 
-  console.log(universityPrefList);
-  //placement input render
   const [cdpc, checkCdpc] = useState(false);
 
   useEffect(() => {
@@ -278,11 +291,59 @@ const LorRequest = () => {
     return errors;
   };
 
+  const [universityPrefListErrors, setUniversityPrefListErrors] = useState([
+    { universityName: "", courseName: "", countryName: "", intakeDate: "" },
+  ]);
+
+  const universityPrefListValidation = (universityPrefList) => {
+    const errors = [...universityPrefListErrors];
+    for (let i = 0; i < universityPrefList.length; i++) {
+      //for university name
+      if (!universityPrefList[i].universityName.trim()) {
+        errors[i]["universityName"] = "required field";
+        setUniversityPrefListErrors(errors);
+      } else if (/^[a-zA-Z ]+$/i.test(universityPrefList[i].universityName)) {
+        errors[i]["universityName"] = "";
+        setUniversityPrefListErrors(errors);
+      } else {
+        errors[i]["universityName"] = "Only Alphabets are allowed";
+        setUniversityPrefListErrors(errors);
+      }
+
+      if (!universityPrefList[i].courseName.trim()) {
+        errors[i]["courseName"] = "required field";
+        setUniversityPrefListErrors(errors);
+      } else if (/^[a-zA-Z ]+$/i.test(universityPrefList[i].courseName)) {
+        errors[i]["courseName"] = "";
+        setUniversityPrefListErrors(errors);
+      } else {
+        errors[i]["courseName"] = "Only Aphabets are allowed";
+        setUniversityPrefListErrors(errors);
+      }
+
+      if (!universityPrefList[i].countryName.trim()) {
+        errors[i]["countryName"] = "required field";
+      } else if (/^[a-zA-Z ]+$/i.test(universityPrefList[i].countryName)) {
+        errors[i]["countryName"] = "";
+      } else {
+        errors[i]["countryName"] = "Only Alphabets are allowed";
+      }
+
+      if (!universityPrefList[i].intakeDate) {
+        errors[i]["intakeDate"] = "required field";
+      } else {
+        errors[i]["intakeDate"] = "";
+      }
+    }
+    return errors;
+  };
+
   //on click confirm
   const onConfirm = () => {
     setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
     setPlacementDetailsErrors(placementDetailsValidation(placementInfo));
     setcompiExamDetailsErrors(compiExamDetailsValidation(compiExamDetails));
+    universityPrefListValidation(universityPrefList);
   };
 
   return (
@@ -307,6 +368,7 @@ const LorRequest = () => {
           uniPref={universityPrefList}
           addUniversity={addUni}
           removeUniversity={removeUni}
+          error={universityPrefListErrors}
         />
         <Button className="lor-request__confirm-btn" onClick={onConfirm}>
           Conifrm

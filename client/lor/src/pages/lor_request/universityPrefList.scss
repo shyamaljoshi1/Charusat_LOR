@@ -36,4 +36,8 @@
     &__remove-button:active {
         scale: 0.98;
     }
+
+    &__remove-button .remove:hover {
+        cursor: not-allowed;
+    }
 }
