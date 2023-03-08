@@ -7,6 +7,7 @@ import PersonalInfo from "./personalInfo";
 import PlacementInfo from "./placementInfo";
 import ResultDetails from "./resultDetails";
 import UniversityPrefList from "./universityPrefList";
+import FacultyPrefList from "./facultyPrefList";
 
 const LorRequest = () => {
   const [personalInfo, setPersonalinfo] = useState({
@@ -62,6 +63,10 @@ const LorRequest = () => {
     { universityName: "", courseName: "", countryName: "", intakeDate: "" },
   ]);
 
+  const [facultyPrefList, setFacultyPrefList] = useState([
+    { facultyName: "", facultyEmail: "", facultyPrefLor: null },
+  ]);
+
   //for changing object data
   const onChange = (e) => {
     setPersonalinfo({ ...personalInfo, [e.target.name]: e.target.value });
@@ -109,15 +114,43 @@ const LorRequest = () => {
     ]);
   };
 
-  const removeUni = (e) => {
-    const index = e.target.value;
+  const removeUni = (i) => {
     const rows = [...universityPrefList];
     const error = [...universityPrefListErrors];
-    rows.splice(index, 1);
-    error.splice(index, 1);
+    rows.splice(i, 1);
+    error.splice(i, 1);
     setUniversityPrefList(rows);
     setUniversityPrefListErrors(error);
   };
+
+  const onChangeFaculty = (i, e) => {
+    const { name, value } = e.target;
+    const list = [...facultyPrefList];
+    list[i][name] = value;
+    setFacultyPrefList(list);
+  };
+
+  const onUploadFac = (i, e) => {
+    const list = [...facultyPrefList];
+    list[i][e.target.name] = e.target.files[0];
+    setFacultyPrefList(list);
+  };
+
+  const addFac = () => {
+    setFacultyPrefList([
+      ...facultyPrefList,
+      { facultyName: "", facultyEmail: "", facultyPrefLor: null },
+    ]);
+  };
+
+  const removeFac = (i) => {
+    const rows = [...facultyPrefList];
+    console.log(JSON.stringify(rows));
+    rows.splice(i, 1);
+    setFacultyPrefList(rows);
+  };
+
+  console.log(JSON.stringify(facultyPrefList));
 
   const [cdpc, checkCdpc] = useState(false);
 
@@ -443,6 +476,13 @@ const LorRequest = () => {
           addUniversity={addUni}
           removeUniversity={removeUni}
           error={universityPrefListErrors}
+        />
+        <FacultyPrefList
+          onChange={onChangeFaculty}
+          facPref={facultyPrefList}
+          onUpload={onUploadFac}
+          addFaculty={addFac}
+          removeFaculty={removeFac}
         />
         <Button className="lor-request__confirm-btn" onClick={onConfirm}>
           Conifrm

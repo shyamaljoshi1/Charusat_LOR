@@ -135,28 +135,20 @@ const UniversityPrefList = ({
                 <div style={{ flex: ".3" }}>
                   {uniPref.length > 1 ? (
                     <Button
-                      onClick={removeUniversity}
-                      value={index}
+                      onClick={() => removeUniversity(index)}
                       className="university-pref__remove-button"
                     >
                       Remove
                     </Button>
                   ) : (
                     <Button
-                      onClick={removeUniversity}
-                      value={index}
+                      onClick={() => removeUniversity(index)}
                       disabled={"true"}
                       className="university-pref__remove-button remove"
                     >
                       Remove
                     </Button>
                   )}
-                  {/* <Button
-                    onClick={removeUniversity}
-                    className="university-pref__remove-button"
-                  >
-                    Remove
-                  </Button> */}
                 </div>
               </div>
             );
