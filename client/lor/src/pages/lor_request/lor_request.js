@@ -21,13 +21,14 @@ const LorRequest = () => {
     firstSAtt: "",
     secondSAtt: "",
     thirdSAtt: "",
+    forthSAtt: "",
     fifthSAtt: "",
     sixthSAtt: "",
     seventhSAtt: "",
     eightthSAtt: "",
     firstSCG: "",
     secondSCG: "",
-    thirdSACG: "",
+    thirdSCG: "",
     forthSCG: "",
     fifthSCG: "",
     sixthSCG: "",
@@ -107,17 +108,15 @@ const LorRequest = () => {
       },
     ]);
   };
-  console.log(JSON.stringify(universityPrefList));
 
-  const removeUni = (index) => {
+  const removeUni = (e) => {
+    const index = e.target.value;
     const rows = [...universityPrefList];
     const error = [...universityPrefListErrors];
-    console.log(JSON.stringify(rows)); //placement input render
     rows.splice(index, 1);
     error.splice(index, 1);
     setUniversityPrefList(rows);
     setUniversityPrefListErrors(error);
-    console.log(rows);
   };
 
   const [cdpc, checkCdpc] = useState(false);
@@ -253,39 +252,73 @@ const LorRequest = () => {
     //have given compi exam or not
     if (!compiExamDetails.compiExam) {
       errors.compiExam = "reqired field";
+    } else if (
+      !compiExamDetails.greSc &&
+      !compiExamDetails.gre &&
+      !compiExamDetails.ieltsSc &&
+      !compiExamDetails.ielts &&
+      !compiExamDetails.toeflSc &&
+      !compiExamDetails.toefl &&
+      !compiExamDetails.gmatSc &&
+      !compiExamDetails.gmat &&
+      !compiExamDetails.gateSc &&
+      !compiExamDetails.gate &&
+      !compiExamDetails.otherSc &&
+      !compiExamDetails.other
+    ) {
+      errors.compiExam =
+        "You must have to enter least one Exam marks and upload marksheet";
     } else {
       errors.compiExam = "";
     }
 
-    //for simple validation if score is entered than file must be uploaded
+    //for simple validation if score is entered than file must be uploaded and vice versa
     if (compiExamDetails.greSc && !compiExamDetails.gre) {
       errors.gre = "file must be uploaded";
+    } else if (!compiExamDetails.greSc && compiExamDetails.gre) {
+      errors.gre = "marks must be entered";
     } else {
       errors.gre = "";
     }
 
     if (compiExamDetails.ieltsSc && !compiExamDetails.ielts) {
       errors.ielts = "file must be uploaded";
+    } else if (!compiExamDetails.ieltsSc && compiExamDetails.ielts) {
+      errors.ielts = "marks must be entered";
     } else {
       errors.ielts = "";
     }
 
     if (compiExamDetails.toeflSc && !compiExamDetails.toefl) {
       errors.toefl = "file must be uploaded";
+    } else if (!compiExamDetails.toeflSc && compiExamDetails.toefl) {
+      errors.toefl = "marks must be entered";
     } else {
       errors.toefl = "";
     }
 
     if (compiExamDetails.gmatSc && !compiExamDetails.gmat) {
       errors.gmat = "file must be uploaded";
+    } else if (!compiExamDetails.gmatSc && compiExamDetails.gmat) {
+      errors.gmat = "marks must be entered";
     } else {
       errors.gmat = "";
     }
 
     if (compiExamDetails.gateSc && !compiExamDetails.gate) {
       errors.gate = "file must be uploaded";
+    } else if (!compiExamDetails.gateSc && compiExamDetails.gate) {
+      errors.gate = "marks must be entered";
     } else {
       errors.gate = "";
+    }
+
+    if (compiExamDetails.otherSc && !compiExamDetails.other) {
+      errors.other = "file must be uploaded";
+    } else if (!compiExamDetails.otherSc && compiExamDetails.otherSc) {
+      errors.other = "marks must be entered";
+    } else {
+      errors.other = "";
     }
 
     return errors;
@@ -338,11 +371,52 @@ const LorRequest = () => {
     return errors;
   };
 
+  const [noOfLetterHeadErrors, setNoOfLetterheadErrors] = useState({});
+
+  const noOfLetterheadValidation = (noOfLetterhead) => {
+    const errors = {};
+    if (!noOfLetterhead) {
+      errors.noOfletterHead = "required field";
+    } else {
+      errors.noOfletterHead = "";
+    }
+    return errors;
+  };
+
+  const [resultDetailsErrors, setResultDetailsErrors] = useState({});
+  const resultDetailsValidation = (resultDetails) => {
+    const errors = {};
+    if (
+      !resultDetails.firstSAtt &&
+      !resultDetails.firstSCG &&
+      !resultDetails.secondSAtt &&
+      !resultDetails.secondSCG &&
+      !resultDetails.thirdSAtt &&
+      !resultDetails.thirdSCG &&
+      !resultDetails.forthSAtt &&
+      !resultDetails.forthSCG &&
+      !resultDetails.fifthSAtt &&
+      !resultDetails.fifthSCG &&
+      !resultDetails.sixthSAtt &&
+      !resultDetails.sixthSCG &&
+      !resultDetails.seventhSAtt &&
+      !resultDetails.seventhSCG &&
+      !resultDetails.eightthSAtt &&
+      !resultDetails.eightthSCG
+    ) {
+      errors.res = "Attendence and CGPA for every semester must be entered";
+    } else {
+      errors.res = "";
+    }
+    return errors;
+  };
   //on click confirm
   const onConfirm = () => {
     setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
     setPlacementDetailsErrors(placementDetailsValidation(placementInfo));
     setcompiExamDetailsErrors(compiExamDetailsValidation(compiExamDetails));
+    setResultDetailsErrors(resultDetailsValidation(resultDetails));
+    setNoOfLetterheadErrors(noOfLetterheadValidation(noOfLetterhead));
     universityPrefListValidation(universityPrefList);
   };
 
@@ -355,8 +429,8 @@ const LorRequest = () => {
           onChange={onChange}
           cdpc={cdpc}
         />
-        <ResultDetails onChange={onChange} />
-        <LorLetter onChange={onChange} />
+        <ResultDetails onChange={onChange} error={resultDetailsErrors} />
+        <LorLetter onChange={onChange} error={noOfLetterHeadErrors} />
         <CompiExamDetail
           onChange={onChange}
           compiExam={compiExam}

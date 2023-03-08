@@ -133,9 +133,10 @@ const UniversityPrefList = ({
                   </FormHelperText>
                 </FormControl>
                 <div style={{ flex: ".3" }}>
-                  {/* {uniPref.length > 1 ? (
+                  {uniPref.length > 1 ? (
                     <Button
                       onClick={removeUniversity}
+                      value={index}
                       className="university-pref__remove-button"
                     >
                       Remove
@@ -143,18 +144,19 @@ const UniversityPrefList = ({
                   ) : (
                     <Button
                       onClick={removeUniversity}
+                      value={index}
                       disabled={"true"}
                       className="university-pref__remove-button remove"
                     >
                       Remove
                     </Button>
-                  )} */}
-                  <Button
+                  )}
+                  {/* <Button
                     onClick={removeUniversity}
                     className="university-pref__remove-button"
                   >
                     Remove
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             );
