@@ -87,12 +87,15 @@ const LorRequest = () => {
     });
   };
 
+  //to change usniversity preference details
   const onChangeUni = (i, e) => {
     const { name, value } = e.target;
     const list = [...universityPrefList];
     list[i][name] = value;
     setUniversityPrefList(list);
   };
+
+  //to add university row
   const addUni = () => {
     setUniversityPrefList([
       ...universityPrefList,
@@ -114,6 +117,7 @@ const LorRequest = () => {
     ]);
   };
 
+  //to remove university row
   const removeUni = (i) => {
     const rows = [...universityPrefList];
     const error = [...universityPrefListErrors];
@@ -123,6 +127,7 @@ const LorRequest = () => {
     setUniversityPrefListErrors(error);
   };
 
+  //to chnage faculy preference list
   const onChangeFaculty = (i, e) => {
     const { name, value } = e.target;
     const list = [...facultyPrefList];
@@ -130,27 +135,38 @@ const LorRequest = () => {
     setFacultyPrefList(list);
   };
 
+  //to upload faculty preference lor
   const onUploadFac = (i, e) => {
     const list = [...facultyPrefList];
     list[i][e.target.name] = e.target.files[0];
     setFacultyPrefList(list);
   };
 
+  //tp add facultypreference list row
   const addFac = () => {
     setFacultyPrefList([
       ...facultyPrefList,
       { facultyName: "", facultyEmail: "", facultyPrefLor: null },
     ]);
+    setFacultyPrefListErrors([
+      ...facultyPrefListErrors,
+      {
+        facultyName: "",
+        facultyEmail: "",
+        facultyPrefLor: "",
+      },
+    ]);
   };
 
+  //to remove faculty preference row
   const removeFac = (i) => {
     const rows = [...facultyPrefList];
-    console.log(JSON.stringify(rows));
+    const error = [...facultyPrefListErrors];
     rows.splice(i, 1);
+    error.splice(i, 1);
     setFacultyPrefList(rows);
+    setFacultyPrefListErrors(error);
   };
-
-  console.log(JSON.stringify(facultyPrefList));
 
   const [cdpc, checkCdpc] = useState(false);
 
@@ -357,53 +373,6 @@ const LorRequest = () => {
     return errors;
   };
 
-  const [universityPrefListErrors, setUniversityPrefListErrors] = useState([
-    { universityName: "", courseName: "", countryName: "", intakeDate: "" },
-  ]);
-
-  const universityPrefListValidation = (universityPrefList) => {
-    const errors = [...universityPrefListErrors];
-    for (let i = 0; i < universityPrefList.length; i++) {
-      //for university name
-      if (!universityPrefList[i].universityName.trim()) {
-        errors[i]["universityName"] = "required field";
-        setUniversityPrefListErrors(errors);
-      } else if (/^[a-zA-Z ]+$/i.test(universityPrefList[i].universityName)) {
-        errors[i]["universityName"] = "";
-        setUniversityPrefListErrors(errors);
-      } else {
-        errors[i]["universityName"] = "Only Alphabets are allowed";
-        setUniversityPrefListErrors(errors);
-      }
-
-      if (!universityPrefList[i].courseName.trim()) {
-        errors[i]["courseName"] = "required field";
-        setUniversityPrefListErrors(errors);
-      } else if (/^[a-zA-Z ]+$/i.test(universityPrefList[i].courseName)) {
-        errors[i]["courseName"] = "";
-        setUniversityPrefListErrors(errors);
-      } else {
-        errors[i]["courseName"] = "Only Aphabets are allowed";
-        setUniversityPrefListErrors(errors);
-      }
-
-      if (!universityPrefList[i].countryName.trim()) {
-        errors[i]["countryName"] = "required field";
-      } else if (/^[a-zA-Z ]+$/i.test(universityPrefList[i].countryName)) {
-        errors[i]["countryName"] = "";
-      } else {
-        errors[i]["countryName"] = "Only Alphabets are allowed";
-      }
-
-      if (!universityPrefList[i].intakeDate) {
-        errors[i]["intakeDate"] = "required field";
-      } else {
-        errors[i]["intakeDate"] = "";
-      }
-    }
-    return errors;
-  };
-
   const [noOfLetterHeadErrors, setNoOfLetterheadErrors] = useState({});
 
   const noOfLetterheadValidation = (noOfLetterhead) => {
@@ -443,6 +412,104 @@ const LorRequest = () => {
     }
     return errors;
   };
+
+  const [universityPrefListErrors, setUniversityPrefListErrors] = useState([
+    { universityName: "", courseName: "", countryName: "", intakeDate: "" },
+  ]);
+
+  const universityPrefListValidation = (universityPrefList) => {
+    const errors = [...universityPrefListErrors];
+    for (let i = 0; i < universityPrefList.length; i++) {
+      //for university name
+      if (!universityPrefList[i].universityName.trim()) {
+        errors[i]["universityName"] = "required field";
+        setUniversityPrefListErrors(errors);
+      } else if (/^[a-zA-Z ]+$/i.test(universityPrefList[i].universityName)) {
+        errors[i]["universityName"] = "";
+        setUniversityPrefListErrors(errors);
+      } else {
+        errors[i]["universityName"] = "Only Alphabets are allowed";
+        setUniversityPrefListErrors(errors);
+      }
+
+      //for course validatoin
+      if (!universityPrefList[i].courseName.trim()) {
+        errors[i]["courseName"] = "required field";
+        setUniversityPrefListErrors(errors);
+      } else if (/^[a-zA-Z ]+$/i.test(universityPrefList[i].courseName)) {
+        errors[i]["courseName"] = "";
+        setUniversityPrefListErrors(errors);
+      } else {
+        errors[i]["courseName"] = "Only Aphabets are allowed";
+        setUniversityPrefListErrors(errors);
+      }
+
+      //for country name validatiop
+      if (!universityPrefList[i].countryName.trim()) {
+        errors[i]["countryName"] = "required field";
+      } else if (/^[a-zA-Z ]+$/i.test(universityPrefList[i].countryName)) {
+        errors[i]["countryName"] = "";
+      } else {
+        errors[i]["countryName"] = "Only Alphabets are allowed";
+      }
+
+      //for inteake date validation
+      if (!universityPrefList[i].intakeDate) {
+        errors[i]["intakeDate"] = "required field";
+      } else {
+        errors[i]["intakeDate"] = "";
+      }
+    }
+    return errors;
+  };
+
+  const [facultyPrefListErrors, setFacultyPrefListErrors] = useState([
+    {
+      facultyName: "",
+      facultyEmail: "",
+      facultyPrefLor: "",
+    },
+  ]);
+
+  const facutlPrefListValidation = (facultyPrefList) => {
+    const errors = [...facultyPrefListErrors];
+
+    for (let i = 0; i < facultyPrefList.length; i++) {
+      //for faculty name validation
+      if (!facultyPrefList[i].facultyName.trim()) {
+        errors[i]["facultyName"] = "required field";
+        setFacultyPrefListErrors(errors);
+      } else if (/^[a-zA-Z ]+$/i.test(facultyPrefList[i].facultyName)) {
+        errors[i]["facultyName"] = "";
+        setFacultyPrefListErrors(errors);
+      } else {
+        errors[i]["facultyName"] = "Only Alphabets are allowed";
+        setFacultyPrefListErrors(errors);
+      }
+
+      //fpr faculty email validation
+      if (!facultyPrefList[i].facultyEmail.trim()) {
+        errors[i]["facultyEmail"] = "reqired field";
+      } else if (
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
+          facultyPrefList[i].facultyEmail
+        )
+      ) {
+        errors[i]["facultyEmail"] = "Invalid Email Address";
+      } else {
+        errors[i]["facultyEmail"] = "";
+      }
+
+      //for faculty preference lor validation
+      if (!facultyPrefList[i].facultyPrefLor) {
+        errors[i]["facultyPrefLor"] = "LOR must be uploaded";
+      } else {
+        errors[i]["facultyPrefLor"] = "";
+      }
+    }
+    return errors;
+  };
+
   //on click confirm
   const onConfirm = () => {
     setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
@@ -451,6 +518,7 @@ const LorRequest = () => {
     setResultDetailsErrors(resultDetailsValidation(resultDetails));
     setNoOfLetterheadErrors(noOfLetterheadValidation(noOfLetterhead));
     universityPrefListValidation(universityPrefList);
+    facutlPrefListValidation(facultyPrefList);
   };
 
   return (
@@ -483,6 +551,7 @@ const LorRequest = () => {
           onUpload={onUploadFac}
           addFaculty={addFac}
           removeFaculty={removeFac}
+          error={facultyPrefListErrors}
         />
         <Button className="lor-request__confirm-btn" onClick={onConfirm}>
           Conifrm

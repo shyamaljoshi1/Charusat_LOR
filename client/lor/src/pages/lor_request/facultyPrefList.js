@@ -7,6 +7,7 @@ import {
   FormLabel,
   Input,
   Button,
+  FormHelperText,
 } from "@chakra-ui/react";
 import "./facultyPrefList.css";
 const FacultyPrefList = ({
@@ -15,6 +16,7 @@ const FacultyPrefList = ({
   onUpload,
   addFaculty,
   removeFaculty,
+  error,
 }) => {
   return (
     <>
@@ -35,14 +37,12 @@ const FacultyPrefList = ({
           gap={"10"}
         >
           {facPref.map((data, index) => {
-            const { facutltyName, facultyEmail, facultyPrefLor } = data;
+            const { facultyName, facultyEmail, facultyPrefLor } = data;
             return (
               <div
                 style={{
                   display: "flex",
                   gap: "1.3rem",
-                  justifyContent: "center",
-                  alignItems: "center",
                 }}
                 key={index}
               >
@@ -50,6 +50,7 @@ const FacultyPrefList = ({
                   display={"flex"}
                   flexDirection={"column"}
                   flex={"1"}
+                  isInvalid={!!error[index].facultyName}
                 >
                   <FormLabel fontSize={"1.3rem"}>Faculty Name</FormLabel>
                   <Input
@@ -58,15 +59,19 @@ const FacultyPrefList = ({
                     borderColor={"#1b65a7"}
                     name="facultyName"
                     type="text"
-                    value={facutltyName}
+                    value={facultyName}
                     onChange={(e) => onChange(index, e)}
                   ></Input>
+                  <FormHelperText color={"red"}>
+                    {error[index].facultyName}
+                  </FormHelperText>
                 </FormControl>
 
                 <FormControl
                   display={"flex"}
                   flexDirection={"column"}
                   flex={"1"}
+                  isInvalid={!!error[index].facultyEmail}
                 >
                   <FormLabel fontSize={"1.3rem"}>Faculty Email ID</FormLabel>
                   <Input
@@ -78,12 +83,16 @@ const FacultyPrefList = ({
                     value={facultyEmail}
                     onChange={(e) => onChange(index, e)}
                   ></Input>
+                  <FormHelperText color={"red"}>
+                    {error[index].facultyEmail}
+                  </FormHelperText>
                 </FormControl>
 
                 <FormControl
                   display={"flex"}
                   flexDirection={"column"}
                   flex={"1"}
+                  isInvalid={!!error[index].facultyPrefLor}
                 >
                   <FormLabel fontSize={"1.3rem"}>Upload LOR</FormLabel>
                   <Input
@@ -94,12 +103,15 @@ const FacultyPrefList = ({
                     type="file"
                     onChange={(e) => onUpload(index, e)}
                   ></Input>
+                  <FormHelperText color={"red"}>
+                    {error[index].facultyPrefLor}
+                  </FormHelperText>
                 </FormControl>
-                <div style={{ flex: "1" }}>
+                <div style={{ flex: ".5" }}>
                   {facPref.length > 1 ? (
                     <Button
-                      className="faculty-pref__remove-button"
                       onClick={() => removeFaculty(index)}
+                      className="faculty-pref__remove-button"
                     >
                       Remove
                     </Button>

@@ -9,4 +9,14 @@
     margin: 0 0 0 5rem !important;
     background-color: #1b65a7 !important;
     color: white !important;
+
+    &:hover {
+        opacity: 0.9 !important;
+    }
+    &:active {
+        scale: 0.98 !important;
+    }
+    &:focus {
+        outline: none !important;
+    }
 }

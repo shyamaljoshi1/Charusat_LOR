@@ -10,4 +10,13 @@
   margin: 0 0 0 5rem !important;
   background-color: #1b65a7 !important;
   color: white !important;
+}
+.lor-request__confirm-btn:hover {
+  opacity: 0.9 !important;
+}
+.lor-request__confirm-btn:active {
+  scale: 0.98 !important;
+}
+.lor-request__confirm-btn:focus {
+  outline: none !important;
 }/*# sourceMappingURL=lor_request.css.map */
