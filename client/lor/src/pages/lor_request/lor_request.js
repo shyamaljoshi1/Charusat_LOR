@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button, background } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import CompiExamDetail from "./compiExamDetail";
 import LorLetter from "./lor_letter";
@@ -62,7 +62,6 @@ const LorRequest = () => {
   const [universityPrefList, setUniversityPrefList] = useState([
     { universityName: "", courseName: "", countryName: "", intakeDate: "" },
   ]);
-
   const [facultyPrefList, setFacultyPrefList] = useState([
     { facultyName: "", facultyEmail: "", facultyPrefLor: null },
   ]);
@@ -81,10 +80,35 @@ const LorRequest = () => {
 
   //for upload files
   const onUpload = (e) => {
-    setCompiExamDetails({
-      ...compiExamDetails,
-      [e.target.name]: e.target.files[0],
-    });
+    if (!e.target.files[0]) {
+    } else {
+      const ext = e.target.files[0].name.split(".").pop();
+      if (ext === "pdf") {
+        const size = e.target.files[0].size;
+        if (size > 1048576) {
+          setcompiExamDetailsErrors({
+            ...compiExamDetailsErrors,
+            [e.target.name]: "You can only upload file upto 1MB",
+          });
+          e.target.value = "";
+        } else {
+          setCompiExamDetails({
+            ...compiExamDetails,
+            [e.target.name]: e.target.files[0],
+          });
+          setcompiExamDetailsErrors({
+            ...compiExamDetailsErrors,
+            [e.target.name]: "",
+          });
+        }
+      } else {
+        setcompiExamDetailsErrors({
+          ...compiExamDetailsErrors,
+          [e.target.name]: "You can only upload .pdf format files",
+        });
+        e.target.value = "";
+      }
+    }
   };
 
   //to change usniversity preference details
@@ -137,12 +161,34 @@ const LorRequest = () => {
 
   //to upload faculty preference lor
   const onUploadFac = (i, e) => {
-    const list = [...facultyPrefList];
-    list[i][e.target.name] = e.target.files[0];
-    setFacultyPrefList(list);
+    if (!e.target.files[0]) {
+    } else {
+      const ext = e.target.files[0].name.split(".").pop();
+      if (ext === "pdf" || ext === "doc" || ext === "docx") {
+        const size = e.target.files[0].size;
+        if (size > 1048576) {
+          const error = [...facultyPrefListErrors];
+          error[i]["facultyPrefLor"] = "You can only upload file upto 1MB;";
+          setFacultyPrefListErrors(error);
+          e.target.value = "";
+        } else {
+          const list = [...facultyPrefList];
+          list[i][e.target.name] = e.target.files[0];
+          setFacultyPrefList(list);
+          const error = [...facultyPrefListErrors];
+          error[i]["facultyPrefLor"] = "";
+          setFacultyPrefListErrors(error);
+        }
+      } else {
+        const error = [...facultyPrefListErrors];
+        error[i]["facultyPrefLor"] =
+          "You can only upload .pdf/.doc/.docx files";
+        setFacultyPrefListErrors(error);
+        e.target.value = "";
+      }
+    }
   };
-
-  //tp add facultypreference list row
+  //to add facultypreference list row
   const addFac = () => {
     setFacultyPrefList([
       ...facultyPrefList,
@@ -168,32 +214,6 @@ const LorRequest = () => {
     setFacultyPrefListErrors(error);
   };
 
-  const [cdpc, checkCdpc] = useState(false);
-
-  useEffect(() => {
-    if (placementInfo.placeThroughCdpc === "true") checkCdpc(true);
-    else {
-      checkCdpc(false);
-      placementInfo.companyName = "";
-    }
-  }, [placementInfo]);
-
-  //compi div render
-  const [compiExam, checkCompiExam] = useState(false);
-
-  useEffect(() => {
-    if (compiExamDetails.compiExam === "true") checkCompiExam(true);
-    else {
-      checkCompiExam(false);
-      compiExamDetails.greSc = "";
-      compiExamDetails.ieltsSc = "";
-      compiExamDetails.toeflSc = "";
-      compiExamDetails.gmatSc = "";
-      compiExamDetails.gateSc = "";
-      compiExamDetails.otherSc = "";
-    }
-  }, [compiExamDetails]);
-
   //validation
   const [personalDetailsErrors, setPersonalDetailsErrors] = useState({});
 
@@ -203,8 +223,43 @@ const LorRequest = () => {
     //student id
     if (!personalInfo.studentId.trim()) {
       errors.studentId = "Student ID is required";
-    } else if (personalInfo.studentId.lenght > 8) {
-      errors.studentId = "Student ID contain 8 characters";
+    } else if (
+      !(
+        7 <= personalInfo.studentId.length && personalInfo.studentId.length <= 8
+      )
+    ) {
+      errors.studentId = "Student ID should be of 7 or 8 characters";
+    } else if (personalInfo.studentId[0].toLowerCase() === "d") {
+      const year = personalInfo.studentId.slice(1, 3);
+      if (!isNaN(year)) {
+        const branch = personalInfo.studentId.slice(3, 5).toLowerCase();
+        if (branch === "ce" || branch === "it" || branch === "cs") {
+          const fNum = personalInfo.studentId.slice(5);
+          if (!isNaN(fNum)) {
+            errors.studentId = "";
+          } else {
+            errors.studentId = "ID is invalid";
+          }
+        } else {
+          errors.studentId = "ID is Invalid";
+        }
+      } else {
+        errors.studentId = "ID is Invalid";
+      }
+    } else if (!isNaN(personalInfo.studentId.slice(0, 2))) {
+      const branch = personalInfo.studentId.slice(2, 4).toLowerCase();
+      if (branch === "ce" || branch === "it" || branch === "cs") {
+        const fNum = personalInfo.studentId.slice(4);
+        if (!isNaN(fNum)) {
+          errors.studentId = "";
+        } else {
+          errors.studentId = "";
+        }
+      } else {
+        errors.studentId = "";
+      }
+    } else {
+      errors.studentId = "";
     }
 
     //student name
@@ -232,9 +287,25 @@ const LorRequest = () => {
       errors.studentMobile = "Student's mobile number is required";
     } else if (
       personalInfo.studentMobile.length < 10 ||
-      personalInfo.studentMobile.lenght > 10
+      personalInfo.studentMobile.length > 10
     ) {
       errors.studentMobile = "Phone number must be of 10 digit";
+    } else if (
+      personalInfo.studentMobile[0] === "1" ||
+      personalInfo.studentMobile[0] === "2" ||
+      personalInfo.studentMobile[0] === "3" ||
+      personalInfo.studentMobile[0] === "4" ||
+      personalInfo.studentMobile[0] === "0"
+    ) {
+      errors.studentMobile = "Your number should start with 5, 6, 7, 8 or 9";
+    } else if (
+      personalInfo.studentMobile === "9999999999" ||
+      personalInfo.studentMobile === "8888888888" ||
+      personalInfo.studentMobile === "7777777777" ||
+      personalInfo.studentMobile === "6666666666" ||
+      personalInfo.studentMobile === "5555555555"
+    ) {
+      errors.studentMobile = "All digits should not be same";
     } else {
       errors.studentMobile = "";
     }
@@ -244,9 +315,25 @@ const LorRequest = () => {
       errors.parentMobile = "Parent's mobile number is required";
     } else if (
       personalInfo.parentMobile.length < 10 ||
-      personalInfo.parentMobile.lenght > 10
+      personalInfo.parentMobile.length > 10
     ) {
       errors.parentMobile = "Phone number must be of 10 digit";
+    } else if (
+      personalInfo.parentMobile[0] === "1" ||
+      personalInfo.parentMobile[0] === "2" ||
+      personalInfo.parentMobile[0] === "3" ||
+      personalInfo.parentMobile[0] === "4" ||
+      personalInfo.parentMobile[0] === "0"
+    ) {
+      errors.parentMobile = "Your number should start with 5, 6, 7, 8 or 9";
+    } else if (
+      personalInfo.parentMobile === "9999999999" ||
+      personalInfo.parentMobile === "8888888888" ||
+      personalInfo.parentMobile === "7777777777" ||
+      personalInfo.parentMobile === "6666666666" ||
+      personalInfo.parentMobile === "5555555555"
+    ) {
+      errors.parentMobile = "All digits should not be same";
     } else {
       errors.parentMobile = "";
     }
@@ -260,7 +347,11 @@ const LorRequest = () => {
     return errors;
   };
 
-  const [placementDetailsErrors, setPlacementDetailsErrors] = useState({});
+  const [placementDetailsErrors, setPlacementDetailsErrors] = useState({
+    placeThroughCdpc: "",
+    bondCompleted: "",
+    companyName: "",
+  });
 
   const placementDetailsValidation = (placementInfo) => {
     const errors = {};
@@ -293,7 +384,14 @@ const LorRequest = () => {
     return errors;
   };
 
-  const [compiExamDetailsErrors, setcompiExamDetailsErrors] = useState({});
+  const [compiExamDetailsErrors, setcompiExamDetailsErrors] = useState({
+    gre: "",
+    ielts: "",
+    toefl: "",
+    gmat: "",
+    gate: "",
+    other: "",
+  });
 
   const compiExamDetailsValidation = (compiExamDetails) => {
     const errors = {};
@@ -510,6 +608,40 @@ const LorRequest = () => {
     return errors;
   };
 
+  //cdpc render
+  const [cdpc, checkCdpc] = useState(false);
+
+  useEffect(() => {
+    if (placementInfo.placeThroughCdpc === "true") checkCdpc(true);
+    else {
+      checkCdpc(false);
+      placementInfo.companyName = "";
+      placementDetailsErrors.companyName = "";
+    }
+  }, [placementInfo, placementDetailsErrors]);
+
+  //compi div render
+  const [compiExam, checkCompiExam] = useState(false);
+
+  useEffect(() => {
+    if (compiExamDetails.compiExam === "true") checkCompiExam(true);
+    else {
+      checkCompiExam(false);
+      compiExamDetails.greSc = "";
+      compiExamDetails.ieltsSc = "";
+      compiExamDetails.toeflSc = "";
+      compiExamDetails.gmatSc = "";
+      compiExamDetails.gateSc = "";
+      compiExamDetails.otherSc = "";
+      compiExamDetailsErrors.gre = "";
+      compiExamDetailsErrors.ielts = "";
+      compiExamDetailsErrors.toefl = "";
+      compiExamDetailsErrors.gmat = "";
+      compiExamDetailsErrors.gate = "";
+      compiExamDetailsErrors.other = "";
+    }
+  }, [compiExamDetails, compiExamDetailsErrors]);
+
   //on click confirm
   const onConfirm = () => {
     setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
@@ -520,6 +652,7 @@ const LorRequest = () => {
     universityPrefListValidation(universityPrefList);
     facutlPrefListValidation(facultyPrefList);
   };
+  console.log(personalInfo);
 
   return (
     <div className="form__container">

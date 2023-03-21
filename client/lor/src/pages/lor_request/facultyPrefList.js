@@ -102,6 +102,7 @@ const FacultyPrefList = ({
                     name="facultyPrefLor"
                     type="file"
                     onChange={(e) => onUpload(index, e)}
+                    accept=".pdf, .doc, .docx"
                   ></Input>
                   <FormHelperText color={"red"}>
                     {error[index].facultyPrefLor}

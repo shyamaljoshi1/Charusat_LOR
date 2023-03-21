@@ -91,6 +91,7 @@ const CompiExamDetail = ({ onChange, compiExam, onUpload, error }) => {
                 padding={"0.2rem 0 0 2rem"}
                 size="lg"
                 width={"auto"}
+                accept=".pdf"
               ></Input>
               <FormHelperText flex={"1"} color="red" margin=".4rem 0 0 0">
                 {error.gre}
@@ -131,6 +132,7 @@ const CompiExamDetail = ({ onChange, compiExam, onUpload, error }) => {
                 padding={"0.2rem 0 0 2rem"}
                 size="lg"
                 width={"auto"}
+                accept=".pdf"
               ></Input>
               <FormHelperText flex={"1"} color="red" margin=".4rem 0 0 0">
                 {error.ielts}
@@ -171,6 +173,7 @@ const CompiExamDetail = ({ onChange, compiExam, onUpload, error }) => {
                 padding={"0.2rem 0 0 2rem"}
                 size="lg"
                 width={"auto"}
+                accept=".pdf"
               ></Input>
               <FormHelperText flex={"1"} color="red" margin=".4rem 0 0 0">
                 {error.toefl}
@@ -211,6 +214,7 @@ const CompiExamDetail = ({ onChange, compiExam, onUpload, error }) => {
                 padding={"0.2rem 0 0 2rem"}
                 size="lg"
                 width={"auto"}
+                accept=".pdf"
               ></Input>
               <FormHelperText flex={"1"} color="red" margin=".4rem 0 0 0">
                 {error.gmat}
@@ -251,6 +255,7 @@ const CompiExamDetail = ({ onChange, compiExam, onUpload, error }) => {
                 padding={"0.2rem 0 0 2rem"}
                 size="lg"
                 width={"auto"}
+                accept=".pdf"
               ></Input>
               <FormHelperText flex={"1"} color="red" margin=".4rem 0 0 0">
                 {error.gate}
@@ -291,6 +296,7 @@ const CompiExamDetail = ({ onChange, compiExam, onUpload, error }) => {
                 padding={"0.2rem 0 0 2rem"}
                 size="lg"
                 width={"auto"}
+                accept=".pdf"
               ></Input>
               <FormHelperText flex={"1"} color="red" margin=".4rem 0 0 0">
                 {error.other}
