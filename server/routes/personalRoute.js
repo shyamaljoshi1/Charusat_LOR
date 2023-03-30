@@ -1,9 +1,12 @@
 const { Router } = require("express");
 const express = require("express");
 
-const { personalInfo } = require("../controller/perosnalController");
+const { personalInfo,getAllStudents,getStudentInfo,getResult, getAttendance } = require("../controller/perosnalController");
 const router = require("express").Router();
 
 router.route("/personalinfo").post(personalInfo);
+router.route("/personalinfo").get(getAllStudents);
+router.route("/personalinfo/:id").get(getStudentInfo);
+router.route("/resultinfo/:id").get(getResult).get(getAttendance);
 
 module.exports = router;

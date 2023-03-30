@@ -2,7 +2,99 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
+exports.getAllStudents = async (req,res)=>{
+  try {
+    const student = await prisma.tblPersonalInfo.findMany({
+      include : {attendances : true ,results : true}
+    })
+    res.send(student);
 
+  } catch (error) {
+    res.status(404).send({
+      success: false,
+      message: "Data is not found!",
+    });
+  }
+}
+
+exports.getStudentInfo = async (req,res)=>{
+  try {
+    const student = await prisma.tblPersonalInfo.findUnique({
+      where:{
+        studentId : (req.params.id)
+      }
+    })
+    if(student)
+      res.send(student);
+    else{
+      res.status(404).send({
+        success: false,
+        message: "Data is not found!",
+      });
+    }
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+}
+
+exports.getResult = async (req,res)=>{
+  try {
+    const result = await prisma.tblResult.findMany({
+      include : {studentInfo : true},
+      where:{
+        studentId : (req.params.id),
+      }
+    });
+    
+    // for testing purpose there are many studentId
+    // while prodution convert findmany --> findUnique  && result[0] --> result
+    if(result[0])
+      res.send(result);
+    else{
+      res.status(404).send({
+        success: false,
+        message: "Data is not found!",
+      });
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+}
+
+exports.getAttendance = async (req,res)=>{
+  try {
+    const attendance = await prisma.tblAttendance.findMany({
+      include : {studentInfo : true},
+      where:{
+        studentId : (req.params.id),
+      },
+    });
+    
+    // for testing purpose there are many studentId
+    // while prodution convert findmany --> findUnique  && attendance[0] --> attendance
+    if(attendance[0])
+      res.send(attendance);
+    else{
+      res.status(404).send({
+        success: false,
+        message: "Data is not found!",
+      });
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+}
 exports.personalInfo = async (req, res) => {
   const lastEntryOfResult = async () => {
     const lastEntryResult = await prisma.tblResult.findMany({
