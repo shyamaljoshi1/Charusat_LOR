@@ -2,7 +2,7 @@
 import axios from "axios";
 
 export const personalInformation =
-  async (studentId, studentName, emailId, studentMobile, parentMobile, passoutDate) => {
+  async (studentId, studentName, emailId, studentMobile, parentMobile, passoutDate, placeThroughCdpc,bondCompleted,companyName,firstSAtt,secondSAtt,firstSCG,secondSCG,noh) => {
     console.log("hello");
     try {
       const config = { headers: { "Content-Type": "application/json" } };
@@ -15,6 +15,13 @@ export const personalInformation =
           studentMobile,
           parentMobile,
           passoutDate,
+          placeThroughCdpc,
+          bondCompleted,
+          companyName,
+          firstSAtt,
+          secondSAtt,
+          firstSCG,
+          secondSCG,
         },
         config
       );

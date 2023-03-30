@@ -111,27 +111,27 @@ exports.sendEmail = async (req, res) => {
 };
 
 exports.personalInfo = async (req, res) => {
-  // const lastEntryOfResult = async () => {
-  //   const lastEntryResult = await prisma.tblResult.findMany({
-  //     take: 1,
-  //     orderBy: {
-  //       id: "desc",
-  //     },
-  //   });
+  const lastEntryOfResult = async () => {
+    const lastEntryResult = await prisma.tblResult.findMany({
+      take: 1,
+      orderBy: {
+        id: "desc",
+      },
+    });
 
-  //   return lastEntryResult;
-  // };
+    return lastEntryResult;
+  };
 
-  // const lastEntryOAttendance = async () => {
-  //   const lastEntrAttendance = await prisma.tblAttendance.findMany({
-  //     take: 1,
-  //     orderBy: {
-  //       id: "desc",
-  //     },
-  //   });
+  const lastEntryOAttendance = async () => {
+    const lastEntrAttendance = await prisma.tblAttendance.findMany({
+      take: 1,
+      orderBy: {
+        id: "desc",
+      },
+    });
 
-  //   return lastEntrAttendance;
-  // };
+    return lastEntrAttendance;
+  };
   const {
     studentId,
     studentName,
@@ -139,14 +139,14 @@ exports.personalInfo = async (req, res) => {
     studentMobile,
     parentMobile,
     passoutDate,
-    // place,
-    // cname,
-    // bond,
+    placeThroughCdpc,
+    companyName,
+    bondCompleted,
     // noh,
-    // s1,
-    // s2,
-    // a1,
-    // a2,
+    firstSCG,
+    secondSCG,
+    firstSAtt,
+    secondSAtt,
   } = req.body;
 
   console.log(req.body)
@@ -156,34 +156,51 @@ exports.personalInfo = async (req, res) => {
 
   const format = "T00:00:00.000Z";
   const newdateOfGraduation = passoutDate + format;
-  console.log(newdateOfGraduation)
+  // console.log(newdateOfGraduation)
 
   // const date = new Date(newdateOfGraduation);
-  const datetimeStr = new Date(newdateOfGraduation).toISOString();
+  // const datetimeStr = new Date(newdateOfGraduation).toISOString();
 
-  console.log(datetimeStr);
+  // console.log(datetimeStr);
   try {
-    // const studentResultInfo = await prisma.tblResult.create({
-    //   data: {
-    //     studentId: studentId,
-    //     rsem1: s1,
-    //     rsem2: s2,
-    //   },
-    // });
-    // const studentAttInfo = await prisma.tblAttendance.create({
-    //   data: {
-    //     studentId: studentId,
-    //     asem1: a1,
-    //     asem2: a2,
-    //   },
-    // });
+    const studentResultInfo = await prisma.tblResult.create({
+      data: {
+        studentId: studentId,
+        rsem1: firstSCG,
+        rsem2: secondSCG,
+      },
+    });
+    const studentAttInfo = await prisma.tblAttendance.create({
+      data: {
+        studentId: studentId,
+        asem1: firstSAtt,
+        asem2: secondSAtt,
+      },
+    });
 
-    // let rid = await lastEntryOfResult();
-    // let aid = await lastEntryOAttendance();
+    let rid = await lastEntryOfResult();
+    let aid = await lastEntryOAttendance();
 
-    // rid = rid[0].id;
-    // aid = aid[0].id;
+    rid = rid[0].id;
+    aid = aid[0].id;
 
+    console.log(rid);
+    console.log(aid);
+    
+    if(placeThroughCdpc=="false"){
+      studentPlace = false;
+    }
+    else{
+      studentPlace = true;
+    }  
+
+    if(bondCompleted=="false"){
+      bond = false;
+    }
+    else{
+      bond = true;
+    }  
+    
     const studentInfo = await prisma.tblPersonalInfo.create({
       // data: req.body,
       data: {
@@ -192,20 +209,19 @@ exports.personalInfo = async (req, res) => {
         emailId: emailId,
         studentMobile: studentMobile,
         parentMobile: parentMobile,
-        dateOfGraduation: datetimeStr,
-        // studentPlace: place,
-        // companyName: cname,
-        // bond: bond,
-        // noOfLetterHead: noh,
-        // rid: rid,
-        // aid: aid,
+        dateOfGraduation: newdateOfGraduation,
+        studentPlace,
+        companyName: companyName,
+        bond,
+        rid: rid,
+        aid: aid,
       },
     });
     res.status(201).send({
       success: true,
       studentInfo,
-      // studentAttInfo,
-      // studentResultInfo,
+      studentAttInfo,
+      studentResultInfo,
     });
   } catch (error) {
     console.log(error);
