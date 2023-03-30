@@ -1,15 +1,22 @@
 .form__container {
     margin-left: 30rem;
-    form {
-        Button {
-            color: black;
-            padding: 2rem 4rem;
-            border-radius: 0.5rem;
-            font-size: 1.6rem;
-            font-weight: bold;
-            margin: 0 0 0 5rem;
-            background-color: #1b65a7 !important;
-            color: white;
-        }
+}
+.lor-request__confirm-btn {
+    padding: 2rem 4rem !important;
+    border-radius: 0.5rem !important;
+    font-size: 1.6rem !important;
+    font-weight: bold !important;
+    margin: 0 0 0 5rem !important;
+    background-color: #1b65a7 !important;
+    color: white !important;
+
+    &:hover {
+        opacity: 0.9 !important;
+    }
+    &:active {
+        scale: 0.98 !important;
+    }
+    &:focus {
+        outline: none !important;
     }
 }

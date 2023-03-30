@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
+const sendEmail = require("../utils/sendEmail");
 
 const prisma = new PrismaClient();
 
@@ -95,6 +96,20 @@ exports.getAttendance = async (req,res)=>{
     });
   }
 }
+
+exports.sendEmail = async (req, res) => {
+  try {
+    await sendEmail();
+
+    res.status(200).json({
+      success: true,
+      message: `Email sent successfully`,
+    });
+  } catch (error) {
+    console.log(err);
+  }
+};
+
 exports.personalInfo = async (req, res) => {
   const lastEntryOfResult = async () => {
     const lastEntryResult = await prisma.tblResult.findMany({

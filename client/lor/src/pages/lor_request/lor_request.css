@@ -1,13 +1,22 @@
 .form__container {
   margin-left: 30rem;
 }
-.form__container form Button {
-  color: black;
-  padding: 2rem 4rem;
-  border-radius: 0.5rem;
-  font-size: 1.6rem;
-  font-weight: bold;
-  margin: 0 0 0 5rem;
+
+.lor-request__confirm-btn {
+  padding: 2rem 4rem !important;
+  border-radius: 0.5rem !important;
+  font-size: 1.6rem !important;
+  font-weight: bold !important;
+  margin: 0 0 0 5rem !important;
   background-color: #1b65a7 !important;
-  color: white;
+  color: white !important;
+}
+.lor-request__confirm-btn:hover {
+  opacity: 0.9 !important;
+}
+.lor-request__confirm-btn:active {
+  scale: 0.98 !important;
+}
+.lor-request__confirm-btn:focus {
+  outline: none !important;
 }/*# sourceMappingURL=lor_request.css.map */
