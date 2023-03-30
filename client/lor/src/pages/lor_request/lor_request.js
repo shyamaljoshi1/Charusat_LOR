@@ -8,6 +8,8 @@ import PlacementInfo from "./placementInfo";
 import ResultDetails from "./resultDetails";
 import UniversityPrefList from "./universityPrefList";
 import FacultyPrefList from "./facultyPrefList";
+import axios from "axios";
+import { personalInformation } from "../../actions/lorReq";
 
 const LorRequest = () => {
   const [personalInfo, setPersonalinfo] = useState({
@@ -213,6 +215,38 @@ const LorRequest = () => {
     setFacultyPrefList(rows);
     setFacultyPrefListErrors(error);
   };
+  //AXIOS
+  // const personalInformation = () =>{
+  //   console.log("hello");
+  // }
+  // const personalInformation = async (
+  //   studentId,
+  //   studentName,
+  //   emailId,
+  //   studentMobile,
+  //   parentMobile,
+  //   passoutDate
+  // ) => {
+  //   console.log("hello");
+  //   try {
+  //     const config = { headers: { "Content-Type": "application/json" } };
+  //     const { data } = await axios.post(
+  //       `/api/v1/personalinfo`,
+  //       {
+  //         studentId,
+  //         studentName,
+  //         emailId,
+  //         studentMobile,
+  //         parentMobile,
+  //         passoutDate,
+  //       },
+  //       config
+  //     );
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   //validation
   const [personalDetailsErrors, setPersonalDetailsErrors] = useState({});
@@ -642,17 +676,31 @@ const LorRequest = () => {
     }
   }, [compiExamDetails, compiExamDetailsErrors]);
 
+  const mergedObj = {
+    ...personalInfo,
+    ...placementInfo,
+    ...resultDetails,
+  };
+  console.log(mergedObj)
   //on click confirm
   const onConfirm = () => {
     setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
-    setPlacementDetailsErrors(placementDetailsValidation(placementInfo));
-    setcompiExamDetailsErrors(compiExamDetailsValidation(compiExamDetails));
-    setResultDetailsErrors(resultDetailsValidation(resultDetails));
-    setNoOfLetterheadErrors(noOfLetterheadValidation(noOfLetterhead));
-    universityPrefListValidation(universityPrefList);
-    facutlPrefListValidation(facultyPrefList);
+    // setPlacementDetailsErrors(placementDetailsValidation(placementInfo));
+    // setcompiExamDetailsErrors(compiExamDetailsValidation(compiExamDetails));
+    // setResultDetailsErrors(resultDetailsValidation(resultDetails));
+    // setNoOfLetterheadErrors(noOfLetterheadValidation(noOfLetterhead));
+    // universityPrefListValidation(universityPrefList);
+    // facutlPrefListValidation(facultyPrefList);
+    personalInformation(
+      mergedObj.studentId,
+      mergedObj.studentName,
+      mergedObj.emailId,
+      mergedObj.studentMobile,
+      mergedObj.parentMobile,
+      mergedObj.passoutDate
+    );
   };
-  console.log(personalInfo);
+  // console.log(personalInfo);
 
   return (
     <div className="form__container">
