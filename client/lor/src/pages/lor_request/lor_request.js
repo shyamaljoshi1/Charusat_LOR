@@ -8,7 +8,7 @@ import PlacementInfo from "./placementInfo";
 import ResultDetails from "./resultDetails";
 import UniversityPrefList from "./universityPrefList";
 import FacultyPrefList from "./facultyPrefList";
-import axios from "axios";
+// import axios from "axios";
 import { personalInformation } from "../../actions/lorReq";
 import TermCondition from "./TermCondition";
 
@@ -24,27 +24,29 @@ const LorRequest = () => {
   const [resultDetails, setResultDetails] = useState({
     firstSAtt: "",
     secondSAtt: "",
-    thirdSAtt: "",
-    forthSAtt: "",
-    fifthSAtt: "",
-    sixthSAtt: "",
-    seventhSAtt: "",
-    eightthSAtt: "",
+    // thirdSAtt: "",
+    // forthSAtt: "",
+    // fifthSAtt: "",
+    // sixthSAtt: "",
+    // seventhSAtt: "",
+    // eightthSAtt: "",
     firstSCG: "",
     secondSCG: "",
-    thirdSCG: "",
-    forthSCG: "",
-    fifthSCG: "",
-    sixthSCG: "",
-    seventhSCG: "",
-    eightthSCG: "",
+    // thirdSCG: "",
+    // forthSCG: "",
+    // fifthSCG: "",
+    // sixthSCG: "",
+    // seventhSCG: "",
+    // eightthSCG: "",
   });
   const [placementInfo, setPlacementinfo] = useState({
     placeThroughCdpc: "",
     bondCompleted: "",
     companyName: "",
   });
-  const [noOfLetterhead, setNoOfLetterhead] = useState();
+  const [noOfLetterhead, setNoOfLetterhead] = useState({
+    noh: 0,
+  });
 
   const [compiExamDetails, setCompiExamDetails] = useState({
     compiExam: "",
@@ -669,7 +671,17 @@ const LorRequest = () => {
       mergedObj.emailId,
       mergedObj.studentMobile,
       mergedObj.parentMobile,
-      mergedObj.passoutDate
+      mergedObj.passoutDate,
+
+      mergedObj.placeThroughCdpc,
+      mergedObj.bondCompleted,
+      mergedObj.companyName,
+
+      mergedObj.firstSAtt,
+      mergedObj.secondSAtt,
+
+      mergedObj.firstSCG,
+      mergedObj.secondSCG
     );
   };
   console.log(termAndCondition);
