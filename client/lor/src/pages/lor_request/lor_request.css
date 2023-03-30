@@ -19,4 +19,9 @@
 }
 .lor-request__confirm-btn:focus {
   outline: none !important;
+}
+.lor-request__confirm-btn:disabled {
+  cursor: not-allowed !important;
+  opacity: 0.5 !important;
+  scale: 1 !important;
 }/*# sourceMappingURL=lor_request.css.map */

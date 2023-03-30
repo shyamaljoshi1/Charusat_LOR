@@ -6,7 +6,7 @@ import Home from "./pages/home/home";
 import LorRequest from "./pages/lor_request/lor_request";
 import Login from "./pages/login/login";
 import LorFormat from "./pages/lor_format/lorFormat";
-import UploadAdmissionLetter from "./pages/UploadAdmissionLetter/UploadAdmissionLetter.js.js";
+import UploadAdmissionLetter from "./pages/UploadAdmissionLetter/UploadAdmissionLetter.js";
 
 const App = () => {
   const [user, setUser] = useState(null);

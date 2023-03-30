@@ -1,0 +1,22 @@
+.lor-request__note {
+  background-color: #dd0000 !important;
+  color: white !important;
+}
+.lor-request__condition__container {
+  margin: 1.5rem 0 1rem 0;
+  display: flex;
+  gap: 2rem;
+  align-items: center !important;
+}
+.lor-request__condition__container__check {
+  width: 1.5rem;
+  height: 1.5rem;
+  transform: translateY(0.25rem);
+}
+.lor-request__condition__container__check:active {
+  outline: 0;
+}
+.lor-request__condition__container__text {
+  font-size: 1.5rem !important;
+  font-weight: 500 !important;
+}/*# sourceMappingURL=note.css.map */

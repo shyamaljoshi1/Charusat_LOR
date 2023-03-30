@@ -1,18 +1,12 @@
 import { Button } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import CompiExamDetail from "./compiExamDetail";
-import LorLetter from "./lor_letter";
-import "./lor_request.css";
-import PersonalInfo from "./personalInfo";
-import PlacementInfo from "./placementInfo";
-import ResultDetails from "./resultDetails";
-import UniversityPrefList from "./universityPrefList";
-import FacultyPrefList from "./facultyPrefList";
-import axios from "axios";
-import { personalInformation } from "../../actions/lorReq";
-import TermCondition from "./TermCondition";
+import "./UploadAdmissionLetter.css";
+import PersonalInfo from "../lor_request/personalInfo";
+import CompiExamDetail from "../lor_request/compiExamDetail";
+import UniversityPrefList from "../lor_request/universityPrefList";
+import TermCondition from "../lor_request/TermCondition";
 
-const LorRequest = () => {
+const UploadAdmissionLetter = () => {
   const [personalInfo, setPersonalinfo] = useState({
     studentId: "",
     studentName: "",
@@ -21,31 +15,6 @@ const LorRequest = () => {
     parentMobile: "",
     passoutDate: "",
   });
-  const [resultDetails, setResultDetails] = useState({
-    firstSAtt: "",
-    secondSAtt: "",
-    thirdSAtt: "",
-    forthSAtt: "",
-    fifthSAtt: "",
-    sixthSAtt: "",
-    seventhSAtt: "",
-    eightthSAtt: "",
-    firstSCG: "",
-    secondSCG: "",
-    thirdSCG: "",
-    forthSCG: "",
-    fifthSCG: "",
-    sixthSCG: "",
-    seventhSCG: "",
-    eightthSCG: "",
-  });
-  const [placementInfo, setPlacementinfo] = useState({
-    placeThroughCdpc: "",
-    bondCompleted: "",
-    companyName: "",
-  });
-  const [noOfLetterhead, setNoOfLetterhead] = useState();
-
   const [compiExamDetails, setCompiExamDetails] = useState({
     compiExam: "",
     greSc: "",
@@ -61,28 +30,20 @@ const LorRequest = () => {
     gate: null,
     other: null,
   });
-
   const [universityPrefList, setUniversityPrefList] = useState([
     { universityName: "", courseName: "", countryName: "", intakeDate: "" },
   ]);
-  const [facultyPrefList, setFacultyPrefList] = useState([
-    { facultyName: "", facultyEmail: "", facultyPrefLor: null },
-  ]);
 
-  //for changing object data
+  //functions for change and update
   const onChange = (e) => {
     setPersonalinfo({ ...personalInfo, [e.target.name]: e.target.value });
-    setResultDetails({ ...resultDetails, [e.target.name]: e.target.value });
-    setPlacementinfo({ ...placementInfo, [e.target.name]: e.target.value });
     setCompiExamDetails({
       ...compiExamDetails,
       [e.target.name]: e.target.value,
     });
-    setNoOfLetterhead(e.target.value);
     setTermAndCondition(!termAndCondition);
   };
 
-  //for upload files
   const onUpload = (e) => {
     if (!e.target.files[0]) {
     } else {
@@ -115,7 +76,6 @@ const LorRequest = () => {
     }
   };
 
-  //to change usniversity preference details
   const onChangeUni = (i, e) => {
     const { name, value } = e.target;
     const list = [...universityPrefList];
@@ -123,7 +83,6 @@ const LorRequest = () => {
     setUniversityPrefList(list);
   };
 
-  //to add university row
   const addUni = () => {
     setUniversityPrefList([
       ...universityPrefList,
@@ -145,7 +104,6 @@ const LorRequest = () => {
     ]);
   };
 
-  //to remove university row
   const removeUni = (i) => {
     const rows = [...universityPrefList];
     const error = [...universityPrefListErrors];
@@ -155,72 +113,8 @@ const LorRequest = () => {
     setUniversityPrefListErrors(error);
   };
 
-  //to chnage faculy preference list
-  const onChangeFaculty = (i, e) => {
-    const { name, value } = e.target;
-    const list = [...facultyPrefList];
-    list[i][name] = value;
-    setFacultyPrefList(list);
-  };
-
-  //to upload faculty preference lor
-  const onUploadFac = (i, e) => {
-    if (!e.target.files[0]) {
-    } else {
-      const ext = e.target.files[0].name.split(".").pop();
-      if (ext === "pdf" || ext === "doc" || ext === "docx") {
-        const size = e.target.files[0].size;
-        if (size > 1048576) {
-          const error = [...facultyPrefListErrors];
-          error[i]["facultyPrefLor"] = "You can only upload file upto 1MB;";
-          setFacultyPrefListErrors(error);
-          e.target.value = "";
-        } else {
-          const list = [...facultyPrefList];
-          list[i][e.target.name] = e.target.files[0];
-          setFacultyPrefList(list);
-          const error = [...facultyPrefListErrors];
-          error[i]["facultyPrefLor"] = "";
-          setFacultyPrefListErrors(error);
-        }
-      } else {
-        const error = [...facultyPrefListErrors];
-        error[i]["facultyPrefLor"] =
-          "You can only upload .pdf/.doc/.docx files";
-        setFacultyPrefListErrors(error);
-        e.target.value = "";
-      }
-    }
-  };
-  //to add facultypreference list row
-  const addFac = () => {
-    setFacultyPrefList([
-      ...facultyPrefList,
-      { facultyName: "", facultyEmail: "", facultyPrefLor: null },
-    ]);
-    setFacultyPrefListErrors([
-      ...facultyPrefListErrors,
-      {
-        facultyName: "",
-        facultyEmail: "",
-        facultyPrefLor: "",
-      },
-    ]);
-  };
-
-  //to remove faculty preference row
-  const removeFac = (i) => {
-    const rows = [...facultyPrefList];
-    const error = [...facultyPrefListErrors];
-    rows.splice(i, 1);
-    error.splice(i, 1);
-    setFacultyPrefList(rows);
-    setFacultyPrefListErrors(error);
-  };
-
   //validation
   const [personalDetailsErrors, setPersonalDetailsErrors] = useState({});
-
   const personalDetailsValidation = (personalInfo) => {
     const errors = {};
 
@@ -257,13 +151,13 @@ const LorRequest = () => {
         if (!isNaN(fNum)) {
           errors.studentId = "";
         } else {
-          errors.studentId = "";
+          errors.studentId = "ID is Invalid";
         }
       } else {
-        errors.studentId = "";
+        errors.studentId = "ID is Invalid";
       }
     } else {
-      errors.studentId = "";
+      errors.studentId = "ID is Invalid";
     }
 
     //student name
@@ -350,44 +244,6 @@ const LorRequest = () => {
     }
     return errors;
   };
-
-  const [placementDetailsErrors, setPlacementDetailsErrors] = useState({
-    placeThroughCdpc: "",
-    bondCompleted: "",
-    companyName: "",
-  });
-
-  const placementDetailsValidation = (placementInfo) => {
-    const errors = {};
-
-    //place through cdpc
-    if (!placementInfo.placeThroughCdpc) {
-      errors.placeThroughCdpc = "required field";
-    } else {
-      errors.placeThroughCdpc = "";
-    }
-
-    //company name
-    if (
-      placementInfo.placeThroughCdpc === "true" &&
-      !placementInfo.companyName.trim()
-    ) {
-      errors.companyName = "required field";
-    } else if (/^[a-zA-Z ]+$/i.test(placementInfo.companyName)) {
-      errors.companyName = "";
-    } else {
-      errors.companyName = "Only alphabet are allowed";
-    }
-
-    //bond period
-    if (!placementInfo.bondCompleted) {
-      errors.bondCompleted = "required field";
-    } else {
-      errors.bondCompleted = "";
-    }
-    return errors;
-  };
-
   const [compiExamDetailsErrors, setcompiExamDetailsErrors] = useState({
     gre: "",
     ielts: "",
@@ -475,46 +331,6 @@ const LorRequest = () => {
     return errors;
   };
 
-  const [noOfLetterHeadErrors, setNoOfLetterheadErrors] = useState({});
-
-  const noOfLetterheadValidation = (noOfLetterhead) => {
-    const errors = {};
-    if (!noOfLetterhead) {
-      errors.noOfletterHead = "required field";
-    } else {
-      errors.noOfletterHead = "";
-    }
-    return errors;
-  };
-
-  const [resultDetailsErrors, setResultDetailsErrors] = useState({});
-  const resultDetailsValidation = (resultDetails) => {
-    const errors = {};
-    if (
-      !resultDetails.firstSAtt &&
-      !resultDetails.firstSCG &&
-      !resultDetails.secondSAtt &&
-      !resultDetails.secondSCG &&
-      !resultDetails.thirdSAtt &&
-      !resultDetails.thirdSCG &&
-      !resultDetails.forthSAtt &&
-      !resultDetails.forthSCG &&
-      !resultDetails.fifthSAtt &&
-      !resultDetails.fifthSCG &&
-      !resultDetails.sixthSAtt &&
-      !resultDetails.sixthSCG &&
-      !resultDetails.seventhSAtt &&
-      !resultDetails.seventhSCG &&
-      !resultDetails.eightthSAtt &&
-      !resultDetails.eightthSCG
-    ) {
-      errors.res = "Attendence and CGPA for every semester must be entered";
-    } else {
-      errors.res = "";
-    }
-    return errors;
-  };
-
   const [universityPrefListErrors, setUniversityPrefListErrors] = useState([
     { universityName: "", courseName: "", countryName: "", intakeDate: "" },
   ]);
@@ -565,68 +381,8 @@ const LorRequest = () => {
     return errors;
   };
 
-  const [facultyPrefListErrors, setFacultyPrefListErrors] = useState([
-    {
-      facultyName: "",
-      facultyEmail: "",
-      facultyPrefLor: "",
-    },
-  ]);
-
-  const facutlPrefListValidation = (facultyPrefList) => {
-    const errors = [...facultyPrefListErrors];
-
-    for (let i = 0; i < facultyPrefList.length; i++) {
-      //for faculty name validation
-      if (!facultyPrefList[i].facultyName.trim()) {
-        errors[i]["facultyName"] = "required field";
-        setFacultyPrefListErrors(errors);
-      } else if (/^[a-zA-Z ]+$/i.test(facultyPrefList[i].facultyName)) {
-        errors[i]["facultyName"] = "";
-        setFacultyPrefListErrors(errors);
-      } else {
-        errors[i]["facultyName"] = "Only Alphabets are allowed";
-        setFacultyPrefListErrors(errors);
-      }
-
-      //fpr faculty email validation
-      if (!facultyPrefList[i].facultyEmail.trim()) {
-        errors[i]["facultyEmail"] = "reqired field";
-      } else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
-          facultyPrefList[i].facultyEmail
-        )
-      ) {
-        errors[i]["facultyEmail"] = "Invalid Email Address";
-      } else {
-        errors[i]["facultyEmail"] = "";
-      }
-
-      //for faculty preference lor validation
-      if (!facultyPrefList[i].facultyPrefLor) {
-        errors[i]["facultyPrefLor"] = "LOR must be uploaded";
-      } else {
-        errors[i]["facultyPrefLor"] = "";
-      }
-    }
-    return errors;
-  };
-
-  //cdpc render
-  const [cdpc, checkCdpc] = useState(false);
-
-  useEffect(() => {
-    if (placementInfo.placeThroughCdpc === "true") checkCdpc(true);
-    else {
-      checkCdpc(false);
-      placementInfo.companyName = "";
-      placementDetailsErrors.companyName = "";
-    }
-  }, [placementInfo, placementDetailsErrors]);
-
-  //compi div render
+  //render
   const [compiExam, checkCompiExam] = useState(false);
-
   useEffect(() => {
     if (compiExamDetails.compiExam === "true") checkCompiExam(true);
     else {
@@ -645,46 +401,19 @@ const LorRequest = () => {
       compiExamDetailsErrors.other = "";
     }
   }, [compiExamDetails, compiExamDetailsErrors]);
-
   const [termAndCondition, setTermAndCondition] = useState(false);
 
-  const mergedObj = {
-    ...personalInfo,
-    ...placementInfo,
-    ...resultDetails,
-  };
-  console.log(mergedObj);
-  //on click confirm
+  //onConfirm
   const onConfirm = () => {
     setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
-    setPlacementDetailsErrors(placementDetailsValidation(placementInfo));
     setcompiExamDetailsErrors(compiExamDetailsValidation(compiExamDetails));
-    setResultDetailsErrors(resultDetailsValidation(resultDetails));
-    setNoOfLetterheadErrors(noOfLetterheadValidation(noOfLetterhead));
     universityPrefListValidation(universityPrefList);
-    facutlPrefListValidation(facultyPrefList);
-    personalInformation(
-      mergedObj.studentId,
-      mergedObj.studentName,
-      mergedObj.emailId,
-      mergedObj.studentMobile,
-      mergedObj.parentMobile,
-      mergedObj.passoutDate
-    );
   };
-  console.log(termAndCondition);
 
   return (
-    <div className="form__container">
+    <div className="form_container">
       <form action="POST">
-        <PersonalInfo error={personalDetailsErrors} onChange={onChange} />
-        <PlacementInfo
-          error={placementDetailsErrors}
-          onChange={onChange}
-          cdpc={cdpc}
-        />
-        <ResultDetails onChange={onChange} error={resultDetailsErrors} />
-        <LorLetter onChange={onChange} error={noOfLetterHeadErrors} />
+        <PersonalInfo onChange={onChange} error={personalDetailsErrors} />
         <CompiExamDetail
           onChange={onChange}
           compiExam={compiExam}
@@ -697,14 +426,6 @@ const LorRequest = () => {
           addUniversity={addUni}
           removeUniversity={removeUni}
           error={universityPrefListErrors}
-        />
-        <FacultyPrefList
-          onChange={onChangeFaculty}
-          facPref={facultyPrefList}
-          onUpload={onUploadFac}
-          addFaculty={addFac}
-          removeFaculty={removeFac}
-          error={facultyPrefListErrors}
         />
         <TermCondition onChange={onChange} />
         {termAndCondition ? (
@@ -720,15 +441,8 @@ const LorRequest = () => {
             Conifrm
           </Button>
         )}
-        {/* <Button className="lor-request__confirm-btn" onClick={onConfirm}>
-          Conifrm
-        </Button> */}
       </form>
-
-      {/* testing purpose */}
-      {/* <img src={URL.createObjectURL(compiExamDetails.gre)} /> */}
     </div>
   );
 };
-
-export default LorRequest;
+export default UploadAdmissionLetter;
