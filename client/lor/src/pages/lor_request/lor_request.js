@@ -1,4 +1,4 @@
-import { Button, background } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import CompiExamDetail from "./compiExamDetail";
 import LorLetter from "./lor_letter";
@@ -652,7 +652,6 @@ const LorRequest = () => {
     universityPrefListValidation(universityPrefList);
     facutlPrefListValidation(facultyPrefList);
   };
-  console.log(personalInfo);
 
   return (
     <div className="form__container">

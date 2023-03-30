@@ -120,7 +120,6 @@ const FacultyPrefList = ({
                     <Button
                       className="faculty-pref__remove-button"
                       isDisabled={"true"}
-                      onClick={() => removeFaculty(index)}
                     >
                       Remove
                     </Button>
