@@ -19,4 +19,12 @@
 .lor-request__condition__container__text {
   font-size: 1.5rem !important;
   font-weight: 500 !important;
+}
+.lor-request__condition__container__text::-moz-selection {
+  background-color: white;
+  color: black;
+}
+.lor-request__condition__container__text::selection {
+  background-color: white;
+  color: black;
 }/*# sourceMappingURL=note.css.map */

@@ -22,6 +22,10 @@
                 font-size: 1.5rem !important;
                 font-weight: 500 !important;
             }
+            &__text::selection {
+                background-color: white;
+                color: black;
+            }
         }
     }
 }
