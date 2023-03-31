@@ -1,14 +1,22 @@
 .lor-request__note {
-  background-color: #dd0000 !important;
-  color: white !important;
+  background-color: #ffffff !important;
+  border-color: red !important;
+  color: red !important;
+  border-collapse: collapse;
+  border: 1px solid red;
+}
+.lor-request__condition {
+  border: none;
 }
 .lor-request__condition__container {
+  border: none;
   margin: 1.5rem 0 1rem 0;
   display: flex;
   gap: 2rem;
   align-items: center !important;
 }
 .lor-request__condition__container__check {
+  border: none;
   width: 1.5rem;
   height: 1.5rem;
   transform: translateY(0.25rem);
@@ -17,14 +25,15 @@
   outline: 0;
 }
 .lor-request__condition__container__text {
+  border: none;
   font-size: 1.5rem !important;
   font-weight: 500 !important;
 }
 .lor-request__condition__container__text::-moz-selection {
-  background-color: white;
-  color: black;
+  background-color: red;
+  color: white;
 }
 .lor-request__condition__container__text::selection {
-  background-color: white;
-  color: black;
+  background-color: red;
+  color: white;
 }/*# sourceMappingURL=note.css.map */

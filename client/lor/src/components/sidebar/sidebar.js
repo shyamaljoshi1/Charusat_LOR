@@ -50,6 +50,7 @@ const SidebarCustom = () => {
           className="menu_item"
           onClick={() => {
             admission();
+            
           }}
         >
           &nbsp; Upload Admission letter
