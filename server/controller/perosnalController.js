@@ -3,6 +3,8 @@ const sendEmail = require("../utils/sendEmail");
 
 const prisma = new PrismaClient();
 
+
+
 exports.getAllStudents = async (req,res)=>{
   try {
     const student = await prisma.tblPersonalInfo.findMany({
@@ -129,9 +131,67 @@ exports.personalInfo = async (req, res) => {
         id: "desc",
       },
     });
-
     return lastEntrAttendance;
   };
+
+  const lastEntryOfCompExam = async () => {
+    const lastEntryCompExam = await prisma.tblcompetitive.findMany({
+      take: 1,
+      orderBy: {
+        id: "desc",
+      },
+    });
+    return lastEntryCompExam;
+  };
+
+  const fileUploadOfCompExam = async (studentId) => {
+    if(req.files){
+
+      const files = req.files;
+      if(files.gre){
+        var file = req.files.gre;
+        file.mv(`./uploads/${studentId}_gre.pdf`,(err)=>{
+          if(err)
+            res.send(err);
+        })
+      }
+      if(files.ielts){
+        var file = req.files.ielts;
+        file.mv(`./uploads/${studentId}_ielts.pdf`,(err)=>{
+          if(err)
+            res.send(err);
+        })
+      }
+      if(files.toefl){
+        var file = req.files.toefl;
+        file.mv(`./uploads/${studentId}_toefl.pdf`,(err)=>{
+          if(err)
+            res.send(err);
+        })
+      }
+      if(files.gmat){
+        var file = req.files.gmat;
+        file.mv(`./uploads/${studentId}_gmat.pdf`,(err)=>{
+          if(err)
+            res.send(err);
+        })
+      }
+      if(files.gate){
+        var file = req.files.gate;
+        file.mv(`./uploads/${studentId}_gate.pdf`,(err)=>{
+          if(err)
+            res.send(err);
+        })
+      }
+      if(files.other){
+        var file = req.files.other;
+        file.mv(`./uploads/${studentId}_other.pdf`,(err)=>{
+          if(err)
+            res.send(err);
+        })
+      }
+    }
+  }
   const {
     studentId,
     studentName,
@@ -147,9 +207,16 @@ exports.personalInfo = async (req, res) => {
     secondSCG,
     firstSAtt,
     secondSAtt,
+    greS,
+    ieltsS,
+    toeflS,
+    gmatS,
+    gateS,
+    otherS,
   } = req.body;
 
   console.log(req.body)
+  fileUploadOfCompExam(studentId);
   // const originalDate = dateOfGraduation;
   // const parts = originalDate.split("-");
   // const rearrangedDate = `${parts[0]}-${parts[1]}-${parts[2]}`;
@@ -178,11 +245,25 @@ exports.personalInfo = async (req, res) => {
       },
     });
 
+    const competitiveExam = await prisma.tblcompetitive.create({
+      data:{
+        studentId : studentId,
+        greS : greS || "0",
+        ieltsS : ieltsS || "0",
+        toeflS : toeflS || "0",
+        gmatS : gmatS || "0",
+        gateS : gateS || "0",
+        otherS : otherS || "0",
+      }
+    })
+
     let rid = await lastEntryOfResult();
     let aid = await lastEntryOAttendance();
+    let ceid = await lastEntryOfCompExam();
 
     rid = rid[0].id;
     aid = aid[0].id;
+    ceid = ceid[0].id;
 
     console.log(rid);
     console.log(aid);
@@ -215,6 +296,7 @@ exports.personalInfo = async (req, res) => {
         bond,
         rid: rid,
         aid: aid,
+        ceid: ceid,
       },
     });
     res.status(201).send({
@@ -222,6 +304,7 @@ exports.personalInfo = async (req, res) => {
       studentInfo,
       studentAttInfo,
       studentResultInfo,
+      competitiveExam,
     });
   } catch (error) {
     console.log(error);
