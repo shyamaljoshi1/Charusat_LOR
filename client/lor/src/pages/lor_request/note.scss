@@ -1,16 +1,23 @@
 .lor-request {
     &__note {
-        background-color: #dd0000 !important;
-        color: white !important;
+        background-color: #ffffff !important;
+        border-color: red !important;
+        color: red !important;
+        border-collapse: collapse;
+        border:1px solid red;
     }
     &__condition {
+        border: none;
+
         &__container {
+            border: none;
             margin: 1.5rem 0 1rem 0;
             display: flex;
             gap: 2rem;
             align-items: center !important;
 
             &__check {
+                border: none;
                 width: 1.5rem;
                 height: 1.5rem;
                 transform: translateY(0.25rem);
@@ -19,8 +26,13 @@
                 outline: 0;
             }
             &__text {
+                border: none;
                 font-size: 1.5rem !important;
                 font-weight: 500 !important;
+            }
+            &__text::selection {
+                background-color: red;
+                color: white;
             }
         }
     }

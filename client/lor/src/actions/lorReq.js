@@ -30,3 +30,13 @@ export const personalInformation =
       console.log(error);
     }
   };
+
+export const sendEmail = async ()=>{
+  try {
+    const config = { headers: { "Content-Type": "application/json" } };
+    const {data} = await axios.post('http://localhost:3001/api/v1/sendemail',config);
+    console.log(data);
+  } catch (error) {
+    console.log(error)
+  }
+}

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import "./UploadAdmissionLetter.css";
 import PersonalInfo from "../lor_request/personalInfo";
 import CompiExamDetail from "../lor_request/compiExamDetail";
-import UniversityPrefList from "../lor_request/universityPrefList";
+import UniversityPrefList from "./UniversityPrefList";
 import TermCondition from "../lor_request/TermCondition";
 
 const UploadAdmissionLetter = () => {
@@ -31,7 +31,13 @@ const UploadAdmissionLetter = () => {
     other: null,
   });
   const [universityPrefList, setUniversityPrefList] = useState([
-    { universityName: "", courseName: "", countryName: "", intakeDate: "" },
+    {
+      universityName: "",
+      courseName: "",
+      countryName: "",
+      intakeDate: "",
+      admissionCard: null,
+    },
   ]);
 
   //functions for change and update
@@ -111,6 +117,33 @@ const UploadAdmissionLetter = () => {
     error.splice(i, 1);
     setUniversityPrefList(rows);
     setUniversityPrefListErrors(error);
+  };
+  const onUploadAdmissionCard = (i, e) => {
+    if (!e.target.files[0]) {
+    } else {
+      const ext = e.target.files[0].name.split(".").pop();
+      if (ext === "pdf" || ext === "doc" || ext === "docx") {
+        const size = e.target.files[0].size;
+        if (size > 1048576) {
+          const error = [...universityPrefListErrors];
+          error[i]["admissionCard"] = "You can only upload file upto 1MB;";
+          setUniversityPrefListErrors(error);
+          e.target.value = "";
+        } else {
+          const list = [...universityPrefList];
+          list[i][e.target.name] = e.target.files[0];
+          universityPrefList(list);
+          const error = [...universityPrefListErrors];
+          error[i]["admissionCard"] = "";
+          setUniversityPrefListErrors(error);
+        }
+      } else {
+        const error = [...universityPrefListErrors];
+        error[i]["admissionCard"] = "You can only upload .pdf/.doc/.docx files";
+        setUniversityPrefListErrors(error);
+        e.target.value = "";
+      }
+    }
   };
 
   //validation
@@ -332,7 +365,13 @@ const UploadAdmissionLetter = () => {
   };
 
   const [universityPrefListErrors, setUniversityPrefListErrors] = useState([
-    { universityName: "", courseName: "", countryName: "", intakeDate: "" },
+    {
+      universityName: "",
+      courseName: "",
+      countryName: "",
+      intakeDate: "",
+      admissionCard: "",
+    },
   ]);
 
   const universityPrefListValidation = (universityPrefList) => {
@@ -377,7 +416,13 @@ const UploadAdmissionLetter = () => {
       } else {
         errors[i]["intakeDate"] = "";
       }
+      if (!universityPrefList[i].admissionCard) {
+        errors[i]["admissionCard"] = "Admission Card must be uploaded";
+      } else {
+        errors[i]["admissionCard"] = "";
+      }
     }
+
     return errors;
   };
 
@@ -421,6 +466,7 @@ const UploadAdmissionLetter = () => {
           error={compiExamDetailsErrors}
         />
         <UniversityPrefList
+          onUpload={onUploadAdmissionCard}
           onChange={onChangeUni}
           uniPref={universityPrefList}
           addUniversity={addUni}

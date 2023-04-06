@@ -13,4 +13,12 @@
   font-size: 1.6rem;
   margin: 0 7rem;
   line-height: 2.3rem;
+}
+.home__container__data__heading {
+  font-weight: bold;
+}
+.home__container__instructions__heading {
+  margin-bottom: 0.5rem !important;
+  font-weight: 900;
+  text-decoration: underline;
 }/*# sourceMappingURL=home.css.map */

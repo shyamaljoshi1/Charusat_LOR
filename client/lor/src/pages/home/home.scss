@@ -1,16 +1,26 @@
-.home__container{
+.home__container {
     margin-left: 30rem;
-    &__heading{
-        font-family: 'Raleway', sans-serif;
+    &__heading {
+        font-family: "Raleway", sans-serif;
         font-size: 3rem;
         font-weight: 600;
-        letter-spacing: .54rem;
+        letter-spacing: 0.54rem;
         text-align: center;
         margin: 5.7rem 0;
     }
-    &__data{
+    &__data {
         font-size: 1.6rem;
-        margin: 0 7rem ;
+        margin: 0 7rem;
         line-height: 2.3rem;
+        &__heading {
+            font-weight: bold;
+        }
+    }
+    &__instructions {
+        &__heading {
+            margin-bottom: 0.5rem !important;
+            font-weight: 900;
+            text-decoration: underline;
+        }
     }
 }
