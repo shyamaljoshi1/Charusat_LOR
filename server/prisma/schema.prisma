@@ -21,8 +21,10 @@ model tblPersonalInfo {
   aid              Int
   rid              Int
   sid              Int           @id @default(autoincrement())
+  ceid Int
   attendances      tblAttendance @relation(fields: [aid], references: [id])
   results          tblResult     @relation(fields: [rid], references: [id])
+  compititiveExams tblcompetitive @relation(fields: [ceid], references: [id])
 }
 
 model tblResult {
@@ -38,5 +40,17 @@ model tblAttendance {
   studentId   String
   asem1       String
   asem2       String
+  studentInfo tblPersonalInfo[]
+}
+
+model tblcompetitive{
+  id Int @id @default(autoincrement())
+  studentId   String
+  greS String
+  ieltsS String
+  toeflS String
+  gmatS String
+  gateS String
+  otherS String
   studentInfo tblPersonalInfo[]
 }
