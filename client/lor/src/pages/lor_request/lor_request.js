@@ -9,7 +9,7 @@ import ResultDetails from "./resultDetails";
 import UniversityPrefList from "./universityPrefList";
 import FacultyPrefList from "./facultyPrefList";
 // import axios from "axios";
-import { personalInformation } from "../../actions/lorReq";
+import { personalInformation, sendEmail } from "../../actions/lorReq";
 import TermCondition from "./TermCondition";
 
 const LorRequest = () => {
@@ -45,7 +45,7 @@ const LorRequest = () => {
     companyName: "",
   });
   const [noOfLetterhead, setNoOfLetterhead] = useState({
-    noh: 0,
+    noh: "",
   });
 
   const [compiExamDetails, setCompiExamDetails] = useState({
@@ -80,10 +80,9 @@ const LorRequest = () => {
       ...compiExamDetails,
       [e.target.name]: e.target.value,
     });
-    setNoOfLetterhead(e.target.value);
+    setNoOfLetterhead(parseInt(e.target.value));
     setTermAndCondition(!termAndCondition);
   };
-
   //for upload files
   const onUpload = (e) => {
     if (!e.target.files[0]) {
@@ -117,6 +116,7 @@ const LorRequest = () => {
     }
   };
 
+  console.log(typeof(noOfLetterhead));
   //to change usniversity preference details
   const onChangeUni = (i, e) => {
     const { name, value } = e.target;
@@ -660,11 +660,11 @@ const LorRequest = () => {
   const onConfirm = () => {
     setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
     setPlacementDetailsErrors(placementDetailsValidation(placementInfo));
-    setcompiExamDetailsErrors(compiExamDetailsValidation(compiExamDetails));
+    // setcompiExamDetailsErrors(compiExamDetailsValidation(compiExamDetails));
     setResultDetailsErrors(resultDetailsValidation(resultDetails));
-    setNoOfLetterheadErrors(noOfLetterheadValidation(noOfLetterhead));
-    universityPrefListValidation(universityPrefList);
-    facutlPrefListValidation(facultyPrefList);
+    // setNoOfLetterheadErrors(noOfLetterheadValidation(noOfLetterhead));
+    // universityPrefListValidation(universityPrefList);
+    // facutlPrefListValidation(facultyPrefList);
     personalInformation(
       mergedObj.studentId,
       mergedObj.studentName,
@@ -683,6 +683,7 @@ const LorRequest = () => {
       mergedObj.firstSCG,
       mergedObj.secondSCG
     );
+    sendEmail();
   };
   console.log(termAndCondition);
 

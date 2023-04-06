@@ -13,9 +13,9 @@ const sendEmail = async (options) => {
 
   const mailOptions = {
     from: "tempmailfornode@gmail.com",
-    to: ["dvnshnirmal001@gmail.com","ndev2003@gmail.com"],
-    subject: "this is test1",
-    text: "Hello there",
+    to: ["dvnshnirmal001@gmail.com","ndev2003@gmail.com","20ce038@charusat.edu.in", "20ce143@charusat.edu.in"],
+    subject: "Charusat LOR",
+    text: "Chodu o Email Done!",
   };
 
   await transporter.sendMail(mailOptions);
