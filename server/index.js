@@ -7,7 +7,10 @@ const cookieSession = require("cookie-session");
 const app = express();
 const personalInfo = require("./routes/personalRoute");
 const upload = require('express-fileupload');
+const bodyParser = require('body-parser');
 
+
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 app.use(upload());

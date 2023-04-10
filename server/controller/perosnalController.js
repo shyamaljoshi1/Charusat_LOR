@@ -1,8 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const sendEmail = require("../utils/sendEmail");
-
 const prisma = new PrismaClient();
-
 
 
 exports.getAllStudents = async (req,res)=>{
@@ -148,42 +146,42 @@ exports.personalInfo = async (req, res) => {
     if(req.files){
 
       const files = req.files;
-      if(files.gre){
+      if(files.gre !=null){
         var file = req.files.gre;
         file.mv(`./uploads/${studentId}_gre.pdf`,(err)=>{
           if(err)
             res.send(err);
         })
       }
-      if(files.ielts){
+      if(files.ielts!=null){
         var file = req.files.ielts;
         file.mv(`./uploads/${studentId}_ielts.pdf`,(err)=>{
           if(err)
             res.send(err);
         })
       }
-      if(files.toefl){
+      if(files.toefl!=null){
         var file = req.files.toefl;
         file.mv(`./uploads/${studentId}_toefl.pdf`,(err)=>{
           if(err)
             res.send(err);
         })
       }
-      if(files.gmat){
+      if(files.gmat!=null){
         var file = req.files.gmat;
         file.mv(`./uploads/${studentId}_gmat.pdf`,(err)=>{
           if(err)
             res.send(err);
         })
       }
-      if(files.gate){
+      if(files.gate!=null){
         var file = req.files.gate;
         file.mv(`./uploads/${studentId}_gate.pdf`,(err)=>{
           if(err)
             res.send(err);
         })
       }
-      if(files.other){
+      if(files.other!=null){
         var file = req.files.other;
         file.mv(`./uploads/${studentId}_other.pdf`,(err)=>{
           if(err)
@@ -192,6 +190,7 @@ exports.personalInfo = async (req, res) => {
       }
     }
   }
+  
   const {
     studentId,
     studentName,
@@ -200,35 +199,37 @@ exports.personalInfo = async (req, res) => {
     parentMobile,
     passoutDate,
     placeThroughCdpc,
-    companyName,
     bondCompleted,
-    // noh,
-    firstSCG,
-    secondSCG,
+    companyName,
     firstSAtt,
     secondSAtt,
-    greS,
-    ieltsS,
-    toeflS,
-    gmatS,
-    gateS,
-    otherS,
+    firstSCG,
+    secondSCG,
+    noOfLetterhead,
+    greSc,
+    ieltsSc,
+    toeflSc,
+    gmatSc,
+    gateSc,
+    otherSc,
   } = req.body;
 
   console.log(req.body)
-  fileUploadOfCompExam(studentId);
+  console.log(req.files)
+  
+  await fileUploadOfCompExam(studentId);
+
   // const originalDate = dateOfGraduation;
   // const parts = originalDate.split("-");
   // const rearrangedDate = `${parts[0]}-${parts[1]}-${parts[2]}`;
 
   const format = "T00:00:00.000Z";
   const newdateOfGraduation = passoutDate + format;
+  
   // console.log(newdateOfGraduation)
-
   // const date = new Date(newdateOfGraduation);
   // const datetimeStr = new Date(newdateOfGraduation).toISOString();
 
-  // console.log(datetimeStr);
   try {
     const studentResultInfo = await prisma.tblResult.create({
       data: {
@@ -248,12 +249,12 @@ exports.personalInfo = async (req, res) => {
     const competitiveExam = await prisma.tblcompetitive.create({
       data:{
         studentId : studentId,
-        greS : greS || "0",
-        ieltsS : ieltsS || "0",
-        toeflS : toeflS || "0",
-        gmatS : gmatS || "0",
-        gateS : gateS || "0",
-        otherS : otherS || "0",
+        greS : greSc || "0",
+        ieltsS : ieltsSc || "0",
+        toeflS : toeflSc || "0",
+        gmatS : gmatSc || "0",
+        gateS : gateSc || "0",
+        otherS : otherSc || "0",
       }
     })
 
@@ -265,8 +266,8 @@ exports.personalInfo = async (req, res) => {
     aid = aid[0].id;
     ceid = ceid[0].id;
 
-    console.log(rid);
-    console.log(aid);
+    // console.log(rid);
+    // console.log(aid);
     
     if(placeThroughCdpc=="false"){
       studentPlace = false;
@@ -294,11 +295,13 @@ exports.personalInfo = async (req, res) => {
         studentPlace,
         companyName: companyName,
         bond,
+        noOfLetterHead : noOfLetterhead,
         rid: rid,
         aid: aid,
         ceid: ceid,
       },
     });
+    console.log("Data inserted successfully")
     res.status(201).send({
       success: true,
       studentInfo,
@@ -315,3 +318,8 @@ exports.personalInfo = async (req, res) => {
     // console.log(error);
   }
 };
+
+
+
+
+
