@@ -45,7 +45,6 @@ const LorRequest = () => {
     companyName: "",
   });
   const [noOfLetterhead, setNoOfLetterhead] = useState({
-    noh: "",
   });
 
   const [compiExamDetails, setCompiExamDetails] = useState({
@@ -80,7 +79,7 @@ const LorRequest = () => {
       ...compiExamDetails,
       [e.target.name]: e.target.value,
     });
-    setNoOfLetterhead(parseInt(e.target.value));
+    setNoOfLetterhead(e.target.value);
     setTermAndCondition(!termAndCondition);
   };
   //for upload files
@@ -654,17 +653,22 @@ const LorRequest = () => {
     ...personalInfo,
     ...placementInfo,
     ...resultDetails,
+    ...noOfLetterhead,
+    ...compiExamDetails,
   };
-  console.log(mergedObj);
+
+  console.log({mergedObj});
   //on click confirm
   const onConfirm = () => {
     setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
     setPlacementDetailsErrors(placementDetailsValidation(placementInfo));
-    // setcompiExamDetailsErrors(compiExamDetailsValidation(compiExamDetails));
+    setcompiExamDetailsErrors(compiExamDetailsValidation(compiExamDetails));
     setResultDetailsErrors(resultDetailsValidation(resultDetails));
-    // setNoOfLetterheadErrors(noOfLetterheadValidation(noOfLetterhead));
+    setNoOfLetterheadErrors(noOfLetterheadValidation(noOfLetterhead));
     // universityPrefListValidation(universityPrefList);
     // facutlPrefListValidation(facultyPrefList);
+
+    // window.alert(JSON.stringify(mergedObj.noOfLetterhead))
     personalInformation(
       mergedObj.studentId,
       mergedObj.studentName,
@@ -681,9 +685,26 @@ const LorRequest = () => {
       mergedObj.secondSAtt,
 
       mergedObj.firstSCG,
-      mergedObj.secondSCG
+      mergedObj.secondSCG,
+      
+      mergedObj.noOfLetterhead,
+
+      // mergedObj.compiExam
+      mergedObj.greSc,
+      mergedObj.ieltsSc,
+      mergedObj.toeflSc,
+      mergedObj.gmatSc,
+      mergedObj.gateSc,
+      mergedObj.otherSc,
+      
+      mergedObj.gre,
+      mergedObj.ielts,
+      mergedObj.toefl,
+      mergedObj.gmat,
+      mergedObj.gate,
+      mergedObj.other,
     );
-    sendEmail();
+    // sendEmail();
   };
   console.log(termAndCondition);
 

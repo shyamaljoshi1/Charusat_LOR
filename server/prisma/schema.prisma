@@ -8,23 +8,23 @@ datasource db {
 }
 
 model tblPersonalInfo {
-  studentId        String        @unique
+  studentId        String         @unique
   studentName      String
   emailId          String
   studentMobile    String
   parentMobile     String
   dateOfGraduation String
   studentPlace     Boolean
-  companyName      String        @default("NA")
+  companyName      String         @default("NA")
   bond             Boolean
-  noOfLetterHead   Int           @default(0)
+  noOfLetterHead   String         @default("0")
   aid              Int
   rid              Int
-  sid              Int           @id @default(autoincrement())
-  ceid Int
-  attendances      tblAttendance @relation(fields: [aid], references: [id])
-  results          tblResult     @relation(fields: [rid], references: [id])
+  sid              Int            @id @default(autoincrement())
+  ceid             Int
+  attendances      tblAttendance  @relation(fields: [aid], references: [id])
   compititiveExams tblcompetitive @relation(fields: [ceid], references: [id])
+  results          tblResult      @relation(fields: [rid], references: [id])
 }
 
 model tblResult {
@@ -43,14 +43,14 @@ model tblAttendance {
   studentInfo tblPersonalInfo[]
 }
 
-model tblcompetitive{
-  id Int @id @default(autoincrement())
+model tblcompetitive {
+  id          Int               @id @default(autoincrement())
   studentId   String
-  greS String
-  ieltsS String
-  toeflS String
-  gmatS String
-  gateS String
-  otherS String
+  greS        String
+  ieltsS      String
+  toeflS      String
+  gmatS       String
+  gateS       String
+  otherS      String
   studentInfo tblPersonalInfo[]
 }
