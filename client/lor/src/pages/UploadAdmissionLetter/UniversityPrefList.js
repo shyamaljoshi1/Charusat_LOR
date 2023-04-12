@@ -39,6 +39,7 @@ const UniversityPrefList = ({
         >
           {uniPref.map((data, index) => {
             const {
+              id,
               universityName,
               courseName,
               countryName,
@@ -53,7 +54,7 @@ const UniversityPrefList = ({
                   justifyContent: "center",
                   alignContent: "center",
                 }}
-                key={index}
+                key={id}
               >
                 <FormControl
                   display={"flex"}

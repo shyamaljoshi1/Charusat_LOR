@@ -32,6 +32,7 @@ const UploadAdmissionLetter = () => {
   });
   const [universityPrefList, setUniversityPrefList] = useState([
     {
+      id: 1,
       universityName: "",
       courseName: "",
       countryName: "",
@@ -93,6 +94,7 @@ const UploadAdmissionLetter = () => {
     setUniversityPrefList([
       ...universityPrefList,
       {
+        id: universityPrefList[universityPrefList.length - 1].id + 1,
         universityName: "",
         courseName: "",
         countryName: "",

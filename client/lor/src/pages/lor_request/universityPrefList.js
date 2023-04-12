@@ -37,7 +37,7 @@ const UniversityPrefList = ({
           gap={"10"}
         >
           {uniPref.map((data, index) => {
-            const { universityName, courseName, countryName, intakeDate } =
+            const { id, universityName, courseName, countryName, intakeDate } =
               data;
             return (
               <div
@@ -47,7 +47,7 @@ const UniversityPrefList = ({
                   justifyContent: "center",
                   alignContent: "center",
                 }}
-                key={index}
+                key={id}
               >
                 <FormControl
                   display={"flex"}

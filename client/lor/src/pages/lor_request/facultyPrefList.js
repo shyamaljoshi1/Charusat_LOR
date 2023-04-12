@@ -18,6 +18,97 @@ const FacultyPrefList = ({
   removeFaculty,
   error,
 }) => {
+  // const Component = ({ data, index }) => {
+  // const { facultyName, facultyEmail, facultyPrefLor } = data;
+  // return (
+  // <div
+  //   style={{
+  //     display: "flex",
+  //     gap: "1.3rem",
+  //   }}
+  //     >
+  //       <FormControl
+  //         display={"flex"}
+  //         flexDirection={"column"}
+  //         flex={"1"}
+  //         isInvalid={!!error[index].facultyName}
+  //       >
+  //         <FormLabel fontSize={"1.3rem"}>Faculty Name</FormLabel>
+  //         <Input
+  //           size={"lg"}
+  //           variant={"outline"}
+  //           borderColor={"#1b65a7"}
+  //           name="facultyName"
+  //           type="text"
+  //           value={facultyName}
+  //           onChange={(e) => onChange(index, e)}
+  //         ></Input>
+  //         <FormHelperText color={"red"}>
+  //           {error[index].facultyName}
+  //         </FormHelperText>
+  //       </FormControl>
+
+  //       <FormControl
+  //         display={"flex"}
+  //         flexDirection={"column"}
+  //         flex={"1"}
+  //         isInvalid={!!error[index].facultyEmail}
+  //       >
+  //         <FormLabel fontSize={"1.3rem"}>Faculty Email ID</FormLabel>
+  //         <Input
+  //           size={"lg"}
+  //           variant={"outline"}
+  //           borderColor={"#1b65a7"}
+  //           name="facultyEmail"
+  //           type="text"
+  //           value={facultyEmail}
+  //           onChange={(e) => onChange(index, e)}
+  //         ></Input>
+  //         <FormHelperText color={"red"}>
+  //           {error[index].facultyEmail}
+  //         </FormHelperText>
+  //       </FormControl>
+
+  //       <FormControl
+  //         display={"flex"}
+  //         flexDirection={"column"}
+  //         flex={"1"}
+  //         isInvalid={!!error[index].facultyPrefLor}
+  //       >
+  //         <FormLabel fontSize={"1.3rem"}>Upload LOR</FormLabel>
+  //         <input
+  //           size={"lg"}
+  //           variant={"unstyled"}
+  //           padding={".35rem 0 0 1rem"}
+  //           name="facultyPrefLor"
+  //           type="file"
+  //           onChange={(e) => onUpload(index, e)}
+  //           accept=".pdf, .doc, .docx"
+  //         ></input>
+  //         <FormHelperText color={"red"}>
+  //           {error[index].facultyPrefLor}
+  //         </FormHelperText>
+  //       </FormControl>
+  //       <div style={{ flex: ".5" }}>
+  //         {facPref.length > 1 ? (
+  //           <Button
+  //             onClick={() => removeFaculty(index)}
+  //             className="faculty-pref__remove-button"
+  //           >
+  //             Remove
+  //           </Button>
+  //         ) : (
+  //           <Button className="faculty-pref__remove-button" isDisabled={"true"}>
+  //             Remove
+  //           </Button>
+  //         )}
+  //       </div>
+  //       {/* <input type="file" />
+  //       <Button onClick={() => removeFaculty(index)}>Remove</Button> */}
+  //     </div>
+  //   );
+  // };
+
   return (
     <>
       <Card margin={"4rem 7rem 5rem 5rem"}>
@@ -37,14 +128,15 @@ const FacultyPrefList = ({
           gap={"10"}
         >
           {facPref.map((data, index) => {
-            const { facultyName, facultyEmail, facultyPrefLor } = data;
+            console.log(index + data.facultyName.toString());
+            const { facultyName, facultyEmail, facultyPrefLor, id } = data;
             return (
               <div
                 style={{
                   display: "flex",
                   gap: "1.3rem",
                 }}
-                key={index}
+                key={id}
               >
                 <FormControl
                   display={"flex"}
@@ -119,7 +211,7 @@ const FacultyPrefList = ({
                   ) : (
                     <Button
                       className="faculty-pref__remove-button"
-                      isDisabled={"true"}
+                      isDisabled={true}
                     >
                       Remove
                     </Button>
@@ -128,6 +220,10 @@ const FacultyPrefList = ({
               </div>
             );
           })}
+
+          {/* {facPref.map((data, index) => {
+            return <Component key={index} data={data} index={index} />;
+          })} */}
 
           <Button className="faculty-pref__add-button" onClick={addFaculty}>
             Add
