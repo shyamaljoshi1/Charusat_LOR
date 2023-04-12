@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SidebarCustom from "./components/sidebar/sidebar";
 import { ProSidebarProvider } from "react-pro-sidebar";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 import Home from "./pages/home/home";
 import LorRequest from "./pages/lor_request/lor_request";
 import Login from "./pages/login/login";
