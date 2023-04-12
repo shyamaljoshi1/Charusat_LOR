@@ -80,8 +80,11 @@ const LorRequest = () => {
       [e.target.name]: e.target.value,
     });
     setNoOfLetterhead(e.target.value);
-    setTermAndCondition(!termAndCondition);
+    
   };
+  const changeTerm=(e)=>{
+    setTermAndCondition(!termAndCondition);
+  }
   //for upload files
   const onUpload = (e) => {
     if (!e.target.files[0]) {
@@ -740,7 +743,7 @@ const LorRequest = () => {
           removeFaculty={removeFac}
           error={facultyPrefListErrors}
         />
-        <TermCondition onChange={onChange} />
+        <TermCondition onChange={changeTerm} />
         {termAndCondition ? (
           <Button className="lor-request__confirm-btn" onClick={onConfirm}>
             Conifrm

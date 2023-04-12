@@ -124,7 +124,7 @@ const UniversityPrefList = ({
                     variant="outline"
                     borderColor={"#1B65A7"}
                     name="intakeDate"
-                    type="month"
+                    type="date"
                     value={intakeDate}
                     onChange={(e) => onChange(index, e)}
                   ></Input>
