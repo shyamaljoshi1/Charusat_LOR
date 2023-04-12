@@ -2,7 +2,7 @@ import { Button } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import "./UploadAdmissionLetter.css";
 import PersonalInfo from "../lor_request/personalInfo";
-import CompiExamDetail from "../lor_request/compiExamDetail";
+import CompiExamDetail from "./CompiExam";
 import UniversityPrefList from "./UniversityPrefList";
 import TermCondition from "../lor_request/TermCondition";
 
@@ -16,7 +16,6 @@ const UploadAdmissionLetter = () => {
     passoutDate: "",
   });
   const [compiExamDetails, setCompiExamDetails] = useState({
-    compiExam: "",
     greSc: "",
     ieltsSc: "",
     toeflSc: "",
@@ -30,16 +29,13 @@ const UploadAdmissionLetter = () => {
     gate: null,
     other: null,
   });
-  const [universityPrefList, setUniversityPrefList] = useState([
-    {
-      id: 1,
-      universityName: "",
-      courseName: "",
-      countryName: "",
-      intakeDate: "",
-      admissionCard: null,
-    },
-  ]);
+  const [university, setUniversity] = useState({
+    universityName: "",
+    courseName: "",
+    countryName: "",
+    intakeDate: "",
+    admissionCard: null,
+  });
 
   //functions for change and update
   const onChange = (e) => {
@@ -48,6 +44,10 @@ const UploadAdmissionLetter = () => {
       ...compiExamDetails,
       [e.target.name]: e.target.value,
     });
+    setUniversity({ ...university, [e.target.name]: e.target.value });
+  };
+
+  const changeTerm = (e) => {
     setTermAndCondition(!termAndCondition);
   };
 
@@ -83,66 +83,33 @@ const UploadAdmissionLetter = () => {
     }
   };
 
-  const onChangeUni = (i, e) => {
-    const { name, value } = e.target;
-    const list = [...universityPrefList];
-    list[i][name] = value;
-    setUniversityPrefList(list);
-  };
-
-  const addUni = () => {
-    setUniversityPrefList([
-      ...universityPrefList,
-      {
-        id: universityPrefList[universityPrefList.length - 1].id + 1,
-        universityName: "",
-        courseName: "",
-        countryName: "",
-        intakeDate: "",
-      },
-    ]);
-    setUniversityPrefListErrors([
-      ...universityPrefListErrors,
-      {
-        universityName: "",
-        courseName: "",
-        countryName: "",
-        intakeDate: "",
-      },
-    ]);
-  };
-
-  const removeUni = (i) => {
-    const rows = [...universityPrefList];
-    const error = [...universityPrefListErrors];
-    rows.splice(i, 1);
-    error.splice(i, 1);
-    setUniversityPrefList(rows);
-    setUniversityPrefListErrors(error);
-  };
-  const onUploadAdmissionCard = (i, e) => {
+  const onUploadAdmissionCard = (e) => {
     if (!e.target.files[0]) {
     } else {
       const ext = e.target.files[0].name.split(".").pop();
       if (ext === "pdf" || ext === "doc" || ext === "docx") {
         const size = e.target.files[0].size;
         if (size > 1048576) {
-          const error = [...universityPrefListErrors];
-          error[i]["admissionCard"] = "You can only upload file upto 1MB;";
-          setUniversityPrefListErrors(error);
+          // const error = [...universityErrors];
+          // error["admissionCard"] = "You can only upload file upto 1MB";
+          setUniversityErrors({
+            ...universityErrors,
+            [e.target.name]: "You can only upload file upto 1MB",
+          });
           e.target.value = "";
         } else {
-          const list = [...universityPrefList];
-          list[i][e.target.name] = e.target.files[0];
-          universityPrefList(list);
-          const error = [...universityPrefListErrors];
-          error[i]["admissionCard"] = "";
-          setUniversityPrefListErrors(error);
+          setUniversity({ ...university, [e.target.name]: e.target.files[0] });
+          // const error = [...universityErrors];
+          // error["admissionCard"] = "";
+          setUniversityErrors({ ...universityErrors, [e.target.name]: "" });
         }
       } else {
-        const error = [...universityPrefListErrors];
-        error[i]["admissionCard"] = "You can only upload .pdf/.doc/.docx files";
-        setUniversityPrefListErrors(error);
+        // const error = [...universityErrors];
+        // error["admissionCard"] = "You can only upload .pdf/.doc/.docx files";
+        setUniversityErrors({
+          ...universityErrors,
+          [e.target.name]: "You can only upload .pdf/.doc/.docx files",
+        });
         e.target.value = "";
       }
     }
@@ -292,9 +259,7 @@ const UploadAdmissionLetter = () => {
     const errors = {};
 
     //have given compi exam or not
-    if (!compiExamDetails.compiExam) {
-      errors.compiExam = "reqired field";
-    } else if (
+    if (
       !compiExamDetails.greSc &&
       !compiExamDetails.gre &&
       !compiExamDetails.ieltsSc &&
@@ -366,95 +331,72 @@ const UploadAdmissionLetter = () => {
     return errors;
   };
 
-  const [universityPrefListErrors, setUniversityPrefListErrors] = useState([
-    {
-      universityName: "",
-      courseName: "",
-      countryName: "",
-      intakeDate: "",
-      admissionCard: "",
-    },
-  ]);
+  const [universityErrors, setUniversityErrors] = useState({
+    universityName: "",
+    courseName: "",
+    countryName: "",
+    intakeDate: "",
+    admissionCard: "",
+  });
 
-  const universityPrefListValidation = (universityPrefList) => {
-    const errors = [...universityPrefListErrors];
-    for (let i = 0; i < universityPrefList.length; i++) {
-      //for university name
-      if (!universityPrefList[i].universityName.trim()) {
-        errors[i]["universityName"] = "required field";
-        setUniversityPrefListErrors(errors);
-      } else if (/^[a-zA-Z ]+$/i.test(universityPrefList[i].universityName)) {
-        errors[i]["universityName"] = "";
-        setUniversityPrefListErrors(errors);
-      } else {
-        errors[i]["universityName"] = "Only Alphabets are allowed";
-        setUniversityPrefListErrors(errors);
-      }
-
-      //for course validatoin
-      if (!universityPrefList[i].courseName.trim()) {
-        errors[i]["courseName"] = "required field";
-        setUniversityPrefListErrors(errors);
-      } else if (/^[a-zA-Z ]+$/i.test(universityPrefList[i].courseName)) {
-        errors[i]["courseName"] = "";
-        setUniversityPrefListErrors(errors);
-      } else {
-        errors[i]["courseName"] = "Only Aphabets are allowed";
-        setUniversityPrefListErrors(errors);
-      }
-
-      //for country name validatiop
-      if (!universityPrefList[i].countryName.trim()) {
-        errors[i]["countryName"] = "required field";
-      } else if (/^[a-zA-Z ]+$/i.test(universityPrefList[i].countryName)) {
-        errors[i]["countryName"] = "";
-      } else {
-        errors[i]["countryName"] = "Only Alphabets are allowed";
-      }
-
-      //for inteake date validation
-      if (!universityPrefList[i].intakeDate) {
-        errors[i]["intakeDate"] = "required field";
-      } else {
-        errors[i]["intakeDate"] = "";
-      }
-      if (!universityPrefList[i].admissionCard) {
-        errors[i]["admissionCard"] = "Admission Card must be uploaded";
-      } else {
-        errors[i]["admissionCard"] = "";
-      }
+  const universityValidation = (university) => {
+    const errors = { ...universityErrors };
+    //for university name
+    if (!university.universityName.trim()) {
+      errors["universityName"] = "required field";
+      setUniversityErrors(errors);
+    } else if (/^[a-zA-Z ]+$/i.test(university.universityName)) {
+      errors["universityName"] = "";
+      setUniversityErrors(errors);
+    } else {
+      errors["universityName"] = "Only Alphabets are allowed";
+      setUniversityErrors(errors);
     }
 
+    //for course validatoin
+    if (!university.courseName.trim()) {
+      errors["courseName"] = "required field";
+      setUniversityErrors(errors);
+    } else if (/^[a-zA-Z ]+$/i.test(university.courseName)) {
+      errors["courseName"] = "";
+      setUniversityErrors(errors);
+    } else {
+      errors["courseName"] = "Only Aphabets are allowed";
+      setUniversityErrors(errors);
+    }
+
+    //for country name validatiop
+    if (!university.countryName.trim()) {
+      errors["countryName"] = "required field";
+    } else if (/^[a-zA-Z ]+$/i.test(university.countryName)) {
+      errors["countryName"] = "";
+    } else {
+      errors["countryName"] = "Only Alphabets are allowed";
+    }
+
+    //for inteake date validation
+    if (!university.intakeDate) {
+      errors["intakeDate"] = "required field";
+    } else {
+      errors["intakeDate"] = "";
+    }
+    if (!university.admissionCard) {
+      errors["admissionCard"] = "Admission Card must be uploaded";
+    } else {
+      errors["admissionCard"] = "";
+    }
     return errors;
   };
 
   //render
-  const [compiExam, checkCompiExam] = useState(false);
-  useEffect(() => {
-    if (compiExamDetails.compiExam === "true") checkCompiExam(true);
-    else {
-      checkCompiExam(false);
-      compiExamDetails.greSc = "";
-      compiExamDetails.ieltsSc = "";
-      compiExamDetails.toeflSc = "";
-      compiExamDetails.gmatSc = "";
-      compiExamDetails.gateSc = "";
-      compiExamDetails.otherSc = "";
-      compiExamDetailsErrors.gre = "";
-      compiExamDetailsErrors.ielts = "";
-      compiExamDetailsErrors.toefl = "";
-      compiExamDetailsErrors.gmat = "";
-      compiExamDetailsErrors.gate = "";
-      compiExamDetailsErrors.other = "";
-    }
-  }, [compiExamDetails, compiExamDetailsErrors]);
+
   const [termAndCondition, setTermAndCondition] = useState(false);
 
   //onConfirm
   const onConfirm = () => {
     setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
     setcompiExamDetailsErrors(compiExamDetailsValidation(compiExamDetails));
-    universityPrefListValidation(universityPrefList);
+    universityValidation(university);
   };
 
   return (
@@ -463,19 +405,16 @@ const UploadAdmissionLetter = () => {
         <PersonalInfo onChange={onChange} error={personalDetailsErrors} />
         <CompiExamDetail
           onChange={onChange}
-          compiExam={compiExam}
           onUpload={onUpload}
           error={compiExamDetailsErrors}
         />
         <UniversityPrefList
           onUpload={onUploadAdmissionCard}
-          onChange={onChangeUni}
-          uniPref={universityPrefList}
-          addUniversity={addUni}
-          removeUniversity={removeUni}
-          error={universityPrefListErrors}
+          onChange={onChange}
+          uniPref={university}
+          error={universityErrors}
         />
-        <TermCondition onChange={onChange} />
+        <TermCondition onChange={changeTerm} />
         {termAndCondition ? (
           <Button className="lor-request__confirm-btn" onClick={onConfirm}>
             Conifrm
