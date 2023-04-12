@@ -1,11 +1,19 @@
 import './lorFormat.css'
-const LorFormat = () => {
+// import {allData} from "../lor_format/helper";
+
+const LorFormat = (allData) => {
+    // const data={...allData};
+    // console.log(data.allData.studentId);
+    // console.log(allData);
+    // console.log("HELLO");
+
+    console.log(allData.allData.studentId);
     return (
         <div className='lor_format__container'>
             <div className='lor_format'>
                 <div className='lor_format__header'>
                     <div className='lor_format__header__top'>
-                        <div className='lor_format__header__top__id'>CSPIT/CE/04122022/20CE143</div>   {/* to set id and date */}
+                        <div className='lor_format__header__top__id'>CSPIT/CE/04122022/{allData.allData.studentId}</div>   {/* to set id and date */}
                         <div className='lor_format__header__top__date'>Date:<span>03/12/2022</span></div>   {/* to set the date */}
                     </div>
                     <div className='lor_format__header__uni_info'>
@@ -24,7 +32,7 @@ const LorFormat = () => {
                     </div>
                     <div className='lor_format__body__body'>
                         <p>Respected Sir,</p>
-                        <p>I am, ID No.: 20CE143 DHRUVIN ARUNKUMAR TANDEL passed out in MAY-2022 applying for master in universities listed in below table:</p>
+                        <p>I am, ID No.: {allData.allData.studentId} {allData.allData.studentName} passed out in {allData.allData.passoutDate} applying for master in universities listed in below table:</p>
                         <div className='lor_format__body__uni_table__container'>
                             <table style={{ border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times', marginTop: '10px', width: '100%' }}>
                                 <tr>

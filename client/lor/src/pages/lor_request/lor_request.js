@@ -11,6 +11,9 @@ import FacultyPrefList from "./facultyPrefList";
 // import axios from "axios";
 import { personalInformation, sendEmail } from "../../actions/lorReq";
 import TermCondition from "./TermCondition";
+import {getAllData} from "../lor_format/helper";
+import LorFormat from "../lor_format/lorFormat";
+
 
 const LorRequest = () => {
   const [personalInfo, setPersonalinfo] = useState({
@@ -660,8 +663,10 @@ const LorRequest = () => {
     ...compiExamDetails,
   };
 
-  console.log({mergedObj});
+  // console.log({mergedObj});
   //on click confirm
+  const [confirmState,setConfirmState] = useState(false);
+
   const onConfirm = () => {
     setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
     setPlacementDetailsErrors(placementDetailsValidation(placementInfo));
@@ -672,6 +677,10 @@ const LorRequest = () => {
     // facutlPrefListValidation(facultyPrefList);
 
     // window.alert(JSON.stringify(mergedObj.noOfLetterhead))
+    // console.log(mergedObj);
+    // getAllData(mergedObj);
+
+    setConfirmState(true);
     personalInformation(
       mergedObj.studentId,
       mergedObj.studentName,
@@ -746,7 +755,7 @@ const LorRequest = () => {
         <TermCondition onChange={changeTerm} />
         {termAndCondition ? (
           <Button className="lor-request__confirm-btn" onClick={onConfirm}>
-            Conifrm
+            Confirm
           </Button>
         ) : (
           <Button
@@ -757,11 +766,12 @@ const LorRequest = () => {
             Conifrm
           </Button>
         )}
+        {confirmState && <LorFormat allData={mergedObj}/> }
         {/* <Button className="lor-request__confirm-btn" onClick={onConfirm}>
           Conifrm
         </Button> */}
       </form>
-
+      
       {/* testing purpose */}
       {/* <img src={URL.createObjectURL(compiExamDetails.gre)} /> */}
     </div>

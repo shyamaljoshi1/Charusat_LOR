@@ -35,6 +35,11 @@ const App = () => {
     getUser();
   }, []);
   console.log(user);
+  const getAllData=(obj)=>{
+    console.log(obj);
+    return obj;
+  }
+const allData=getAllData;
   return (
     <ProSidebarProvider>
       <BrowserRouter>
@@ -53,8 +58,8 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Home />} />
-          <Route path="/lor_request" element={<LorRequest />} />
-          <Route path="/lor_format" element={<LorFormat />} />
+          <Route path="/lor_request" element={<LorRequest getAllData={getAllData}/>} />
+          <Route path="/lor_format" element={<LorFormat allData={allData}/>} />
           <Route
             path="/upload_admission_letter"
             element={<UploadAdmissionLetter />}
