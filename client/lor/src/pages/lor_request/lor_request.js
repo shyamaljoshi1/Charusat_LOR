@@ -9,7 +9,7 @@ import ResultDetails from "./resultDetails";
 import UniversityPrefList from "./universityPrefList";
 import FacultyPrefList from "./facultyPrefList";
 // import axios from "axios";
-import { personalInformation } from "../../actions/lorReq";
+import { personalInformation, sendEmail } from "../../actions/lorReq";
 import TermCondition from "./TermCondition";
 
 const LorRequest = () => {
@@ -44,9 +44,7 @@ const LorRequest = () => {
     bondCompleted: "",
     companyName: "",
   });
-  const [noOfLetterhead, setNoOfLetterhead] = useState({
-    noh: "",
-  });
+  const [noOfLetterhead, setNoOfLetterhead] = useState({});
 
   const [compiExamDetails, setCompiExamDetails] = useState({
     compiExam: "",
@@ -86,10 +84,11 @@ const LorRequest = () => {
       ...compiExamDetails,
       [e.target.name]: e.target.value,
     });
-    setNoOfLetterhead(parseInt(e.target.value));
+    setNoOfLetterhead(e.target.value);
+  };
+  const changeTerm = (e) => {
     setTermAndCondition(!termAndCondition);
   };
-
   //for upload files
   const onUpload = (e) => {
     if (!e.target.files[0]) {
@@ -123,6 +122,7 @@ const LorRequest = () => {
     }
   };
 
+  console.log(typeof noOfLetterhead);
   //to change usniversity preference details
   const onChangeUni = (i, e) => {
     const { name, value } = e.target;
@@ -669,9 +669,10 @@ const LorRequest = () => {
     ...personalInfo,
     ...placementInfo,
     ...resultDetails,
+    ...noOfLetterhead,
+    ...compiExamDetails,
   };
-
-  console.log({ facultyPrefList });
+  console.log(mergedObj);
   //on click confirm
   const onConfirm = () => {
     setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
@@ -679,8 +680,10 @@ const LorRequest = () => {
     setcompiExamDetailsErrors(compiExamDetailsValidation(compiExamDetails));
     setResultDetailsErrors(resultDetailsValidation(resultDetails));
     setNoOfLetterheadErrors(noOfLetterheadValidation(noOfLetterhead));
-    universityPrefListValidation(universityPrefList);
-    facutlPrefListValidation(facultyPrefList);
+    // universityPrefListValidation(universityPrefList);
+    // facutlPrefListValidation(facultyPrefList);
+
+    // window.alert(JSON.stringify(mergedObj.noOfLetterhead))
     personalInformation(
       mergedObj.studentId,
       mergedObj.studentName,
@@ -697,8 +700,26 @@ const LorRequest = () => {
       mergedObj.secondSAtt,
 
       mergedObj.firstSCG,
-      mergedObj.secondSCG
+      mergedObj.secondSCG,
+
+      mergedObj.noOfLetterhead,
+
+      // mergedObj.compiExam
+      mergedObj.greSc,
+      mergedObj.ieltsSc,
+      mergedObj.toeflSc,
+      mergedObj.gmatSc,
+      mergedObj.gateSc,
+      mergedObj.otherSc,
+
+      mergedObj.gre,
+      mergedObj.ielts,
+      mergedObj.toefl,
+      mergedObj.gmat,
+      mergedObj.gate,
+      mergedObj.other
     );
+    // sendEmail();
   };
   console.log(termAndCondition);
 
@@ -734,7 +755,7 @@ const LorRequest = () => {
           removeFaculty={removeFac}
           error={facultyPrefListErrors}
         />
-        <TermCondition onChange={onChange} />
+        <TermCondition onChange={changeTerm} />
         {termAndCondition ? (
           <Button className="lor-request__confirm-btn" onClick={onConfirm}>
             Conifrm
