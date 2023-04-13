@@ -9,7 +9,7 @@ import ResultDetails from "./resultDetails";
 import UniversityPrefList from "./universityPrefList";
 import FacultyPrefList from "./facultyPrefList";
 // import axios from "axios";
-import { personalInformation, sendEmail } from "../../actions/lorReq";
+import { personalInformation, uniPref,sendEmail } from "../../actions/lorReq";
 import TermCondition from "./TermCondition";
 import {getAllData} from "../lor_format/helper";
 import LorFormat from "../lor_format/lorFormat";
@@ -125,7 +125,7 @@ const LorRequest = () => {
     }
   };
 
-  console.log(typeof noOfLetterhead);
+  // console.log(typeof noOfLetterhead);
   //to change usniversity preference details
   const onChangeUni = (i, e) => {
     const { name, value } = e.target;
@@ -675,8 +675,11 @@ const LorRequest = () => {
     ...noOfLetterhead,
     ...compiExamDetails,
   };
+  // const mergedObj1= [
+  //   // universityPrefList
+  // ]
 
-  // console.log({mergedObj});
+  // console.log(mergedObj1);
   //on click confirm
   const [confirmState,setConfirmState] = useState(false);
 
@@ -686,10 +689,22 @@ const LorRequest = () => {
     setcompiExamDetailsErrors(compiExamDetailsValidation(compiExamDetails));
     setResultDetailsErrors(resultDetailsValidation(resultDetails));
     setNoOfLetterheadErrors(noOfLetterheadValidation(noOfLetterhead));
-    // universityPrefListValidation(universityPrefList);
+    universityPrefListValidation(universityPrefList);
     // facutlPrefListValidation(facultyPrefList);
 
     // window.alert(JSON.stringify(mergedObj.noOfLetterhead))
+
+    for(let i=0;i<universityPrefList.length;i++){
+      uniPref(
+        mergedObj.studentId,
+        universityPrefList[i].universityName,
+        universityPrefList[i].courseName,
+        universityPrefList[i].countryName,
+        universityPrefList[i].intakeDate,
+      )
+
+    }
+
     // console.log(mergedObj);
     // getAllData(mergedObj);
 
@@ -727,11 +742,12 @@ const LorRequest = () => {
       mergedObj.toefl,
       mergedObj.gmat,
       mergedObj.gate,
-      mergedObj.other
+      mergedObj.other,
+      // mergedObj.
     );
     // sendEmail();
   };
-  console.log(termAndCondition);
+  // console.log(termAndCondition);
 
   return (
     <div className="form__container">

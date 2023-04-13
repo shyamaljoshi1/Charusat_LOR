@@ -54,3 +54,12 @@ model tblcompetitive {
   otherS      String
   studentInfo tblPersonalInfo[]
 }
+
+model tblAllUniversity{
+  id Int @id @default(autoincrement())
+  studentId   String
+  unName String
+  courseName String
+  countryName String
+  intake String
+}
