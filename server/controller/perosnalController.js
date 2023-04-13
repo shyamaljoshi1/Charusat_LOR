@@ -110,6 +110,27 @@ exports.sendEmail = async (req, res) => {
   }
 };
 
+exports.uniPreference = async (req,res) => {
+  const {studentId,universityName,courseName,countryName,intakeDate} = req.body
+  // console.log(req.body)
+  try {
+    const result = await prisma.tblAllUniversity.create({
+      data: {
+        studentId,
+        unName:universityName,
+        courseName,  
+        countryName,
+        intake:intakeDate,
+      },
+    })
+    // res.status(200).send(result);
+    console.log(result);
+  } catch (error) {
+    // res.status(500).send(error) 
+    console.log(error) 
+  }
+}
+
 exports.personalInfo = async (req, res) => {
   const lastEntryOfResult = async () => {
     const lastEntryResult = await prisma.tblResult.findMany({

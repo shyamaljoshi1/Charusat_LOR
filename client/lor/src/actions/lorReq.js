@@ -79,6 +79,84 @@ export const personalInformation =
     }
   };
 
+// export const uniPref = async (studentId,uni)=>{
+//   console.log(studentId)
+//   // let i;
+//   // console.log(uni.length)
+//   // for(let i=0;i<uni.length;i++){
+//       try{
+//         // const result = JSON.stringify(uni[i]);
+//         // const universityName = uni[i].universityName;
+//         // const courseName = uni[i].courseName;
+//         // const countryName = uni[i].countryName;
+//         // const intakeDate = uni[i].intakeDate;
+
+//         // const universityName = uni[i].universityName;
+//         // const courseName = uni[i].courseName;
+//         // const countryName = uni[i].countryName;
+//         // const intakeDate = uni[i].intakeDate;
+
+//         console.log(uni[i].universityName);
+//         // alert(result);  
+
+//         const config = { headers: { "Content-Type": "application/json" } };
+//         const { data } = await axios.post(
+//           `http://localhost:3001/api/v1/unipref`,
+//           {
+//             studentId,
+//             universityName,
+//             courseName,
+//             countryName,
+//             intakeDate,
+//           },
+//           config,
+//           // console.log(i)
+//           );
+//           console.log(i)
+//     }
+//     catch(error){
+//       console.log(error);
+//     }
+//   }
+
+export const uniPref = async (studentId,universityName,courseName,countryName,intakeDate)=>{
+  console.log(studentId)
+  // let i;
+  // console.log(uni.length)
+  // for(let i=0;i<uni.length;i++){
+    try{
+      // const result = JSON.stringify(uni[i]);
+      // const universityName = uni[i].universityName;
+      // const courseName = uni[i].courseName;
+      // const countryName = uni[i].countryName;
+      // const intakeDate = uni[i].intakeDate;
+
+      // const universityName = uni[i].universityName;
+      // const courseName = uni[i].courseName;
+      // const countryName = uni[i].countryName;
+      // const intakeDate = uni[i].intakeDate;
+
+      // console.log(uni[i].universityName);
+      // alert(result);  
+
+      const config = { headers: { "Content-Type": "application/json" } };
+      const { data } = await axios.post(
+        `http://localhost:3001/api/v1/unipref`,
+        {
+          studentId,
+          universityName,
+          courseName,
+          countryName,
+          intakeDate,
+        },
+        config,
+        );
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+
 export const sendEmail = async ()=>{
   try {
     const config = { headers: { "Content-Type": "application/json" } };
