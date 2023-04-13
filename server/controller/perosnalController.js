@@ -131,6 +131,38 @@ exports.uniPreference = async (req,res) => {
   }
 }
 
+exports.facultyPreference = async (req,res)=>{
+  console.log(req.body)
+  console.log(req.files)
+
+  const uploadDoc = async(studentId,facultyName)=>{
+    if(req.files){
+      const files = req.files;
+      if(files.facultyPrefLor !=null){
+        var file = req.files.facultyPrefLor;
+        file.mv(`./facultyUploads/${studentId}_${facultyName}.pdf`,(err)=>{
+          if(err)
+            console.log(err);
+        })
+      }
+    }
+  }
+
+  const {studentId,facultyName,facultyEmail} = req.body;
+  try {
+    const result = await prisma.tblFacultyPref.create({
+      data:{
+        studentId,
+        fcName:facultyName,
+        fcEmail:facultyEmail
+      }
+    })
+    uploadDoc(studentId,facultyName);
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 exports.personalInfo = async (req, res) => {
   const lastEntryOfResult = async () => {
     const lastEntryResult = await prisma.tblResult.findMany({
@@ -339,8 +371,3 @@ exports.personalInfo = async (req, res) => {
     // console.log(error);
   }
 };
-
-
-
-
-
