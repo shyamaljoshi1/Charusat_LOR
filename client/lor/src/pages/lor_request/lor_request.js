@@ -766,7 +766,7 @@ const LorRequest = () => {
       mergedObj.other,
       // mergedObj.
     );
-    // sendEmail();
+    sendEmail();
   };
   // console.log(termAndCondition);
 

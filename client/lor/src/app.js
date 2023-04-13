@@ -43,7 +43,7 @@ const allData=getAllData;
   return (
     <ProSidebarProvider>
       <BrowserRouter>
-        {/*for implementation*/}
+        {/* for implementation */}
         {/* {user && <SidebarCustom />}
                 <Routes>
                     <Route path="/login" element={<Login />} />
@@ -52,8 +52,10 @@ const allData=getAllData;
                     <Route path="/lor_request" element={user ? <LorRequest /> : <Login />} />
                 </Routes> */}
 
-        {/*for tesiting*/}
-        <SidebarCustom />
+        {/* for tesiting */}
+
+
+        <SidebarCustom /> 
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
