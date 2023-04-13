@@ -9,7 +9,7 @@ import ResultDetails from "./resultDetails";
 import UniversityPrefList from "./universityPrefList";
 import FacultyPrefList from "./facultyPrefList";
 // import axios from "axios";
-import { personalInformation, uniPref,sendEmail } from "../../actions/lorReq";
+import { personalInformation, uniPref,fcPref,sendEmail } from "../../actions/lorReq";
 import TermCondition from "./TermCondition";
 import {getAllData} from "../lor_format/helper";
 import LorFormat from "../lor_format/lorFormat";
@@ -715,9 +715,17 @@ const LorRequest = () => {
         universityPrefList[i].countryName,
         universityPrefList[i].intakeDate,
       )
-
     }
 
+    for(let i=0;i<facultyPrefList.length;i++){
+      fcPref(
+        mergedObj.studentId,
+        facultyPrefList[i].facultyName,
+        facultyPrefList[i].facultyEmail,
+        facultyPrefList[i].facultyPrefLor,
+      )
+
+    }
     // console.log(mergedObj);
     // getAllData(mergedObj);
 
@@ -758,7 +766,7 @@ const LorRequest = () => {
       mergedObj.other,
       // mergedObj.
     );
-    // sendEmail();
+    sendEmail();
   };
   // console.log(termAndCondition);
 
