@@ -36,4 +36,9 @@
 }
 .faculty-pref__remove-button .remove:hover {
   cursor: not-allowed;
+}
+.faculty-pref__remove-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  scale: 1 !important;
 }/*# sourceMappingURL=facultyPrefList.css.map */

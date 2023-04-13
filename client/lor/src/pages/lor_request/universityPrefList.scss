@@ -40,5 +40,10 @@
         & .remove:hover {
             cursor: not-allowed;
         }
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            scale: 1 !important;
+        }
     }
 }

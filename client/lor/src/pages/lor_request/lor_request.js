@@ -11,6 +11,9 @@ import FacultyPrefList from "./facultyPrefList";
 // import axios from "axios";
 import { personalInformation, uniPref,sendEmail } from "../../actions/lorReq";
 import TermCondition from "./TermCondition";
+import {getAllData} from "../lor_format/helper";
+import LorFormat from "../lor_format/lorFormat";
+
 
 const LorRequest = () => {
   const [personalInfo, setPersonalinfo] = useState({
@@ -44,8 +47,7 @@ const LorRequest = () => {
     bondCompleted: "",
     companyName: "",
   });
-  const [noOfLetterhead, setNoOfLetterhead] = useState({
-  });
+  const [noOfLetterhead, setNoOfLetterhead] = useState({});
 
   const [compiExamDetails, setCompiExamDetails] = useState({
     compiExam: "",
@@ -64,10 +66,16 @@ const LorRequest = () => {
   });
 
   const [universityPrefList, setUniversityPrefList] = useState([
-    { universityName: "", courseName: "", countryName: "", intakeDate: "" },
+    {
+      id: 1,
+      universityName: "",
+      courseName: "",
+      countryName: "",
+      intakeDate: "",
+    },
   ]);
   const [facultyPrefList, setFacultyPrefList] = useState([
-    { facultyName: "", facultyEmail: "", facultyPrefLor: null },
+    { id: 1, facultyName: "", facultyEmail: "", facultyPrefLor: null },
   ]);
 
   //for changing object data
@@ -80,11 +88,10 @@ const LorRequest = () => {
       [e.target.name]: e.target.value,
     });
     setNoOfLetterhead(e.target.value);
-    
   };
-  const changeTerm=(e)=>{
+  const changeTerm = (e) => {
     setTermAndCondition(!termAndCondition);
-  }
+  };
   //for upload files
   const onUpload = (e) => {
     if (!e.target.files[0]) {
@@ -118,7 +125,7 @@ const LorRequest = () => {
     }
   };
 
-  // console.log(typeof(noOfLetterhead));
+  // console.log(typeof noOfLetterhead);
   //to change usniversity preference details
   const onChangeUni = (i, e) => {
     const { name, value } = e.target;
@@ -141,6 +148,7 @@ const LorRequest = () => {
     setUniversityPrefListErrors([
       ...universityPrefListErrors,
       {
+        id: universityPrefList[universityPrefList.length - 1].id + 1,
         universityName: "",
         courseName: "",
         countryName: "",
@@ -171,7 +179,8 @@ const LorRequest = () => {
   const onUploadFac = (i, e) => {
     if (!e.target.files[0]) {
     } else {
-      const ext = e.target.files[0].name.split(".").pop();
+      let _e = e;
+      const ext = _e.target.files[0].name.split(".").pop();
       if (ext === "pdf" || ext === "doc" || ext === "docx") {
         const size = e.target.files[0].size;
         if (size > 1048576) {
@@ -200,7 +209,12 @@ const LorRequest = () => {
   const addFac = () => {
     setFacultyPrefList([
       ...facultyPrefList,
-      { facultyName: "", facultyEmail: "", facultyPrefLor: null },
+      {
+        id: facultyPrefList[facultyPrefList.length - 1].id + 1,
+        facultyName: "",
+        facultyEmail: "",
+        facultyPrefLor: null,
+      },
     ]);
     setFacultyPrefListErrors([
       ...facultyPrefListErrors,
@@ -217,6 +231,8 @@ const LorRequest = () => {
     const rows = [...facultyPrefList];
     const error = [...facultyPrefListErrors];
     rows.splice(i, 1);
+    // let _rows = facultyPrefList.filter((v, ind) => ind !== i);
+    // setFacultyPrefList(_rows);
     error.splice(i, 1);
     setFacultyPrefList(rows);
     setFacultyPrefListErrors(error);
@@ -665,6 +681,8 @@ const LorRequest = () => {
 
   // console.log(mergedObj1);
   //on click confirm
+  const [confirmState,setConfirmState] = useState(false);
+
   const onConfirm = () => {
     setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
     setPlacementDetailsErrors(placementDetailsValidation(placementInfo));
@@ -687,6 +705,10 @@ const LorRequest = () => {
 
     }
 
+    // console.log(mergedObj);
+    // getAllData(mergedObj);
+
+    setConfirmState(true);
     personalInformation(
       mergedObj.studentId,
       mergedObj.studentName,
@@ -704,7 +726,7 @@ const LorRequest = () => {
 
       mergedObj.firstSCG,
       mergedObj.secondSCG,
-      
+
       mergedObj.noOfLetterhead,
 
       // mergedObj.compiExam
@@ -714,7 +736,7 @@ const LorRequest = () => {
       mergedObj.gmatSc,
       mergedObj.gateSc,
       mergedObj.otherSc,
-      
+
       mergedObj.gre,
       mergedObj.ielts,
       mergedObj.toefl,
@@ -762,22 +784,23 @@ const LorRequest = () => {
         <TermCondition onChange={changeTerm} />
         {termAndCondition ? (
           <Button className="lor-request__confirm-btn" onClick={onConfirm}>
-            Conifrm
+            Confirm
           </Button>
         ) : (
           <Button
-            disabled
+            isDisabled={true}
             className="lor-request__confirm-btn"
             // onClick={onConfirm}
           >
             Conifrm
           </Button>
         )}
+        {confirmState && <LorFormat allData={mergedObj}/> }
         {/* <Button className="lor-request__confirm-btn" onClick={onConfirm}>
           Conifrm
         </Button> */}
       </form>
-
+      
       {/* testing purpose */}
       {/* <img src={URL.createObjectURL(compiExamDetails.gre)} /> */}
     </div>
