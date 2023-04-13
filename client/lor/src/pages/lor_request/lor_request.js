@@ -675,6 +675,19 @@ const LorRequest = () => {
     ...noOfLetterhead,
     ...compiExamDetails,
   };
+  const mergedObjF = {
+    ...personalInfo,
+    ...placementInfo,
+    ...resultDetails,
+    ...noOfLetterhead,
+    ...compiExamDetails,
+    ...universityPrefList,
+  };
+  const mergedObjFrontend={
+    ...mergedObjF,
+    ...facultyPrefList
+  }
+  
   // const mergedObj1= [
   //   // universityPrefList
   // ]
@@ -803,7 +816,7 @@ const LorRequest = () => {
             Conifrm
           </Button>
         )}
-        {confirmState && <LorFormat allData={mergedObj}/> }
+        {confirmState && <LorFormat allData={mergedObjFrontend}/> }
         {/* <Button className="lor-request__confirm-btn" onClick={onConfirm}>
           Conifrm
         </Button> */}
