@@ -675,6 +675,19 @@ const LorRequest = () => {
     ...noOfLetterhead,
     ...compiExamDetails,
   };
+  const mergedObjF = {
+    ...personalInfo,
+    ...placementInfo,
+    ...resultDetails,
+    ...noOfLetterhead,
+    ...compiExamDetails,
+    ...universityPrefList,
+  };
+  const mergedObjFrontend={
+    ...mergedObjF,
+    ...facultyPrefList
+  }
+  
   // const mergedObj1= [
   //   // universityPrefList
   // ]
@@ -690,7 +703,7 @@ const LorRequest = () => {
     setResultDetailsErrors(resultDetailsValidation(resultDetails));
     setNoOfLetterheadErrors(noOfLetterheadValidation(noOfLetterhead));
     universityPrefListValidation(universityPrefList);
-    // facutlPrefListValidation(facultyPrefList);
+    facutlPrefListValidation(facultyPrefList);
 
     // window.alert(JSON.stringify(mergedObj.noOfLetterhead))
 
@@ -795,7 +808,7 @@ const LorRequest = () => {
             Conifrm
           </Button>
         )}
-        {confirmState && <LorFormat allData={mergedObj}/> }
+        {confirmState && <LorFormat allData={mergedObjFrontend}/> }
         {/* <Button className="lor-request__confirm-btn" onClick={onConfirm}>
           Conifrm
         </Button> */}

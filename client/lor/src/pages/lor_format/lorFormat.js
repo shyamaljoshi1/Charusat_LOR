@@ -1,13 +1,21 @@
+import { useState } from 'react';
 import './lorFormat.css'
 // import {allData} from "../lor_format/helper";
 
 const LorFormat = (allData) => {
     // const data={...allData};
     // console.log(data.allData.studentId);
-    // console.log(allData);
+    console.log(allData.allData);
     // console.log("HELLO");
 
-    console.log(allData.allData.studentId);
+    // const [newDate,setNewDate]=useState("-");
+    // const date = new Date();
+    //     const year=date.getFullYear();
+    //     const month=date.getMonth();
+    //     const day=date.getDate();
+    //     setNewDate("{day}/{month}/{year}");
+
+    console.log(allData.facultyPrefList);
     return (
         <div className='lor_format__container'>
             <div className='lor_format'>
@@ -66,11 +74,12 @@ const LorFormat = (allData) => {
                                     </tr>
                                     <tr>
                                         <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>1</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.greSc}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.ieltsSc}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.toeflSc}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.gmatSc}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.gateSc}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.otherSc}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -109,31 +118,31 @@ const LorFormat = (allData) => {
                                     </tr>
                                     <tr>
                                         <th style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>Attendance</th>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.firstSAtt}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.secondSAtt}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.thirdSAtt}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.forthSAtt}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.fifthSAtt}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.sixthSAtt}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.seventhSAtt}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.eightthSAtt}</td>
                                     </tr>
                                     <tr>
                                         <th style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>CGPA</th>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
-                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>&nbsp;</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.firstSCG}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.secondSCG}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.thirdSCG}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.forthSCG}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.fifthSCG}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.sixthSCG}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.seventhSCG}</td>
+                                        <td style={{ padding: '5px', textAlign: 'center', border: '1px solid black', borderCollapse: 'collapse', fontFamily: 'times' }}>{allData.allData.eightthSCG}</td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
                         <div className='lor_format__body__body__footer'>
-                            <p>I required 9 letter-head for LOR. So, I request you to give me permission to take LOR from respective faculties</p>
+                            <p>I required {allData.allData.noOfLetterhead} letter-head for LOR. So, I request you to give me permission to take LOR from respective faculties</p>
                         </div>
                     </div>
                 </div>
