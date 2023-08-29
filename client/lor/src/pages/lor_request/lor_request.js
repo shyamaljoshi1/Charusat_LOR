@@ -9,11 +9,15 @@ import ResultDetails from "./resultDetails";
 import UniversityPrefList from "./universityPrefList";
 import FacultyPrefList from "./facultyPrefList";
 // import axios from "axios";
-import { personalInformation, uniPref,fcPref,sendEmail } from "../../actions/lorReq";
+import {
+  personalInformation,
+  uniPref,
+  fcPref,
+  sendEmail,
+} from "../../actions/lorReq";
 import TermCondition from "./TermCondition";
-import {getAllData} from "../lor_format/helper";
+import { getAllData } from "../lor_format/helper";
 import LorFormat from "../lor_format/lorFormat";
-
 
 const LorRequest = () => {
   const [personalInfo, setPersonalinfo] = useState({
@@ -683,18 +687,18 @@ const LorRequest = () => {
     ...compiExamDetails,
     ...universityPrefList,
   };
-  const mergedObjFrontend={
+  const mergedObjFrontend = {
     ...mergedObjF,
-    ...facultyPrefList
-  }
-  
+    ...facultyPrefList,
+  };
+
   // const mergedObj1= [
   //   // universityPrefList
   // ]
 
   // console.log(mergedObj1);
   //on click confirm
-  const [confirmState,setConfirmState] = useState(false);
+  const [confirmState, setConfirmState] = useState(false);
 
   const onConfirm = () => {
     setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
@@ -707,24 +711,23 @@ const LorRequest = () => {
 
     // window.alert(JSON.stringify(mergedObj.noOfLetterhead))
 
-    for(let i=0;i<universityPrefList.length;i++){
+    for (let i = 0; i < universityPrefList.length; i++) {
       uniPref(
         mergedObj.studentId,
         universityPrefList[i].universityName,
         universityPrefList[i].courseName,
         universityPrefList[i].countryName,
-        universityPrefList[i].intakeDate,
-      )
+        universityPrefList[i].intakeDate
+      );
     }
 
-    for(let i=0;i<facultyPrefList.length;i++){
+    for (let i = 0; i < facultyPrefList.length; i++) {
       fcPref(
         mergedObj.studentId,
         facultyPrefList[i].facultyName,
         facultyPrefList[i].facultyEmail,
-        facultyPrefList[i].facultyPrefLor,
-      )
-
+        facultyPrefList[i].facultyPrefLor
+      );
     }
     // console.log(mergedObj);
     // getAllData(mergedObj);
@@ -763,7 +766,7 @@ const LorRequest = () => {
       mergedObj.toefl,
       mergedObj.gmat,
       mergedObj.gate,
-      mergedObj.other,
+      mergedObj.other
       // mergedObj.
     );
     sendEmail();
@@ -772,6 +775,16 @@ const LorRequest = () => {
 
   return (
     <div className="form__container">
+      {/* <h1
+        style={{
+          marginTop: "2rem",
+          fontSize: "2.5rem",
+          color: "#1b65a7",
+          fontWeight: "900",
+        }}
+      >
+        LOR Request
+      </h1> */}
       <form action="POST">
         <PersonalInfo error={personalDetailsErrors} onChange={onChange} />
         <PlacementInfo
@@ -816,12 +829,12 @@ const LorRequest = () => {
             Conifrm
           </Button>
         )}
-        {confirmState && <LorFormat allData={mergedObjFrontend}/> }
+        {confirmState && <LorFormat allData={mergedObjFrontend} />}
         {/* <Button className="lor-request__confirm-btn" onClick={onConfirm}>
           Conifrm
         </Button> */}
       </form>
-      
+
       {/* testing purpose */}
       {/* <img src={URL.createObjectURL(compiExamDetails.gre)} /> */}
     </div>
