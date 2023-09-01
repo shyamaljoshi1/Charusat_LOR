@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 exports.getAllStudents = async (req,res)=>{
   try {
     const student = await prisma.tblPersonalInfo.findMany({
-      include : {attendances : true ,results : true}
+      include : {attendances : true ,results : true, university:true}
     })
     res.send(student);
 
@@ -195,6 +195,16 @@ exports.personalInfo = async (req, res) => {
     return lastEntryCompExam;
   };
 
+  const lastEntryOfUniversity = async () => {
+    const lastEntryUniversity = await prisma.tblAllUniversity.findMany({
+      take: 1,
+      orderBy: {
+        id: "desc",
+      },
+    });
+    return lastEntryUniversity;
+  };
+
   const fileUploadOfCompExam = async (studentId) => {
     if(req.files){
 
@@ -314,10 +324,12 @@ exports.personalInfo = async (req, res) => {
     let rid = await lastEntryOfResult();
     let aid = await lastEntryOAttendance();
     let ceid = await lastEntryOfCompExam();
+    let unid = await lastEntryOfUniversity();
 
     rid = rid[0].id;
     aid = aid[0].id;
     ceid = ceid[0].id;
+    unid = unid[0].id;
 
     // console.log(rid);
     // console.log(aid);
@@ -352,6 +364,7 @@ exports.personalInfo = async (req, res) => {
         rid: rid,
         aid: aid,
         ceid: ceid,
+        unid: unid,
       },
     });
     console.log("Data inserted successfully")
@@ -371,3 +384,23 @@ exports.personalInfo = async (req, res) => {
     // console.log(error);
   }
 };
+
+exports.searchByCountry = async(req,res)=>{
+  try{
+    const search = (req.params.search).toLowerCase();
+    const result = await prisma.tblAllUniversity.findMany({
+      include : {studentInfo : true},
+      where:{
+        countryName : search,
+      }
+    });
+
+    res.json(result)
+  }
+  catch(err){
+    res.status(404).send({
+      success: false,
+      message: "Students is not found!",
+    });
+  }
+}

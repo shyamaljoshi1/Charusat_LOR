@@ -22,9 +22,11 @@ model tblPersonalInfo {
   rid              Int
   sid              Int            @id @default(autoincrement())
   ceid             Int
+  unid             Int
   attendances      tblAttendance  @relation(fields: [aid], references: [id])
   compititiveExams tblcompetitive @relation(fields: [ceid], references: [id])
   results          tblResult      @relation(fields: [rid], references: [id])
+  university          tblAllUniversity      @relation(fields: [unid], references: [id])
 }
 
 model tblResult {
@@ -62,6 +64,7 @@ model tblAllUniversity {
   courseName  String
   countryName String
   intake      String
+  studentInfo tblPersonalInfo[]
 }
 
 model tblFacultyPref {

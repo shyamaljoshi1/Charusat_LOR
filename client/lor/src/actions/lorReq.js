@@ -122,6 +122,7 @@ export const personalInformation =
 export const uniPref = async (studentId,universityName,courseName,countryName,intakeDate)=>{
   console.log(studentId)
   try{
+    countryName = countryName.toLowerCase();
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.post(
       `http://localhost:3001/api/v1/unipref`,
