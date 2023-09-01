@@ -24,10 +24,14 @@ const SidebarCustom = () => {
     setWhich("upload_admission_letter");
     navigate("/upload_admission_letter");
   }
+  function search() {
+    setWhich("search");
+    navigate("/search");
+  }
   React.useEffect(() => {
     setWhich(window.location.href.split("/").pop());
   }, []);
-  console.log(which);
+  console.log();
   return (
     <Sidebar
       className="sidebar"
@@ -42,7 +46,11 @@ const SidebarCustom = () => {
             home();
           }}
         >
-          <div className={which === "home" ? "active" : "menu-item"}>
+          <div
+            className={
+              which === "home" || which === "" ? "active" : "menu-item"
+            }
+          >
             &nbsp; Home
           </div>
         </MenuItem>
@@ -68,7 +76,11 @@ const SidebarCustom = () => {
             &nbsp; Upload Admission letter
           </div>
         </MenuItem>
-        <MenuItem>
+        <MenuItem
+          onClick={() => {
+            search();
+          }}
+        >
           <div className={which === "search" ? "active" : "menu-item"}>
             &nbsp; Search
           </div>
@@ -81,12 +93,10 @@ const SidebarCustom = () => {
       <Menu
         style={{
           width: "100%",
-          margin: "0 0 0 1.5rem",
-          backgroundColor: "#e9f3fc",
         }}
       >
         <MenuItem onClick={logout}>
-          <div className="menu-item">Logout</div>
+          <div className="logout">Logout</div>
         </MenuItem>
       </Menu>
     </Sidebar>

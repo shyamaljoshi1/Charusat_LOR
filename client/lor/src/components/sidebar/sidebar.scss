@@ -1,44 +1,68 @@
-*{
+* {
     background-color: white !important;
     color: #040615;
 }
 
-.sidebar{
-    background-color: #E9F3FC;
+.sidebar {
+    background-color: #e9f3fc;
     font-size: 1.6rem;
-    &__menu{
-        background-color: #E9F3FC;
+    &__menu {
+        background-color: #e9f3fc;
     }
 }
 
-.ps-menu-label:hover{
-    background-color: #1B65A7 !important;
-    color: #fff;
-}
-
-.ps-menu-root{
-    
-}
-
-.ps-menu-label{
-    padding: 1.49rem 1rem !important;
-    border-radius: 1.1rem !important;
-    margin: 0 1.5rem !important;
-    font-weight:600 !important;
+.ps-menu-label {
+    background-color: #e9f3fc !important;
+    transition: all 0.15s !important;
     align-items: center;
-    transition: all .15s !important;
-    background-color: #E9F3FC !important;
+    .menu-item {
+        padding: 1.49rem 1rem !important;
+        border-radius: 1.1rem !important;
+        margin: 0 1.5rem !important;
+        font-weight: 600 !important;
+        align-items: center;
+        transition: all 0.15s !important;
+        background-color: #e9f3fc !important;
 
+        &:hover {
+            background-color: #4a83b4 !important;
+            color: #fff;
+        }
+    }
+    .logout {
+        padding: 1.49rem 1rem !important;
+        border-radius: 1.1rem !important;
+        margin: 0 1.5rem !important;
+        font-weight: 600 !important;
+        align-items: center;
+        transition: all 0.15s !important;
+        background-color: #e9f3fc !important;
+
+        &:hover {
+            background-color: #ff4545 !important;
+            color: #fff;
+        }
+    }
+    .active {
+        background-color: #1b65a7 !important;
+        border-radius: 1.1rem !important;
+        color: #fff;
+        padding: 1.49rem 1rem !important;
+        font-weight: 600 !important;
+        transition: all 0.15;
+        align-items: center;
+        margin: 0 1.5rem !important;
+    }
 }
 
-.ps-menu-button{
+.ps-menu-button {
     padding: 0 !important;
-    margin: .7rem 0 !important;
-    background-color: #E9F3FC !important;
+    margin: 0.7rem 0 !important;
+    background-color: #e9f3fc !important;
 }
 
-.ps-sidebar-container{
-    background:  #E9F3FC !important;
+.ps-sidebar-container {
+    background: #e9f3fc !important;
     display: flex !important;
     flex-direction: column;
     box-shadow: 0px 0px 70px 9px rgba(27, 101, 167, 0.25) !important;
@@ -46,7 +70,6 @@
     justify-content: space-around;
 }
 
-.ps-menuitem-root{
-    background-color: #E9F3FC !important;
-
+.ps-menuitem-root {
+    background-color: #e9f3fc !important;
 }

@@ -7,6 +7,7 @@ import LorRequest from "./pages/lor_request/lor_request";
 import Login from "./pages/login/login";
 import LorFormat from "./pages/lor_format/lorFormat";
 import UploadAdmissionLetter from "./pages/UploadAdmissionLetter/UploadAdmissionLetter.js";
+import Search from "./pages/search/Search";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -35,11 +36,11 @@ const App = () => {
     getUser();
   }, []);
   console.log(user);
-  const getAllData=(obj)=>{
+  const getAllData = (obj) => {
     console.log(obj);
     return obj;
-  }
-const allData=getAllData;
+  };
+  const allData = getAllData;
   return (
     <ProSidebarProvider>
       <BrowserRouter>
@@ -54,18 +55,21 @@ const allData=getAllData;
 
         {/* for tesiting */}
 
-
-        <SidebarCustom /> 
+        <SidebarCustom />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Home />} />
-          <Route path="/lor_request" element={<LorRequest getAllData={getAllData}/>} />
-          <Route path="/lor_format" element={<LorFormat allData={allData}/>} />
+          <Route
+            path="/lor_request"
+            element={<LorRequest getAllData={getAllData} />}
+          />
+          <Route path="/lor_format" element={<LorFormat allData={allData} />} />
           <Route
             path="/upload_admission_letter"
             element={<UploadAdmissionLetter />}
           />
+          <Route path="/search" element={<Search />} />
         </Routes>
       </BrowserRouter>
     </ProSidebarProvider>

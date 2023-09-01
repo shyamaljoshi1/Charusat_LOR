@@ -1,0 +1,22 @@
+.search_container {
+    margin-left: 30rem;
+    padding: 3rem 3rem 3rem 0;
+}
+.search-button {
+    font-weight: bold !important;
+    background-color: #e9f3fc !important;
+    padding: 1.5rem 4rem !important;
+    &:hover {
+        background-color: #4a83b4 !important;
+        color: #fff !important;
+    }
+    &:active {
+        background-color: #1b65a7 !important;
+        scale: 0.97;
+    }
+}
+.error-message {
+    color: #e00;
+    font-size: 1.5rem;
+    padding: 0.7rem 0 0 0.5rem;
+}
