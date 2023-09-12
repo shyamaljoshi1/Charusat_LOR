@@ -128,7 +128,7 @@ const FacultyPrefList = ({
           gap={"10"}
         >
           {facPref.map((data, index) => {
-            console.log(index + data.facultyName.toString());
+            // console.log(index + data.facultyName.toString());
             const { facultyName, facultyEmail, facultyPrefLor, id } = data;
             return (
               <div

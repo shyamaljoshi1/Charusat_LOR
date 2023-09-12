@@ -8,25 +8,25 @@ datasource db {
 }
 
 model tblPersonalInfo {
-  studentId        String         @unique
+  studentId        String           @unique
   studentName      String
   emailId          String
   studentMobile    String
   parentMobile     String
   dateOfGraduation String
   studentPlace     Boolean
-  companyName      String         @default("NA")
+  companyName      String           @default("NA")
   bond             Boolean
-  noOfLetterHead   String         @default("0")
+  noOfLetterHead   String           @default("0")
   aid              Int
   rid              Int
-  sid              Int            @id @default(autoincrement())
+  sid              Int              @id @default(autoincrement())
   ceid             Int
   unid             Int
-  attendances      tblAttendance  @relation(fields: [aid], references: [id])
-  compititiveExams tblcompetitive @relation(fields: [ceid], references: [id])
-  results          tblResult      @relation(fields: [rid], references: [id])
-  university          tblAllUniversity      @relation(fields: [unid], references: [id])
+  attendances      tblAttendance    @relation(fields: [aid], references: [id])
+  compititiveExams tblcompetitive   @relation(fields: [ceid], references: [id])
+  results          tblResult        @relation(fields: [rid], references: [id])
+  university       tblAllUniversity @relation(fields: [unid], references: [id])
 }
 
 model tblResult {
@@ -58,7 +58,7 @@ model tblcompetitive {
 }
 
 model tblAllUniversity {
-  id          Int    @id @default(autoincrement())
+  id          Int               @id @default(autoincrement())
   studentId   String
   unName      String
   courseName  String

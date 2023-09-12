@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import CompiExamDetail from "./compiExamDetail";
 import LorLetter from "./lor_letter";
 import "./lor_request.css";
@@ -8,6 +8,7 @@ import PlacementInfo from "./placementInfo";
 import ResultDetails from "./resultDetails";
 import UniversityPrefList from "./universityPrefList";
 import FacultyPrefList from "./facultyPrefList";
+import { AlertContext } from "../../app";
 // import axios from "axios";
 import {
   personalInformation,
@@ -20,6 +21,7 @@ import { getAllData } from "../lor_format/helper";
 import LorFormat from "../lor_format/lorFormat";
 
 const LorRequest = () => {
+  const Alert = useContext(AlertContext);
   const [personalInfo, setPersonalinfo] = useState({
     studentId: "",
     studentName: "",
@@ -51,7 +53,7 @@ const LorRequest = () => {
     bondCompleted: "",
     companyName: "",
   });
-  const [noOfLetterhead, setNoOfLetterhead] = useState({});
+  const [noOfLetterhead, setNoOfLetterhead] = useState({ noOfLetterhead: "" });
 
   const [compiExamDetails, setCompiExamDetails] = useState({
     compiExam: "",
@@ -91,7 +93,11 @@ const LorRequest = () => {
       ...compiExamDetails,
       [e.target.name]: e.target.value,
     });
-    setNoOfLetterhead(e.target.value);
+    setNoOfLetterhead({
+      ...noOfLetterhead,
+      [e.target.name]: e.target.value.toString(),
+    });
+    // setNoOfLetterhead({ ...noOfLetterhead, [e.target.name]: e.target.value });
   };
   const changeTerm = (e) => {
     setTermAndCondition(!termAndCondition);
@@ -129,7 +135,6 @@ const LorRequest = () => {
     }
   };
 
-  // console.log(typeof noOfLetterhead);
   //to change usniversity preference details
   const onChangeUni = (i, e) => {
     const { name, value } = e.target;
@@ -242,6 +247,7 @@ const LorRequest = () => {
     setFacultyPrefListErrors(error);
   };
 
+  const isValid = useRef(true);
   //validation
   const [personalDetailsErrors, setPersonalDetailsErrors] = useState({});
 
@@ -251,12 +257,14 @@ const LorRequest = () => {
     //student id
     if (!personalInfo.studentId.trim()) {
       errors.studentId = "Student ID is required";
+      isValid.current = false;
     } else if (
       !(
         7 <= personalInfo.studentId.length && personalInfo.studentId.length <= 8
       )
     ) {
       errors.studentId = "Student ID should be of 7 or 8 characters";
+      isValid.current = false;
     } else if (personalInfo.studentId[0].toLowerCase() === "d") {
       const year = personalInfo.studentId.slice(1, 3);
       if (!isNaN(year)) {
@@ -267,12 +275,15 @@ const LorRequest = () => {
             errors.studentId = "";
           } else {
             errors.studentId = "ID is invalid";
+            isValid.current = false;
           }
         } else {
           errors.studentId = "ID is Invalid";
+          isValid.current = false;
         }
       } else {
         errors.studentId = "ID is Invalid";
+        isValid.current = false;
       }
     } else if (!isNaN(personalInfo.studentId.slice(0, 2))) {
       const branch = personalInfo.studentId.slice(2, 4).toLowerCase();
@@ -293,19 +304,23 @@ const LorRequest = () => {
     //student name
     if (!personalInfo.studentName.trim()) {
       errors.studentName = "Student Name is required";
+      isValid.current = false;
     } else if (/^[a-zA-Z ]+$/i.test(personalInfo.studentName)) {
       errors.studentName = "";
     } else {
       errors.studentName = "Only alphabet are allowed";
+      isValid.current = false;
     }
 
     //email
     if (!personalInfo.emailId.trim()) {
       errors.emailId = "Email ID is required";
+      isValid.current = false;
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(personalInfo.emailId)
     ) {
       errors.emailId = "Invalid Email address";
+      isValid.current = false;
     } else {
       errors.emailId = "";
     }
@@ -313,11 +328,13 @@ const LorRequest = () => {
     //mobile
     if (!personalInfo.studentMobile.trim()) {
       errors.studentMobile = "Student's mobile number is required";
+      isValid.current = false;
     } else if (
       personalInfo.studentMobile.length < 10 ||
       personalInfo.studentMobile.length > 10
     ) {
       errors.studentMobile = "Phone number must be of 10 digit";
+      isValid.current = false;
     } else if (
       personalInfo.studentMobile[0] === "1" ||
       personalInfo.studentMobile[0] === "2" ||
@@ -326,6 +343,7 @@ const LorRequest = () => {
       personalInfo.studentMobile[0] === "0"
     ) {
       errors.studentMobile = "Your number should start with 5, 6, 7, 8 or 9";
+      isValid.current = false;
     } else if (
       personalInfo.studentMobile === "9999999999" ||
       personalInfo.studentMobile === "8888888888" ||
@@ -334,6 +352,7 @@ const LorRequest = () => {
       personalInfo.studentMobile === "5555555555"
     ) {
       errors.studentMobile = "All digits should not be same";
+      isValid.current = false;
     } else {
       errors.studentMobile = "";
     }
@@ -341,11 +360,13 @@ const LorRequest = () => {
     //parent mobile
     if (!personalInfo.parentMobile.trim()) {
       errors.parentMobile = "Parent's mobile number is required";
+      isValid.current = false;
     } else if (
       personalInfo.parentMobile.length < 10 ||
       personalInfo.parentMobile.length > 10
     ) {
       errors.parentMobile = "Phone number must be of 10 digit";
+      isValid.current = false;
     } else if (
       personalInfo.parentMobile[0] === "1" ||
       personalInfo.parentMobile[0] === "2" ||
@@ -354,6 +375,7 @@ const LorRequest = () => {
       personalInfo.parentMobile[0] === "0"
     ) {
       errors.parentMobile = "Your number should start with 5, 6, 7, 8 or 9";
+      isValid.current = false;
     } else if (
       personalInfo.parentMobile === "9999999999" ||
       personalInfo.parentMobile === "8888888888" ||
@@ -362,6 +384,7 @@ const LorRequest = () => {
       personalInfo.parentMobile === "5555555555"
     ) {
       errors.parentMobile = "All digits should not be same";
+      isValid.current = false;
     } else {
       errors.parentMobile = "";
     }
@@ -369,10 +392,12 @@ const LorRequest = () => {
     //passout date
     if (!personalInfo.passoutDate.trim()) {
       errors.passoutDate = "Passout date is required";
+      isValid.current = false;
     } else {
       errors.passoutDate = "";
     }
-    return errors;
+    setPersonalDetailsErrors(errors);
+    return;
   };
 
   const [placementDetailsErrors, setPlacementDetailsErrors] = useState({
@@ -387,6 +412,7 @@ const LorRequest = () => {
     //place through cdpc
     if (!placementInfo.placeThroughCdpc) {
       errors.placeThroughCdpc = "required field";
+      isValid.current = false;
     } else {
       errors.placeThroughCdpc = "";
     }
@@ -397,19 +423,23 @@ const LorRequest = () => {
       !placementInfo.companyName.trim()
     ) {
       errors.companyName = "required field";
+      isValid.current = false;
     } else if (/^[a-zA-Z ]+$/i.test(placementInfo.companyName)) {
       errors.companyName = "";
     } else {
       errors.companyName = "Only alphabet are allowed";
+      isValid.current = false;
     }
 
     //bond period
     if (!placementInfo.bondCompleted) {
       errors.bondCompleted = "required field";
+      isValid.current = false;
     } else {
       errors.bondCompleted = "";
     }
-    return errors;
+    setPlacementDetailsErrors(errors);
+    return;
   };
 
   const [compiExamDetailsErrors, setcompiExamDetailsErrors] = useState({
@@ -425,9 +455,12 @@ const LorRequest = () => {
     const errors = {};
 
     //have given compi exam or not
+    console.log(compiExamDetails);
     if (!compiExamDetails.compiExam) {
       errors.compiExam = "reqired field";
+      isValid.current = false;
     } else if (
+      compiExamDetails.compiExam === true &&
       !compiExamDetails.greSc &&
       !compiExamDetails.gre &&
       !compiExamDetails.ieltsSc &&
@@ -443,6 +476,7 @@ const LorRequest = () => {
     ) {
       errors.compiExam =
         "You must have to enter least one Exam marks and upload marksheet";
+      isValid.current = false;
     } else {
       errors.compiExam = "";
     }
@@ -450,67 +484,81 @@ const LorRequest = () => {
     //for simple validation if score is entered than file must be uploaded and vice versa
     if (compiExamDetails.greSc && !compiExamDetails.gre) {
       errors.gre = "file must be uploaded";
+      isValid.current = false;
     } else if (!compiExamDetails.greSc && compiExamDetails.gre) {
       errors.gre = "marks must be entered";
+      isValid.current = false;
     } else {
       errors.gre = "";
     }
 
     if (compiExamDetails.ieltsSc && !compiExamDetails.ielts) {
       errors.ielts = "file must be uploaded";
+      isValid.current = false;
     } else if (!compiExamDetails.ieltsSc && compiExamDetails.ielts) {
       errors.ielts = "marks must be entered";
+      isValid.current = false;
     } else {
       errors.ielts = "";
     }
 
     if (compiExamDetails.toeflSc && !compiExamDetails.toefl) {
       errors.toefl = "file must be uploaded";
+      isValid.current = false;
     } else if (!compiExamDetails.toeflSc && compiExamDetails.toefl) {
       errors.toefl = "marks must be entered";
+      isValid.current = false;
     } else {
       errors.toefl = "";
     }
 
     if (compiExamDetails.gmatSc && !compiExamDetails.gmat) {
       errors.gmat = "file must be uploaded";
+      isValid.current = false;
     } else if (!compiExamDetails.gmatSc && compiExamDetails.gmat) {
       errors.gmat = "marks must be entered";
+      isValid.current = false;
     } else {
       errors.gmat = "";
     }
 
     if (compiExamDetails.gateSc && !compiExamDetails.gate) {
       errors.gate = "file must be uploaded";
+      isValid.current = false;
     } else if (!compiExamDetails.gateSc && compiExamDetails.gate) {
       errors.gate = "marks must be entered";
+      isValid.current = false;
     } else {
       errors.gate = "";
     }
 
     if (compiExamDetails.otherSc && !compiExamDetails.other) {
       errors.other = "file must be uploaded";
+      isValid.current = false;
     } else if (!compiExamDetails.otherSc && compiExamDetails.otherSc) {
       errors.other = "marks must be entered";
+      isValid.current = false;
     } else {
       errors.other = "";
     }
-
-    return errors;
+    setcompiExamDetailsErrors(errors);
+    return;
   };
 
-  const [noOfLetterHeadErrors, setNoOfLetterheadErrors] = useState({});
+  const [noOfLetterHeadErrors, setNoOfLetterHeadErrors] = useState({});
 
   const noOfLetterheadValidation = (noOfLetterhead) => {
     const errors = {};
-    if (!noOfLetterhead) {
+    // console.log(noOfLetterhead, errors);
+    if (noOfLetterhead.noOfLetterhead === "") {
       errors.noOfletterHead = "required field";
+      isValid.current = false;
     } else {
       errors.noOfletterHead = "";
     }
-    return errors;
+    setNoOfLetterHeadErrors({ ...errors });
+    // return;
   };
-
   const [resultDetailsErrors, setResultDetailsErrors] = useState({});
   const resultDetailsValidation = (resultDetails) => {
     const errors = {};
@@ -533,10 +581,12 @@ const LorRequest = () => {
       !resultDetails.eightthSCG
     ) {
       errors.res = "Attendence and CGPA for every semester must be entered";
+      isValid.current = false;
     } else {
       errors.res = "";
     }
-    return errors;
+    setResultDetailsErrors(errors);
+    return;
   };
 
   const [universityPrefListErrors, setUniversityPrefListErrors] = useState([
@@ -549,44 +599,51 @@ const LorRequest = () => {
       //for university name
       if (!universityPrefList[i].universityName.trim()) {
         errors[i]["universityName"] = "required field";
+        isValid.current = false;
         setUniversityPrefListErrors(errors);
       } else if (/^[a-zA-Z ]+$/i.test(universityPrefList[i].universityName)) {
         errors[i]["universityName"] = "";
         setUniversityPrefListErrors(errors);
       } else {
         errors[i]["universityName"] = "Only Alphabets are allowed";
+        isValid.current = false;
         setUniversityPrefListErrors(errors);
       }
 
       //for course validatoin
       if (!universityPrefList[i].courseName.trim()) {
         errors[i]["courseName"] = "required field";
+        isValid.current = false;
         setUniversityPrefListErrors(errors);
       } else if (/^[a-zA-Z ]+$/i.test(universityPrefList[i].courseName)) {
         errors[i]["courseName"] = "";
         setUniversityPrefListErrors(errors);
       } else {
         errors[i]["courseName"] = "Only Aphabets are allowed";
+        isValid.current = false;
         setUniversityPrefListErrors(errors);
       }
 
       //for country name validatiop
       if (!universityPrefList[i].countryName.trim()) {
         errors[i]["countryName"] = "required field";
+        isValid.current = false;
       } else if (/^[a-zA-Z ]+$/i.test(universityPrefList[i].countryName)) {
         errors[i]["countryName"] = "";
       } else {
         errors[i]["countryName"] = "Only Alphabets are allowed";
+        isValid.current = false;
       }
 
       //for inteake date validation
       if (!universityPrefList[i].intakeDate) {
         errors[i]["intakeDate"] = "required field";
+        isValid.current = false;
       } else {
         errors[i]["intakeDate"] = "";
       }
     }
-    return errors;
+    return;
   };
 
   const [facultyPrefListErrors, setFacultyPrefListErrors] = useState([
@@ -604,24 +661,28 @@ const LorRequest = () => {
       //for faculty name validation
       if (!facultyPrefList[i].facultyName.trim()) {
         errors[i]["facultyName"] = "required field";
+        isValid.current = false;
         setFacultyPrefListErrors(errors);
       } else if (/^[a-zA-Z ]+$/i.test(facultyPrefList[i].facultyName)) {
         errors[i]["facultyName"] = "";
         setFacultyPrefListErrors(errors);
       } else {
         errors[i]["facultyName"] = "Only Alphabets are allowed";
+        isValid.current = false;
         setFacultyPrefListErrors(errors);
       }
 
       //fpr faculty email validation
       if (!facultyPrefList[i].facultyEmail.trim()) {
         errors[i]["facultyEmail"] = "reqired field";
+        isValid.current = false;
       } else if (
         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
           facultyPrefList[i].facultyEmail
         )
       ) {
         errors[i]["facultyEmail"] = "Invalid Email Address";
+        isValid.current = false;
       } else {
         errors[i]["facultyEmail"] = "";
       }
@@ -629,11 +690,12 @@ const LorRequest = () => {
       //for faculty preference lor validation
       if (!facultyPrefList[i].facultyPrefLor) {
         errors[i]["facultyPrefLor"] = "LOR must be uploaded";
+        isValid.current = false;
       } else {
         errors[i]["facultyPrefLor"] = "";
       }
     }
-    return errors;
+    return;
   };
 
   //cdpc render
@@ -701,75 +763,81 @@ const LorRequest = () => {
   const [confirmState, setConfirmState] = useState(false);
 
   const onConfirm = () => {
-    setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
-    setPlacementDetailsErrors(placementDetailsValidation(placementInfo));
-    setcompiExamDetailsErrors(compiExamDetailsValidation(compiExamDetails));
-    setResultDetailsErrors(resultDetailsValidation(resultDetails));
-    setNoOfLetterheadErrors(noOfLetterheadValidation(noOfLetterhead));
+    isValid.current = true;
+    personalDetailsValidation(personalInfo);
+    placementDetailsValidation(placementInfo);
+    compiExamDetailsValidation(compiExamDetails);
+    noOfLetterheadValidation(noOfLetterhead);
+    resultDetailsValidation(resultDetails);
     universityPrefListValidation(universityPrefList);
     facutlPrefListValidation(facultyPrefList);
+    console.log(isValid.current);
 
-    // window.alert(JSON.stringify(mergedObj.noOfLetterhead))
+    if (isValid.current) {
+      for (let i = 0; i < universityPrefList.length; i++) {
+        uniPref(
+          mergedObj.studentId,
+          universityPrefList[i].universityName,
+          universityPrefList[i].courseName,
+          universityPrefList[i].countryName,
+          universityPrefList[i].intakeDate
+        );
+      }
 
-    for (let i = 0; i < universityPrefList.length; i++) {
-      uniPref(
+      for (let i = 0; i < facultyPrefList.length; i++) {
+        fcPref(
+          mergedObj.studentId,
+          facultyPrefList[i].facultyName,
+          facultyPrefList[i].facultyEmail,
+          facultyPrefList[i].facultyPrefLor
+        );
+      }
+      // console.log(mergedObj);
+      // getAllData(mergedObj);
+
+      setConfirmState(true);
+      personalInformation(
         mergedObj.studentId,
-        universityPrefList[i].universityName,
-        universityPrefList[i].courseName,
-        universityPrefList[i].countryName,
-        universityPrefList[i].intakeDate
+        mergedObj.studentName,
+        mergedObj.emailId,
+        mergedObj.studentMobile,
+        mergedObj.parentMobile,
+        mergedObj.passoutDate,
+
+        mergedObj.placeThroughCdpc,
+        mergedObj.bondCompleted,
+        mergedObj.companyName,
+
+        mergedObj.firstSAtt,
+        mergedObj.secondSAtt,
+
+        mergedObj.firstSCG,
+        mergedObj.secondSCG,
+
+        mergedObj.noOfLetterhead,
+
+        // mergedObj.compiExam
+        mergedObj.greSc,
+        mergedObj.ieltsSc,
+        mergedObj.toeflSc,
+        mergedObj.gmatSc,
+        mergedObj.gateSc,
+        mergedObj.otherSc,
+
+        mergedObj.gre,
+        mergedObj.ielts,
+        mergedObj.toefl,
+        mergedObj.gmat,
+        mergedObj.gate,
+        mergedObj.other
+        // mergedObj.
       );
+      // sendEmail();
+    } else {
+      Alert.setOpen(true);
+      Alert.setDesc("Error submitting form");
+      Alert.setType("error");
     }
-
-    for (let i = 0; i < facultyPrefList.length; i++) {
-      fcPref(
-        mergedObj.studentId,
-        facultyPrefList[i].facultyName,
-        facultyPrefList[i].facultyEmail,
-        facultyPrefList[i].facultyPrefLor
-      );
-    }
-    // console.log(mergedObj);
-    // getAllData(mergedObj);
-
-    setConfirmState(true);
-    personalInformation(
-      mergedObj.studentId,
-      mergedObj.studentName,
-      mergedObj.emailId,
-      mergedObj.studentMobile,
-      mergedObj.parentMobile,
-      mergedObj.passoutDate,
-
-      mergedObj.placeThroughCdpc,
-      mergedObj.bondCompleted,
-      mergedObj.companyName,
-
-      mergedObj.firstSAtt,
-      mergedObj.secondSAtt,
-
-      mergedObj.firstSCG,
-      mergedObj.secondSCG,
-
-      mergedObj.noOfLetterhead,
-
-      // mergedObj.compiExam
-      mergedObj.greSc,
-      mergedObj.ieltsSc,
-      mergedObj.toeflSc,
-      mergedObj.gmatSc,
-      mergedObj.gateSc,
-      mergedObj.otherSc,
-
-      mergedObj.gre,
-      mergedObj.ielts,
-      mergedObj.toefl,
-      mergedObj.gmat,
-      mergedObj.gate,
-      mergedObj.other
-      // mergedObj.
-    );
-    sendEmail();
   };
   // console.log(termAndCondition);
 

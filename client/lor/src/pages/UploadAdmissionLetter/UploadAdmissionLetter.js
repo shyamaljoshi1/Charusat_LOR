@@ -1,12 +1,15 @@
 import { Button } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState, useRef, useContext } from "react";
 import "./UploadAdmissionLetter.css";
 import PersonalInfo from "../lor_request/personalInfo";
 import CompiExamDetail from "./CompiExam";
 import UniversityPrefList from "./UniversityPrefList";
 import TermCondition from "../lor_request/TermCondition";
+import { AlertContext } from "../../app";
 
 const UploadAdmissionLetter = () => {
+  const isValid = useRef(true);
+  const Alert = useContext(AlertContext);
   const [personalInfo, setPersonalinfo] = useState({
     studentId: "",
     studentName: "",
@@ -62,6 +65,7 @@ const UploadAdmissionLetter = () => {
             ...compiExamDetailsErrors,
             [e.target.name]: "You can only upload file upto 1MB",
           });
+          isValid.current = false;
           e.target.value = "";
         } else {
           setCompiExamDetails({
@@ -79,6 +83,7 @@ const UploadAdmissionLetter = () => {
           [e.target.name]: "You can only upload .pdf format files",
         });
         e.target.value = "";
+        isValid.current = false;
       }
     }
   };
@@ -96,6 +101,7 @@ const UploadAdmissionLetter = () => {
             ...universityErrors,
             [e.target.name]: "You can only upload file upto 1MB",
           });
+          isValid.current = false;
           e.target.value = "";
         } else {
           setUniversity({ ...university, [e.target.name]: e.target.files[0] });
@@ -110,6 +116,7 @@ const UploadAdmissionLetter = () => {
           ...universityErrors,
           [e.target.name]: "You can only upload .pdf/.doc/.docx files",
         });
+        isValid.current = false;
         e.target.value = "";
       }
     }
@@ -123,12 +130,14 @@ const UploadAdmissionLetter = () => {
     //student id
     if (!personalInfo.studentId.trim()) {
       errors.studentId = "Student ID is required";
+      isValid.current = false;
     } else if (
       !(
         7 <= personalInfo.studentId.length && personalInfo.studentId.length <= 8
       )
     ) {
       errors.studentId = "Student ID should be of 7 or 8 characters";
+      isValid.current = false;
     } else if (personalInfo.studentId[0].toLowerCase() === "d") {
       const year = personalInfo.studentId.slice(1, 3);
       if (!isNaN(year)) {
@@ -139,12 +148,15 @@ const UploadAdmissionLetter = () => {
             errors.studentId = "";
           } else {
             errors.studentId = "ID is invalid";
+            isValid.current = false;
           }
         } else {
           errors.studentId = "ID is Invalid";
+          isValid.current = false;
         }
       } else {
         errors.studentId = "ID is Invalid";
+        isValid.current = false;
       }
     } else if (!isNaN(personalInfo.studentId.slice(0, 2))) {
       const branch = personalInfo.studentId.slice(2, 4).toLowerCase();
@@ -154,30 +166,37 @@ const UploadAdmissionLetter = () => {
           errors.studentId = "";
         } else {
           errors.studentId = "ID is Invalid";
+          isValid.current = false;
         }
       } else {
         errors.studentId = "ID is Invalid";
+        isValid.current = false;
       }
     } else {
       errors.studentId = "ID is Invalid";
+      isValid.current = false;
     }
 
     //student name
     if (!personalInfo.studentName.trim()) {
       errors.studentName = "Student Name is required";
+      isValid.current = false;
     } else if (/^[a-zA-Z ]+$/i.test(personalInfo.studentName)) {
       errors.studentName = "";
     } else {
       errors.studentName = "Only alphabet are allowed";
+      isValid.current = false;
     }
 
     //email
     if (!personalInfo.emailId.trim()) {
       errors.emailId = "Email ID is required";
+      isValid.current = false;
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(personalInfo.emailId)
     ) {
       errors.emailId = "Invalid Email address";
+      isValid.current = false;
     } else {
       errors.emailId = "";
     }
@@ -185,11 +204,13 @@ const UploadAdmissionLetter = () => {
     //mobile
     if (!personalInfo.studentMobile.trim()) {
       errors.studentMobile = "Student's mobile number is required";
+      isValid.current = false;
     } else if (
       personalInfo.studentMobile.length < 10 ||
       personalInfo.studentMobile.length > 10
     ) {
       errors.studentMobile = "Phone number must be of 10 digit";
+      isValid.current = false;
     } else if (
       personalInfo.studentMobile[0] === "1" ||
       personalInfo.studentMobile[0] === "2" ||
@@ -198,6 +219,7 @@ const UploadAdmissionLetter = () => {
       personalInfo.studentMobile[0] === "0"
     ) {
       errors.studentMobile = "Your number should start with 5, 6, 7, 8 or 9";
+      isValid.current = false;
     } else if (
       personalInfo.studentMobile === "9999999999" ||
       personalInfo.studentMobile === "8888888888" ||
@@ -206,6 +228,7 @@ const UploadAdmissionLetter = () => {
       personalInfo.studentMobile === "5555555555"
     ) {
       errors.studentMobile = "All digits should not be same";
+      isValid.current = false;
     } else {
       errors.studentMobile = "";
     }
@@ -213,11 +236,13 @@ const UploadAdmissionLetter = () => {
     //parent mobile
     if (!personalInfo.parentMobile.trim()) {
       errors.parentMobile = "Parent's mobile number is required";
+      isValid.current = false;
     } else if (
       personalInfo.parentMobile.length < 10 ||
       personalInfo.parentMobile.length > 10
     ) {
       errors.parentMobile = "Phone number must be of 10 digit";
+      isValid.current = false;
     } else if (
       personalInfo.parentMobile[0] === "1" ||
       personalInfo.parentMobile[0] === "2" ||
@@ -226,6 +251,7 @@ const UploadAdmissionLetter = () => {
       personalInfo.parentMobile[0] === "0"
     ) {
       errors.parentMobile = "Your number should start with 5, 6, 7, 8 or 9";
+      isValid.current = false;
     } else if (
       personalInfo.parentMobile === "9999999999" ||
       personalInfo.parentMobile === "8888888888" ||
@@ -234,6 +260,7 @@ const UploadAdmissionLetter = () => {
       personalInfo.parentMobile === "5555555555"
     ) {
       errors.parentMobile = "All digits should not be same";
+      isValid.current = false;
     } else {
       errors.parentMobile = "";
     }
@@ -241,6 +268,7 @@ const UploadAdmissionLetter = () => {
     //passout date
     if (!personalInfo.passoutDate.trim()) {
       errors.passoutDate = "Passout date is required";
+      isValid.current = false;
     } else {
       errors.passoutDate = "";
     }
@@ -275,6 +303,7 @@ const UploadAdmissionLetter = () => {
     ) {
       errors.compiExam =
         "You must have to enter least one Exam marks and upload marksheet";
+      isValid.current = false;
     } else {
       errors.compiExam = "";
     }
@@ -282,48 +311,60 @@ const UploadAdmissionLetter = () => {
     //for simple validation if score is entered than file must be uploaded and vice versa
     if (compiExamDetails.greSc && !compiExamDetails.gre) {
       errors.gre = "file must be uploaded";
+      isValid.current = false;
     } else if (!compiExamDetails.greSc && compiExamDetails.gre) {
       errors.gre = "marks must be entered";
+      isValid.current = false;
     } else {
       errors.gre = "";
     }
 
     if (compiExamDetails.ieltsSc && !compiExamDetails.ielts) {
       errors.ielts = "file must be uploaded";
+      isValid.current = false;
     } else if (!compiExamDetails.ieltsSc && compiExamDetails.ielts) {
       errors.ielts = "marks must be entered";
+      isValid.current = false;
     } else {
       errors.ielts = "";
     }
 
     if (compiExamDetails.toeflSc && !compiExamDetails.toefl) {
       errors.toefl = "file must be uploaded";
+      isValid.current = false;
     } else if (!compiExamDetails.toeflSc && compiExamDetails.toefl) {
       errors.toefl = "marks must be entered";
+      isValid.current = false;
     } else {
       errors.toefl = "";
     }
 
     if (compiExamDetails.gmatSc && !compiExamDetails.gmat) {
       errors.gmat = "file must be uploaded";
+      isValid.current = false;
     } else if (!compiExamDetails.gmatSc && compiExamDetails.gmat) {
       errors.gmat = "marks must be entered";
+      isValid.current = false;
     } else {
       errors.gmat = "";
     }
 
     if (compiExamDetails.gateSc && !compiExamDetails.gate) {
       errors.gate = "file must be uploaded";
+      isValid.current = false;
     } else if (!compiExamDetails.gateSc && compiExamDetails.gate) {
       errors.gate = "marks must be entered";
+      isValid.current = false;
     } else {
       errors.gate = "";
     }
 
     if (compiExamDetails.otherSc && !compiExamDetails.other) {
       errors.other = "file must be uploaded";
+      isValid.current = false;
     } else if (!compiExamDetails.otherSc && compiExamDetails.otherSc) {
       errors.other = "marks must be entered";
+      isValid.current = false;
     } else {
       errors.other = "";
     }
@@ -344,44 +385,52 @@ const UploadAdmissionLetter = () => {
     //for university name
     if (!university.universityName.trim()) {
       errors["universityName"] = "required field";
+      isValid.current = false;
       setUniversityErrors(errors);
     } else if (/^[a-zA-Z ]+$/i.test(university.universityName)) {
       errors["universityName"] = "";
       setUniversityErrors(errors);
     } else {
       errors["universityName"] = "Only Alphabets are allowed";
+      isValid.current = false;
       setUniversityErrors(errors);
     }
 
     //for course validatoin
     if (!university.courseName.trim()) {
       errors["courseName"] = "required field";
+      isValid.current = false;
       setUniversityErrors(errors);
     } else if (/^[a-zA-Z ]+$/i.test(university.courseName)) {
       errors["courseName"] = "";
       setUniversityErrors(errors);
     } else {
       errors["courseName"] = "Only Aphabets are allowed";
+      isValid.current = false;
       setUniversityErrors(errors);
     }
 
     //for country name validatiop
     if (!university.countryName.trim()) {
       errors["countryName"] = "required field";
+      isValid.current = false;
     } else if (/^[a-zA-Z ]+$/i.test(university.countryName)) {
       errors["countryName"] = "";
     } else {
       errors["countryName"] = "Only Alphabets are allowed";
+      isValid.current = false;
     }
 
     //for inteake date validation
     if (!university.intakeDate) {
       errors["intakeDate"] = "required field";
+      isValid.current = false;
     } else {
       errors["intakeDate"] = "";
     }
     if (!university.admissionCard) {
       errors["admissionCard"] = "Admission Card must be uploaded";
+      isValid.current = false;
     } else {
       errors["admissionCard"] = "";
     }
@@ -394,9 +443,19 @@ const UploadAdmissionLetter = () => {
 
   //onConfirm
   const onConfirm = () => {
+    console.log(isValid.current);
     setPersonalDetailsErrors(personalDetailsValidation(personalInfo));
     setcompiExamDetailsErrors(compiExamDetailsValidation(compiExamDetails));
     universityValidation(university);
+    if (isValid.current) {
+      console.log("you are aligible to submit the form");
+
+      // * write which you want to execute if the detais are valid
+    } else {
+      Alert.setOpen(true);
+      Alert.setDesc("Error submitting form");
+      Alert.setType("error");
+    }
   };
 
   return (
