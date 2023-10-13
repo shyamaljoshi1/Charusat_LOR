@@ -19,6 +19,8 @@ import {
 import TermCondition from "./TermCondition";
 import { getAllData } from "../lor_format/helper";
 import LorFormat from "../lor_format/lorFormat";
+import { useAsyncError } from "react-router-dom";
+import axios from "axios";
 
 const LorRequest = () => {
   const Alert = useContext(AlertContext);
@@ -33,20 +35,20 @@ const LorRequest = () => {
   const [resultDetails, setResultDetails] = useState({
     firstSAtt: "",
     secondSAtt: "",
-    // thirdSAtt: "",
-    // forthSAtt: "",
-    // fifthSAtt: "",
-    // sixthSAtt: "",
-    // seventhSAtt: "",
-    // eightthSAtt: "",
+    thirdSAtt: "",
+    forthSAtt: "",
+    fifthSAtt: "",
+    sixthSAtt: "",
+    seventhSAtt: "",
+    eightthSAtt: "",
     firstSCG: "",
     secondSCG: "",
-    // thirdSCG: "",
-    // forthSCG: "",
-    // fifthSCG: "",
-    // sixthSCG: "",
-    // seventhSCG: "",
-    // eightthSCG: "",
+    thirdSCG: "",
+    forthSCG: "",
+    fifthSCG: "",
+    sixthSCG: "",
+    seventhSCG: "",
+    eightthSCG: "",
   });
   const [placementInfo, setPlacementinfo] = useState({
     placeThroughCdpc: "",
@@ -87,7 +89,7 @@ const LorRequest = () => {
   //for changing object data
   const onChange = (e) => {
     setPersonalinfo({ ...personalInfo, [e.target.name]: e.target.value });
-    setResultDetails({ ...resultDetails, [e.target.name]: e.target.value });
+    // setResultDetails({ ...resultDetails, [e.target.name]: e.target.value });
     setPlacementinfo({ ...placementInfo, [e.target.name]: e.target.value });
     setCompiExamDetails({
       ...compiExamDetails,
@@ -98,6 +100,13 @@ const LorRequest = () => {
       [e.target.name]: e.target.value.toString(),
     });
     // setNoOfLetterhead({ ...noOfLetterhead, [e.target.name]: e.target.value });
+  };
+  const onChangeResult = (e) => {
+    console.log(e);
+    setResultDetails({
+      ...resultDetails,
+      [e.target.name]: e.target.value.toString(),
+    });
   };
   const changeTerm = (e) => {
     setTermAndCondition(!termAndCondition);
@@ -234,7 +243,6 @@ const LorRequest = () => {
       },
     ]);
   };
-
   //to remove faculty preference row
   const removeFac = (i) => {
     const rows = [...facultyPrefList];
@@ -762,7 +770,7 @@ const LorRequest = () => {
   //on click confirm
   const [confirmState, setConfirmState] = useState(false);
 
-  const onConfirm = () => {
+  const onConfirm = async () => {
     isValid.current = true;
     personalDetailsValidation(personalInfo);
     placementDetailsValidation(placementInfo);
@@ -832,6 +840,69 @@ const LorRequest = () => {
         mergedObj.other
         // mergedObj.
       );
+      try {
+        let fac = facultyPrefList.map((faculty) => {
+          return {
+            facultyName: faculty.facultyName,
+            facultyEmail: faculty.facultyEmail,
+          };
+        });
+        let uni = universityPrefList.map((university) => {
+          return {
+            universityName: university.universityName,
+            courseName: university.courseName,
+            countryName: university.countryName,
+            intakeDate: university.intakeDate,
+          };
+        });
+        console.log(resultDetails);
+        const config = { headers: { "Content-Type": "application/json" } };
+        const data = await axios.post(
+          `http://localhost:3001/api/v1/generate-pdf`,
+          {
+            studentId: personalInfo.studentId,
+            studentName: personalInfo.studentName,
+            passoutDate: personalInfo.passoutDate,
+            universityPrefList: uni,
+            compiExamDetails: {
+              compiExam: compiExamDetails.compiExam,
+              gre: compiExamDetails.greSc,
+              ielts: compiExamDetails.ieltsSc,
+              toefl: compiExamDetails.toeflSc,
+              gmat: compiExamDetails.gmatSc,
+              gate: compiExamDetails.gateSc,
+              other: compiExamDetails.otherSc,
+            },
+            facultyPrefList: fac,
+            attendance: {
+              first: resultDetails.firstSAtt,
+              second: resultDetails.secondSAtt,
+              third: resultDetails.thirdSAtt,
+              forth: resultDetails.forthSAtt,
+              fifth: resultDetails.fifthSAtt,
+              six: resultDetails.sixthSAtt,
+              seven: resultDetails.seventhSAtt,
+              eight: resultDetails.eightthSAtt,
+            },
+            cgpa: {
+              first: resultDetails.firstSCG,
+              second: resultDetails.secondSCG,
+              third: resultDetails.thirdSCG,
+              forth: resultDetails.forthSCG,
+              fifth: resultDetails.fifthSCG,
+              six: resultDetails.sixthSCG,
+              seven: resultDetails.seventhSCG,
+              eight: resultDetails.eightthSCG,
+            },
+          },
+          config
+        );
+        Alert.setOpen(true);
+        Alert.setDesc(data.data.message);
+        Alert.setType("success");
+      } catch (error) {
+        console.log(error);
+      }
       // sendEmail();
     } else {
       Alert.setOpen(true);
@@ -841,6 +912,69 @@ const LorRequest = () => {
   };
   // console.log(termAndCondition);
 
+  const onGenerate = async () => {
+    try {
+      let fac = facultyPrefList.map((faculty) => {
+        return {
+          facultyName: faculty.facultyName,
+          facultyEmail: faculty.facultyEmail,
+        };
+      });
+      let uni = universityPrefList.map((university) => {
+        return {
+          universityName: university.universityName,
+          courseName: university.courseName,
+          countryName: university.countryName,
+          intakeDate: university.intakeDate,
+        };
+      });
+      console.log(resultDetails);
+      const config = { headers: { "Content-Type": "application/json" } };
+      const data = await axios.post(
+        `http://localhost:3001/api/v1/generate-pdf`,
+        {
+          studentId: personalInfo.studentId,
+          studentName: personalInfo.studentName,
+          passoutDate: personalInfo.passoutDate,
+          universityPrefList: uni,
+          compiExamDetails: {
+            compiExam: compiExamDetails.compiExam,
+            gre: compiExamDetails.greSc,
+            ielts: compiExamDetails.ieltsSc,
+            toefl: compiExamDetails.toeflSc,
+            gmat: compiExamDetails.gmatSc,
+            gate: compiExamDetails.gateSc,
+            other: compiExamDetails.otherSc,
+          },
+          facultyPrefList: fac,
+          attendance: {
+            first: resultDetails.firstSAtt,
+            second: resultDetails.secondSAtt,
+            third: resultDetails.thirdSAtt,
+            forth: resultDetails.forthSAtt,
+            fifth: resultDetails.fifthSAtt,
+            six: resultDetails.sixthSAtt,
+            seven: resultDetails.seventhSAtt,
+            eight: resultDetails.eightthSAtt,
+          },
+          cgpa: {
+            first: resultDetails.firstSCG,
+            second: resultDetails.secondSCG,
+            third: resultDetails.thirdSCG,
+            forth: resultDetails.forthSCG,
+            fifth: resultDetails.fifthSCG,
+            six: resultDetails.sixthSCG,
+            seven: resultDetails.seventhSCG,
+            eight: resultDetails.eightthSCG,
+          },
+        },
+        config
+      );
+      console.log(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="form__container">
       {/* <h1
@@ -860,7 +994,7 @@ const LorRequest = () => {
           onChange={onChange}
           cdpc={cdpc}
         />
-        <ResultDetails onChange={onChange} error={resultDetailsErrors} />
+        <ResultDetails onChange={onChangeResult} error={resultDetailsErrors} />
         <LorLetter onChange={onChange} error={noOfLetterHeadErrors} />
         <CompiExamDetail
           onChange={onChange}
@@ -902,7 +1036,6 @@ const LorRequest = () => {
           Conifrm
         </Button> */}
       </form>
-
       {/* testing purpose */}
       {/* <img src={URL.createObjectURL(compiExamDetails.gre)} /> */}
     </div>
