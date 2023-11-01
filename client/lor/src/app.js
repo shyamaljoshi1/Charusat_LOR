@@ -46,12 +46,12 @@ const App = () => {
     };
     getUser();
   }, []);
-  console.log(user);
+  
   useEffect(() => {
     if (open) {
-      console.log("hello");
+      
       if (type === "error") {
-        console.log("ahya");
+        
         toast.error(desc, {
           position: "top-center",
           autoClose: 3000,

@@ -102,7 +102,6 @@ const LorRequest = () => {
     // setNoOfLetterhead({ ...noOfLetterhead, [e.target.name]: e.target.value });
   };
   const onChangeResult = (e) => {
-    console.log(e);
     setResultDetails({
       ...resultDetails,
       [e.target.name]: e.target.value.toString(),
@@ -1031,7 +1030,7 @@ const LorRequest = () => {
             Conifrm
           </Button>
         )}
-        {confirmState && <LorFormat allData={mergedObjFrontend} />}
+        {/* {confirmState && <LorFormat allData={mergedObjFrontend} />} */}
         {/* <Button className="lor-request__confirm-btn" onClick={onConfirm}>
           Conifrm
         </Button> */}

@@ -35,6 +35,11 @@ const Search = () => {
             padding={"2.4rem"}
             placeholder="Enter Country"
             borderColor={"#1b65a7"}
+            onKeyDown={(e)=>{
+                if(e.key==='Enter'){
+                  handleSearch();
+                }
+              }}
           />
           <InputRightElement
             width="4.5rem"

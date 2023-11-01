@@ -281,20 +281,54 @@ const generateHTML = (body) => {
   compiExamHTML += `
     </tr>
     <tr>`;
-  if (compiExamDetails.compiExam === "false") {
-    compiArr.map(() => {
-      compiExamHTML += `
-      <td
-      style="
-      padding: 5px;
-      text-align: center;
-      border: 1px solid black;
-      border-collapse: collapse;
-      font-family: times;
-      "
-    >-</td>`;
-    });
-  } else {
+  console.log(compiExamDetails.compiExam);
+  // if (compiExamDetails.compiExam === "false") {
+  //   compiArr.map(() => {
+  //     compiExamHTML += `
+  //     <td
+  //     style="
+  //     padding: 5px;
+  //     text-align: center;
+  //     border: 1px solid black;
+  //     border-collapse: collapse;
+  //     font-family: times;
+  //     "
+  //   >-</td>`;
+  //   });
+  // } 
+  // else {
+  //   compiArr.map((exam) => {
+  //     if (compiExamDetails[exam] === "") {
+  //       compiExamHTML += `
+  //       <td
+  //         style="
+  //           padding: 5px;
+  //           text-align: center;
+  //           border: 1px solid black;
+  //           border-collapse: collapse;
+  //           font-family: times;
+  //         "
+  //       >-</td>`;
+  //     } else {
+  //       compiExamHTML += `
+  //       <td
+  //         style="
+  //           padding: 5px;
+  //           text-align: center;
+  //           border: 1px solid black;
+  //           border-collapse: collapse;
+  //           font-family: times;
+  //         "
+  //       >${compiExamDetails[exam]}</td>`;
+  //     }
+  //   });
+  //   compiExamHTML += `
+  //   </tr>
+  //   </table>
+  //   </div>
+  // </div>`;
+  // }
+
     compiArr.map((exam) => {
       if (compiExamDetails[exam] === "") {
         compiExamHTML += `
@@ -325,7 +359,8 @@ const generateHTML = (body) => {
     </table>
     </div>
   </div>`;
-  }
+
+
   html += compiExamHTML;
 
   let facHTML = `
