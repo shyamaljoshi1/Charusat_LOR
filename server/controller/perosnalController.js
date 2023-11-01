@@ -2,166 +2,162 @@ const { PrismaClient } = require("@prisma/client");
 const sendEmail = require("../utils/sendEmail");
 const prisma = new PrismaClient();
 
-
-exports.getAllStudents = async (req,res)=>{
+exports.getAllStudents = async (req, res) => {
   try {
     const student = await prisma.tblPersonalInfo.findMany({
-      include : {attendances : true ,results : true, university:true}
-    })
+      include: { attendances: true, results: true, university: true },
+    });
     res.send(student);
-
   } catch (error) {
     res.status(404).send({
       success: false,
       message: "Data is not found!",
     });
   }
-}
+};
 
-exports.getStudentInfo = async (req,res)=>{
+exports.getStudentInfo = async (req, res) => {
   try {
     const student = await prisma.tblPersonalInfo.findUnique({
-      where:{
-        studentId : (req.params.id)
-      }
-    })
-    if(student)
-      res.send(student);
-    else{
-      res.status(404).send({
-        success: false,
-        message: "Data is not found!",
-      });
-    }
-  } catch (error) {
-    res.status(500).send({
-      success: false,
-      message: "Internal server error",
-    });
-  }
-}
-
-exports.getResult = async (req,res)=>{
-  try {
-    const result = await prisma.tblResult.findMany({
-      include : {studentInfo : true},
-      where:{
-        studentId : (req.params.id),
-      }
-    });
-    
-    // for testing purpose there are many studentId
-    // while prodution convert findmany --> findUnique  && result[0] --> result
-    if(result[0])
-      res.send(result);
-    else{
-      res.status(404).send({
-        success: false,
-        message: "Data is not found!",
-      });
-    }
-  } catch (error) {
-    console.log(error)
-    res.status(500).send({
-      success: false,
-      message: "Internal server error",
-    });
-  }
-}
-
-exports.getAttendance = async (req,res)=>{
-  try {
-    const attendance = await prisma.tblAttendance.findMany({
-      include : {studentInfo : true},
-      where:{
-        studentId : (req.params.id),
+      where: {
+        studentId: req.params.id,
       },
     });
-    
-    // for testing purpose there are many studentId
-    // while prodution convert findmany --> findUnique  && attendance[0] --> attendance
-    if(attendance[0])
-      res.send(attendance);
-    else{
+    if (student) res.send(student);
+    else {
       res.status(404).send({
         success: false,
         message: "Data is not found!",
       });
     }
   } catch (error) {
-    console.log(error)
     res.status(500).send({
       success: false,
       message: "Internal server error",
     });
   }
-}
+};
+
+exports.getResult = async (req, res) => {
+  try {
+    const result = await prisma.tblResult.findMany({
+      include: { studentInfo: true },
+      where: {
+        studentId: req.params.id,
+      },
+    });
+
+    // for testing purpose there are many studentId
+    // while prodution convert findmany --> findUnique  && result[0] --> result
+    if (result[0]) res.send(result);
+    else {
+      res.status(404).send({
+        success: false,
+        message: "Data is not found!",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+exports.getAttendance = async (req, res) => {
+  try {
+    const attendance = await prisma.tblAttendance.findMany({
+      include: { studentInfo: true },
+      where: {
+        studentId: req.params.id,
+      },
+    });
+
+    // for testing purpose there are many studentId
+    // while prodution convert findmany --> findUnique  && attendance[0] --> attendance
+    if (attendance[0]) res.send(attendance);
+    else {
+      res.status(404).send({
+        success: false,
+        message: "Data is not found!",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
 
 exports.sendEmail = async (req, res) => {
   try {
-    await sendEmail();
+    const { id } = req.body;
+    await sendEmail(id);
 
     res.status(200).json({
       success: true,
       message: `Email sent successfully`,
     });
   } catch (error) {
-    console.log(err);
+    console.log(error);
   }
 };
 
-exports.uniPreference = async (req,res) => {
-  const {studentId,universityName,courseName,countryName,intakeDate} = req.body
+exports.uniPreference = async (req, res) => {
+  const { studentId, universityName, courseName, countryName, intakeDate } =
+    req.body;
   // console.log(req.body)
   try {
     const result = await prisma.tblAllUniversity.create({
       data: {
         studentId,
-        unName:universityName,
-        courseName,  
+        unName: universityName,
+        courseName,
         countryName,
-        intake:intakeDate,
+        intake: intakeDate,
       },
-    })
+    });
     // res.status(200).send(result);
     console.log(result);
   } catch (error) {
-    // res.status(500).send(error) 
-    console.log(error) 
+    // res.status(500).send(error)
+    console.log(error);
   }
-}
+};
 
-exports.facultyPreference = async (req,res)=>{ 
-  console.log(req.body)
-  console.log(req.files)
+exports.facultyPreference = async (req, res) => {
+  console.log(req.body);
+  console.log(req.files);
 
-  const uploadDoc = async(studentId,facultyName)=>{
-    if(req.files){
+  const uploadDoc = async (studentId, facultyName) => {
+    if (req.files) {
       const files = req.files;
-      if(files.facultyPrefLor !=null){
+      if (files.facultyPrefLor != null) {
         var file = req.files.facultyPrefLor;
-        file.mv(`./facultyUploads/${studentId}_${facultyName}.pdf`,(err)=>{
-          if(err)
-            console.log(err);
-        })
+        file.mv(`./facultyUploads/${studentId}_${facultyName}.pdf`, (err) => {
+          if (err) console.log(err);
+        });
       }
     }
-  }
+  };
 
-  const {studentId,facultyName,facultyEmail} = req.body;
+  const { studentId, facultyName, facultyEmail } = req.body;
   try {
     const result = await prisma.tblFacultyPref.create({
-      data:{
+      data: {
         studentId,
-        fcName:facultyName,
-        fcEmail:facultyEmail
-      }
-    })
-    uploadDoc(studentId,facultyName);
+        fcName: facultyName,
+        fcEmail: facultyEmail,
+      },
+    });
+    uploadDoc(studentId, facultyName);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 exports.personalInfo = async (req, res) => {
   const lastEntryOfResult = async () => {
@@ -206,54 +202,47 @@ exports.personalInfo = async (req, res) => {
   };
 
   const fileUploadOfCompExam = async (studentId) => {
-    if(req.files){
-
+    if (req.files) {
       const files = req.files;
-      if(files.gre !=null){
+      if (files.gre != null) {
         var file = req.files.gre;
-        file.mv(`./uploads/${studentId}_gre.pdf`,(err)=>{
-          if(err)
-            res.send(err);
-        })
+        file.mv(`./uploads/${studentId}_gre.pdf`, (err) => {
+          if (err) res.send(err);
+        });
       }
-      if(files.ielts!=null){
+      if (files.ielts != null) {
         var file = req.files.ielts;
-        file.mv(`./uploads/${studentId}_ielts.pdf`,(err)=>{
-          if(err)
-            res.send(err);
-        })
+        file.mv(`./uploads/${studentId}_ielts.pdf`, (err) => {
+          if (err) res.send(err);
+        });
       }
-      if(files.toefl!=null){
+      if (files.toefl != null) {
         var file = req.files.toefl;
-        file.mv(`./uploads/${studentId}_toefl.pdf`,(err)=>{
-          if(err)
-            res.send(err);
-        })
+        file.mv(`./uploads/${studentId}_toefl.pdf`, (err) => {
+          if (err) res.send(err);
+        });
       }
-      if(files.gmat!=null){
+      if (files.gmat != null) {
         var file = req.files.gmat;
-        file.mv(`./uploads/${studentId}_gmat.pdf`,(err)=>{
-          if(err)
-            res.send(err);
-        })
+        file.mv(`./uploads/${studentId}_gmat.pdf`, (err) => {
+          if (err) res.send(err);
+        });
       }
-      if(files.gate!=null){
+      if (files.gate != null) {
         var file = req.files.gate;
-        file.mv(`./uploads/${studentId}_gate.pdf`,(err)=>{
-          if(err)
-            res.send(err);
-        })
+        file.mv(`./uploads/${studentId}_gate.pdf`, (err) => {
+          if (err) res.send(err);
+        });
       }
-      if(files.other!=null){
+      if (files.other != null) {
         var file = req.files.other;
-        file.mv(`./uploads/${studentId}_other.pdf`,(err)=>{
-          if(err)
-            res.send(err);
-        })
+        file.mv(`./uploads/${studentId}_other.pdf`, (err) => {
+          if (err) res.send(err);
+        });
       }
     }
-  }
-  
+  };
+
   const {
     studentId,
     studentName,
@@ -277,9 +266,9 @@ exports.personalInfo = async (req, res) => {
     otherSc,
   } = req.body;
 
-  console.log(req.body)
-  console.log(req.files)
-  
+  console.log(req.body);
+  console.log(req.files);
+
   await fileUploadOfCompExam(studentId);
 
   // const originalDate = dateOfGraduation;
@@ -288,7 +277,7 @@ exports.personalInfo = async (req, res) => {
 
   const format = "T00:00:00.000Z";
   const newdateOfGraduation = passoutDate + format;
-  
+
   // console.log(newdateOfGraduation)
   // const date = new Date(newdateOfGraduation);
   // const datetimeStr = new Date(newdateOfGraduation).toISOString();
@@ -310,16 +299,16 @@ exports.personalInfo = async (req, res) => {
     });
 
     const competitiveExam = await prisma.tblcompetitive.create({
-      data:{
-        studentId : studentId,
-        greS : greSc || "0",
-        ieltsS : ieltsSc || "0",
-        toeflS : toeflSc || "0",
-        gmatS : gmatSc || "0",
-        gateS : gateSc || "0",
-        otherS : otherSc || "0",
-      }
-    })
+      data: {
+        studentId: studentId,
+        greS: greSc || "0",
+        ieltsS: ieltsSc || "0",
+        toeflS: toeflSc || "0",
+        gmatS: gmatSc || "0",
+        gateS: gateSc || "0",
+        otherS: otherSc || "0",
+      },
+    });
 
     let rid = await lastEntryOfResult();
     let aid = await lastEntryOAttendance();
@@ -333,21 +322,19 @@ exports.personalInfo = async (req, res) => {
 
     // console.log(rid);
     // console.log(aid);
-    
-    if(placeThroughCdpc=="false"){
-      studentPlace = false;
-    }
-    else{
-      studentPlace = true;
-    }  
 
-    if(bondCompleted=="false"){
-      bond = false;
+    if (placeThroughCdpc == "false") {
+      studentPlace = false;
+    } else {
+      studentPlace = true;
     }
-    else{
+
+    if (bondCompleted == "false") {
+      bond = false;
+    } else {
       bond = true;
-    }  
-    
+    }
+
     const studentInfo = await prisma.tblPersonalInfo.create({
       // data: req.body,
       data: {
@@ -360,14 +347,14 @@ exports.personalInfo = async (req, res) => {
         studentPlace,
         companyName: companyName,
         bond,
-        noOfLetterHead : noOfLetterhead,
+        noOfLetterHead: noOfLetterhead,
         rid: rid,
         aid: aid,
         ceid: ceid,
         unid: unid,
       },
     });
-    console.log("Data inserted successfully")
+    console.log("Data inserted successfully");
     res.status(201).send({
       success: true,
       studentInfo,
@@ -385,22 +372,21 @@ exports.personalInfo = async (req, res) => {
   }
 };
 
-exports.searchByCountry = async(req,res)=>{
-  try{
-    const search = (req.params.search).toLowerCase();
+exports.searchByCountry = async (req, res) => {
+  try {
+    const search = req.params.search.toLowerCase();
     const result = await prisma.tblAllUniversity.findMany({
-      include : {studentInfo : true},
-      where:{
-        countryName : search,
-      }
+      include: { studentInfo: true },
+      where: {
+        countryName: search,
+      },
     });
 
-    res.json(result)
-  }
-  catch(err){
+    res.json(result);
+  } catch (err) {
     res.status(404).send({
       success: false,
       message: "Students is not found!",
     });
   }
-}
+};

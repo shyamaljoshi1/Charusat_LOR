@@ -899,10 +899,10 @@ const LorRequest = () => {
         Alert.setOpen(true);
         Alert.setDesc(data.data.message);
         Alert.setType("success");
+        sendEmail(personalInfo.studentId);
       } catch (error) {
         console.log(error);
       }
-      // sendEmail();
     } else {
       Alert.setOpen(true);
       Alert.setDesc("Error submitting form");

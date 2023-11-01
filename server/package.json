@@ -23,6 +23,7 @@
     "passport": "^0.5.3",
     "passport-google-oauth20": "^2.0.0",
     "passport-google-oidc": "^0.1.0",
+    "path": "^0.12.7",
     "pdfkit": "^0.13.0",
     "prisma": "^4.10.1"
   }
